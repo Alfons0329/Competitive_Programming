@@ -2,7 +2,7 @@
 Contest URL: https://leetcode.com/contest/leetcode-weekly-contest-34/
 AC'd problem: A B C D(D after competition, reference to geeksforgeeks )
 
-![Screenshot]Contest_result.png
+![Screenshot](Contest_result.png)
 
 Briefly introduction to problems
 A.水題(easy problem)
