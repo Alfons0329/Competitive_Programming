@@ -36,7 +36,6 @@ public:
         int ptr1,ptr2;
         for(ptr1=0;ptr1<in.length();ptr1++)
         {
-
             for(ptr2=ptr1+1;ptr2<in.length();ptr2++)
             {
                 if(in[ptr2]==' '&&!path)
