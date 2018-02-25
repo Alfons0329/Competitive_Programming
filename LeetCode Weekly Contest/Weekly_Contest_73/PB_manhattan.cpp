@@ -11,10 +11,6 @@ public:
     bool escapeGhosts(vector<vector<int>>& ghosts, vector<int>& target)
     {
         bool can_esc = true;
-        if(target[0]==-28 && target[1]==3)
-        {
-            return 1;
-        }
         FORI(ghosts.size())
         {
             if(get_dist(0, 0,target[0] ,target[1])>=get_dist(ghosts[i][0], ghosts[i][1],target[0] ,target[1])) //ghosts are closer to the target than you
@@ -27,7 +23,7 @@ public:
     double get_dist(double rowa, double cola, double rowb, double colb)
     {
 
-        return (rowa - rowb) * (rowa - rowb) +  (cola - colb) * (cola - colb);
+        return abs(rowa - rowb) + abs(cola - colb);
     }
 
 };
