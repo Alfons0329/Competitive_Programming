@@ -23,7 +23,6 @@ public:
             }
         }
         gbi=cnt+lci;
-        cout<<lci<<","<<gbi<<endl;
         return (gbi==lci);
     }
 };

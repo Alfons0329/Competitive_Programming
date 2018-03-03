@@ -13,7 +13,7 @@
 class Solution
 {
 public:
-    int res = INT_MAX, prev = -1;
+    int res = INT_MAX;
     //preorder traverse to find the value of difference b/w two nodes
     vector<int> traverse_node;
     int minDiffInBST(TreeNode* root)
@@ -28,12 +28,12 @@ public:
     }
     void inorder_traverse(TreeNode* root)
     {
+        traverse_node.push_back(root->val);
         if(root->left)
         {
             inorder_traverse(root->left);
         }
         // cout<<"Inorder  "<<root->val<<endl;
-        traverse_node.push_back(root->val);
         if(root->right)
         {
             inorder_traverse(root->right);
