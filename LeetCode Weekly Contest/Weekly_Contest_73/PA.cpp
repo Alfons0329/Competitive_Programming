@@ -10,7 +10,6 @@ public:
         for(int i=1;i<=num;i++)
         {
             str = to_string(i);
-            cout<<str<<endl;
             not_good = true;
             for(int j=0;j<str.size();j++)
             {
