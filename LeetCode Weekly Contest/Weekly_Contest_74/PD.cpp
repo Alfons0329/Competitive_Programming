@@ -1,16 +1,26 @@
-class Solution
-{
+class Solution {
 public:
-    int numTilings(int N)
+    int preimageSizeFZF(int kin)
     {
-        unsigned long long int fir = 2 , sec = 5, thr = 7;
-        for(int i = 4 ; i < 5 ; i++)
+        int cnt = 0, factorial = 0, zeros = 0;
+        while(1)
         {
-            fir = sec;
-            sec = thr;
-            thr = fir + sec;
+            if(factorial%5==0 && factorial)
+            {
+                zeros+=((int)(log(factorial)/log(5)));
+                cout<<" factorial is of five multiple "<<factorial<<" zeros "<<zeros<<endl;
+            }
+            if(zeros == kin)
+            {
+                cnt++;
+            }
+            else if(zeros > kin)
+            {
+                break;
+            }
+            factorial++;
+            cout<<" factorial "<<factorial<<" zeros "<<zeros<<endl;
         }
-        cout<<thr<<endl;
-        return thr % 1000000007;
+        return cnt;
     }
 };
