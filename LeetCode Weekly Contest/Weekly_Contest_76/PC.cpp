@@ -2,11 +2,16 @@
 class Solution
 {
 public:
-    vector<int>res, visited;
+    vector<int> res, visited;
+    vector<int> form_cycle;
     stack<int> traversed_path;
     int cycle_cnt;
     vector<int> eventualSafeNodes(vector<vector<int>>& graph)
     {
+        FORI(graph.size())
+        {
+            form_cycle.push_back(0);
+        }
         FORI(graph.size())
         {
             if(graph[i].size()) //if this node is not the terminal node
@@ -29,7 +34,40 @@ public:
                 res.push_back(i);//directly push back it since such node is a terminal
             }
         }
-        return res;
+        //EVERY NODE THAT CONNECTS TO THE NODE THAT PROBABLY FORM A CYCLE SHOULD ALSO BE ELIMINATED
+        cout<<"Form cycle : ";
+        FORI(form_cycle.size())
+        {
+            cout<<form_cycle[i]<<" ";
+        }
+        cout<<endl;
+        FORI(graph.size())
+        {
+            for(int j = 0 ; j < graph[i].size() ; j++)
+            {
+                for(int k = 0 ; k < form_cycle.size() ; k++)
+                {
+                    cout<<" i "<<i<<" j "<<j<<" k "<<k<<endl;
+                    if(graph[i][j] == k && form_cycle[k])
+                    {
+                        cout<<"ELIMINATE "<<k<<endl;
+                        res[i] = -1;
+                        break;
+                    }
+                }
+            }
+
+        }
+        vector<int> final_res;
+        FORI(res.size())
+        {
+            cout<<res[i]<<endl;
+            if(res[i] != -1)
+            {
+                final_res.push_back(res[i]);
+            }
+        }
+        return final_res;
     }
     void dfs(int cur_node, int start, vector<vector<int>> graph,int step)
     {
@@ -43,11 +81,13 @@ public:
             if(graph[cur_node][i] ==  start && step > 1)
             {
                 check_next_is_start_cycle = 1;
+                form_cycle[start] = 1;
                 break;
             }
             else if(graph[cur_node][i] == cur_node)
             {
                 printf(" A SELF cycle formed!!!! %d \n",cur_node);
+                form_cycle[cur_node] = 1;
                 check_next_is_start_cycle = 1;
                 break;
             }
