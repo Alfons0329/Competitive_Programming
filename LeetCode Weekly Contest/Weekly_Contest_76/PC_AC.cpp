@@ -7,61 +7,81 @@ class Solution
 {
 public:
     vector<int> res, visited, in_cycle;
-    vector<int> traversed_path;
-    int cycle_cnt;
     vector<int> eventualSafeNodes(vector<vector<int>>& graph)
     {
+        in_cycle.resize(graph.size());
+        fill(in_cycle.begin(), in_cycle.end(), -1); //-1 for unprocessed, 1 for in cycle and 0 for not in cycle
         FORI(graph.size())
         {
-            if(graph[i].size()) //if this node is not the terminal node
+            if(in_cycle[i] == -1) //if this node is not the terminal node
             {
-                //going to its next node
-                visited.resize(graph.size());
-                fill(visited.begin(), visited.end(), 0);
-                in_cycle.resize(graph.size());
-                fill(in_cycle.begin(), in_cycle.end(), 0);
-                // printf("Start from:  %d \n",i);
-                traversed_path.clear();
-                if(!dfs(i, i, graph, 0))
+                if(graph[i].size()) //the node which unsure in a node should be processed, otherwiswe, just dont do
                 {
-                    res.push_back(i);
+                    visited.resize(graph.size());
+                    fill(visited.begin(), visited.end(), 0);
+                    // cout<<"Start from "<<i<<endl;
+                    if(!dfs(i, i, graph, 0))
+                    {
+                        in_cycle[i] = 0;
+                    }
+                }
+                else
+                {
+                    in_cycle[i] = 0;
                 }
             }
-            else
+        }
+        // cout<<" is in_cycle ";
+        FORI(in_cycle.size())
+        {
+            if(in_cycle[i] == 0)
             {
                 res.push_back(i);
             }
+            // cout<<in_cycle[i]<<" ";
         }
-
         return res;
     }
     bool dfs(int cur_node, int start, vector<vector<int>> graph,int step)
     {
         // cout<<" DFS to "<<cur_node<<endl;
+        // cout<<" is in_cycle ";
+        FORI(in_cycle.size())
+        {
+            cout<<in_cycle[i]<<" ";
+        }
+        // cout<<endl;
         if(in_cycle[cur_node] == 1)
         {
+            // cout<<"Hit a node that causes cycle "<<endl;
             return true;
         }
-        if(visited[cur_node] == 1)
+        else if(in_cycle[cur_node] == 0)  //reach the node that will not form a cycle, which is safe
         {
+            return false;
+        }
+        if(visited[cur_node] == 1) //visit the visited node again, that is a cycle
+        {
+            // cout<<"Hit a node that visited before, CYCLE CONFIRMED!! now cur_node is "<<cur_node<<endl;
             in_cycle[cur_node] = 1;
-            return true; //visit the visited node again, that is a cycle
+            return true;
         }
 
-        traversed_path.push_back(cur_node);
+        //traversed_path.push_back(cur_node);
         visited[cur_node] = 1;
         FORI(graph[cur_node].size()) //search the next node that can be traversed from the current node
         {
+            //if this node will connect to its neighbor that forms a circle, than cur_node will be treated as circle-hazard as well
+            //cout<<i<<endl;
             if(dfs(graph[cur_node][i], start, graph, step + 1))
             {
-                in_cycle[i] = 1;
+                in_cycle[cur_node] = 1;
+                // cout<<"Node "<<cur_node<<" connect to "<<i<<" that forms a cycle "<<endl;
                 return true;
             }
         }
-        visited[cur_node] = false; //reach end and back track to find the next
-        cur_node = traversed_path.back();
-        // cout<<"Back trace to "<<cur_node<<endl;
-        traversed_path.pop_back();
+        visited[cur_node] = 0; //if next traverse meet the terminal, it does not count as meet before that form a cycle since terminal is OK to meet again
+        in_cycle[cur_node] = 0;//this node is terminal since the aforementioned FORI wont get in, so this is the node with output degree zero
         return false;
     }
 };
