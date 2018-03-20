@@ -1,4 +1,4 @@
-# LeetCode_OJWeekly_Contest_68 on 2017/5/28
+# LeetCode_OJWeekly_Contest_68 on 2018/1/21
 Contest URL: https://leetcode.com/contest/weekly-contest-68/
 <br />
 AC'd problem: A B (C D after competition, reference to discussion and E not solved )
