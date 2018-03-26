@@ -8,7 +8,7 @@ public:
         dp_down(MAXN, vector<int>(MAXN, 1)),
         dp_left(MAXN, vector<int>(MAXN, 1)),
         dp_right(MAXN, vector<int>(MAXN, 1)),
-        dp_ans(MAXN, vector<int>(MAXN, 1));
+        dp_ans(MAXN, vector<int>(MAXN, 0));
         cout<<6666<<endl;
         for (size_t i = 0; i < count; i++)
         {
@@ -16,7 +16,6 @@ public:
             dp_down[mines[i][0]][mines[i][1]] = 0;
             dp_left[mines[i][0]][mines[i][1]] = 0;
             dp_right[mines[i][0]][mines[i][1]] = 0;
-            dp_ans[mines[i][0]][mines[i][1]] = 0;
         }
 
         //main dynamic programming
@@ -47,9 +46,9 @@ public:
         {
             for(int j = MAXN - 2;j >=0 ;j--)
             {
-                if(dp_left[i][j + 1] == 1)
+                if(dp_left[i][j] == 1)
                 {
-                    dp_left[i][j + 1] = dp_left[i][j + 1] + 1;
+                    dp_left[i][j] = dp_left[i][j + 1] + 1;
                 }
             }
         }
@@ -58,13 +57,13 @@ public:
         {
             for(int j = 1;j < MAXN; j++)
             {
-                if(dp_right[i][j - 1] == 1)
+                if(dp_right[i][j] == 1)
                 {
-                    dp_right[i][j - 1] = dp_right[i][j - 1] + 1;
+                    dp_right[i][j] = dp_right[i][j - 1] + 1;
                 }
             }
         }
-        for(int i = 0;i < MAXN; i++)
+        /*for(int i = 0;i < MAXN; i++)
         {
             for(int j = 0;j < MAXN; j++)
             {
@@ -98,7 +97,7 @@ public:
                 cout<<dp_right[i][j];
             }
             cout<<endl;
-        }
+        }*/
         //check for direction since the plus sign has to satisfiy all the four direction, if one of the direction fails. it has to decrease to that direction
         for(int i = 0; i < MAXN; i++)
         {
