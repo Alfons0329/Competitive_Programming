@@ -36,14 +36,18 @@ public:
                  vec[str[i]-'a'].end = i;
             }
         }
-        int max_start = vec[str[0]-'a'].start;
+
+
+
+
+        int min_start = vec[str[0]-'a'].start;
         int max_end = vec[str[0]-'a'].end;
         //greedy approach
         int partition = 0;
         vector<int>res;
         for (size_t i = 0; i < count; i++)
         {
-            if( vec[str[i]-'a'].start > max_start
+            if( vec[str[i]-'a'].start > min_start
             && vec[str[i]-'a'].start < max_end
             && vec[str[i]-'a'].end > max_end )
             {
@@ -54,13 +58,13 @@ public:
             {
                 if(i != count - 1)
                 {
-                    res.push_back(max_end - max_start + 1);
-                    max_start = vec[str[i + 1]-'a'].start;
+                    res.push_back(max_end - min_start + 1);
+                    min_start = vec[str[i + 1]-'a'].start;
                     max_end = vec[str[i + 1]-'a'].end;
                 }
                 else
                 {
-                    res.push_back(max_end - max_start + 1); // a special case
+                    res.push_back(max_end - min_start + 1); // a special case
                 }
             }
         }

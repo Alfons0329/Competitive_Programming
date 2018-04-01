@@ -9,7 +9,6 @@ public:
         dp_left(MAXN, vector<int>(MAXN, 1)),
         dp_right(MAXN, vector<int>(MAXN, 1)),
         dp_ans(MAXN, vector<int>(MAXN, 0));
-        cout<<6666<<endl;
         for (size_t i = 0; i < count; i++)
         {
             dp_up[mines[i][0]][mines[i][1]] = 0;
@@ -63,59 +62,20 @@ public:
                 }
             }
         }
-        /*for(int i = 0;i < MAXN; i++)
-        {
-            for(int j = 0;j < MAXN; j++)
-            {
-                cout<<dp_up[i][j];
-            }
-            cout<<endl;
-        }
-        printf("\n");
-        for(int i = 0;i < MAXN; i++)
-        {
-            for(int j = 0;j < MAXN; j++)
-            {
-                cout<<dp_down[i][j];
-            }
-            cout<<endl;
-        }
-        printf("\n");
-        for(int i = 0;i < MAXN; i++)
-        {
-            for(int j = 0;j < MAXN; j++)
-            {
-                cout<<dp_left[i][j];
-            }
-            cout<<endl;
-        }
-        printf("\n");
-        for(int i = 0;i < MAXN; i++)
-        {
-            for(int j = 0;j < MAXN; j++)
-            {
-                cout<<dp_right[i][j];
-            }
-            cout<<endl;
-        }*/
+
         //check for direction since the plus sign has to satisfiy all the four direction, if one of the direction fails. it has to decrease to that direction
         for(int i = 0; i < MAXN; i++)
         {
             for(int j = 0; j < MAXN; j++)
             {
                 dp_ans[i][j] = min(min(dp_up[i][j], dp_down[i][j]), min(dp_left[i][j], dp_right[i][j]));
-            }
-        }
-        for(int i = 0; i < MAXN; i++)
-        {
-            for(int j = 0; j < MAXN; j++)
-            {
                 if(dp_ans[i][j] > order)
                 {
                     order = dp_ans[i][j];
                 }
             }
         }
+
         return order;
     }
 
