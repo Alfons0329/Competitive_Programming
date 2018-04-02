@@ -6,7 +6,7 @@ public:
         if(all > 6000) //monotonically increasing since A is always used more than B. (by emperical method)
             return 1.0;
 
-        int serve = all / 25; //25 ml as a servin unit, chess board as drawing, longest method is always serving 25ml of A till end.
+        int serve = ceil(all / 25.0) ; //25 ml as a servin unit, chess board as drawing, longest method is always serving 25ml of A till end.
         vector<vector <double> > dp(serve + 1, vector<double>(serve + 1, 0)); //each grid represent the rest amount(unit) of a and be which comes to here
         //A row, B col
         double dir1, dir2, dir3, dir4;
@@ -83,7 +83,6 @@ public:
                 {
                     dir4 = dp[i - 1][j - 3];
                 }
-                cout<<"Dir 1__"<<dir1<<" dir 2__"<<dir2<<"dir 3 __"<<dir3<<" dir4___"<<dir4<<endl;
                 dp[i][j] = 0.25 * (dir1 + dir2 + dir3 + dir4);
             }
         }
