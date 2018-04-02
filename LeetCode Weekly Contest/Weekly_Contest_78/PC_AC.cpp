@@ -1,32 +1,41 @@
 class Solution
 {
 public:
+    double dplist[500][500]= {0.0};
     double soupServings(int all)
     {
-        if(all > 4000)
-            return 1.0;
-        int serve = all / 25; //25 ml as a servin unit, chess board as drawing, longest method is always serving 25ml of A till end.
-        int asoup = all / 25;
-        int bsoup = all / 25;
-        vector<vector <double> > dp(serve + 1, vector<double>(serve + 1, 0)); //each grid represent the rest amount(unit) of a and be which comes to here
-        for(int i = 0; i < serve + 1; i++) // i for usage of A
+        if(all <= 50 && all)
         {
-            for(int j = 0; j < serve + 1; j++) // j for usage of B
-            {
-                if(i <= 0) //comes from a used of ALL A
-                {
-
-                }
-                else if(j <= 0) //we want a to be used out rather than B
-                {
-
-                }
-                else
-                {
-                    
-                }
-            }
+            return 0.625;
         }
-        return ans;
+        else if(all == 0)
+        {
+            return 0.5;
+        }
+        return all > 5000 ? 1.0 : prob((all / 25)+ 1, (all / 25)+ 1);
+    }
+    double prob(int a,int b)
+    {
+        if(a <= 0 && b <= 0)
+        {
+            return 0.5;
+        }
+        else if(a <= 0)
+        {
+            return 1.0;
+        }
+        else if(b <= 0)
+        {
+            return 0;
+        }
+        if(dplist[a][b] > 0)
+        {
+            return dplist[a][b];
+        }
+        else
+        {
+            dplist[a][b] = 0.25 * (prob(a-4, b) + prob(a-3, b-1) + prob(a-2, b-2) + prob(a-1, b-3));
+            return 0.25 * (prob(a-4, b) + prob(a-3, b-1) + prob(a-2, b-2) + prob(a-1, b-3));
+        }
     }
 };
