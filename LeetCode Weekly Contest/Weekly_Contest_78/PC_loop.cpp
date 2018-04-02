@@ -5,6 +5,13 @@ public:
     {
         if(all > 6000) //monotonically increasing since A is always used more than B. (by emperical method)
             return 1.0;
+        else if(all && all <= 25) //mathematical testing since all <= 25 ml A will run out first in the probability of 0.25 + 0.5(0.25*3)
+        //(latter is A B run out at the same time)
+            return 0.625;
+        else if(all == 0)
+            return 0.5; //special case // already run out at the same time
+
+
         int serve = all / 25; //25 ml as a servin unit, chess board as drawing, longest method is always serving 25ml of A till end.
         int asoup = all / 25;
         int bsoup = all / 25;
@@ -15,12 +22,6 @@ public:
         {
             for(int j = 0; j <= serve; j++)
             {
-                // cout<<"i "<<i<<" j "<<j<<endl;
-
-                if(j - i < 0) //b used out before a reaches end, thsi is not what we wantz
-                {
-                    continue;
-                }
 
                 if(i - 4 <= 0 && j <=0)
                 {
@@ -29,6 +30,10 @@ public:
                 else if(i - 4 <= 0)
                 {
                     dir1 = 1;
+                }
+                else if(j <= 0)
+                {
+                    dir1 = 0;
                 }
                 else
                 {
