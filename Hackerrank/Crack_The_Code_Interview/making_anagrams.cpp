@@ -8,17 +8,20 @@ int number_needed(string str_a, string str_b)
     for(int i = 0;i < str_a.size();i++)
     {
         count_a[str_a[i] - 'a']++;
+    }
+    for(int i = 0;i < str_b.size();i++)
+    {
         count_b[str_b[i] - 'a']++;
     }
     int remain = 0;
     for(int i = 0;i < 26;i++)
     {
-        if(count_a[i] == count_b[i])
+        if(count_a[i] && count_b[i])
         {
-            remain += count_a[i];
+            remain += min(count_a[i], count_b[i]);
         }
     }
-    return 2 * (str_a.size() - remain);
+    return (str_a.size() + str_b.size() - remain * 2);
 }
 
 int main()
