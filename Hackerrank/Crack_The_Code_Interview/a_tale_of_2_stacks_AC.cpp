@@ -30,7 +30,6 @@ class MyQueue
                 stack_oldest_on_top = reverse_stack(stack_newest_on_top);
                 stack_oldest_on_top.pop();
             }
-            //reprocess, back to the main stack_newest_on_top stack
         }
 
         int front()

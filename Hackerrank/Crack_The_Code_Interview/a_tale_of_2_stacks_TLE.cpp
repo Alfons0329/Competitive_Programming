@@ -16,7 +16,6 @@ class MyQueue
         stack<int> stack_newest_on_top, stack_oldest_on_top;
         void push(int x)
         {
-            //put from old oldest on top (that is the stack after popped and processed, now we take it back and reverse)
             stack_newest_on_top.push(x);
         }
 
@@ -26,7 +25,7 @@ class MyQueue
             {
                 stack_oldest_on_top = reverse_stack(stack_newest_on_top);
                 stack_oldest_on_top.pop();
-                stack_newest_on_top = reverse_stack(stack_oldest_on_top);
+                stack_newest_on_top = reverse_stack(stack_oldest_on_top); //reprocess
             }
         }
 
