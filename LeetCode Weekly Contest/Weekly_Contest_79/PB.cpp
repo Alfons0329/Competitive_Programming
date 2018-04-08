@@ -24,7 +24,6 @@ public:
         {
             return 0;
         }
-        cout<<"Traverse to "<<cur->val<<endl;
 
         if(cur->left == NULL && cur->right == NULL && cur->val == 0)
         {
@@ -51,12 +50,10 @@ public:
 
         if(left_check) //if left subtree needs to be pruned
         {
-            cout<<"Case 6 "<<endl;
             cur->left = NULL;
         }
         if(right_check) //if right subtree needs to be pruned
         {
-            cout<<"Case 7 "<<endl;
             cur->right = NULL;
         }
 
