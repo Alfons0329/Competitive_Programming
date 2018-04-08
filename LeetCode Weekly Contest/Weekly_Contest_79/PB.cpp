@@ -24,26 +24,22 @@ public:
         {
             return 0;
         }
-
+        //due to left_check & right_check & (cur->val == 0); null<-0->null should also be deleted
         if(cur->left == NULL && cur->right == NULL && cur->val == 0)
         {
             return 1;
         }
-
+        //due to left_check & right_check & (cur->val == 0);  null<-0->true should also be deleted
         if(cur->left == NULL && cur->right  && pruneit(cur->right) && cur->val == 0)
         {
             return 1;
         }
-
+        //due to left_check & right_check & (cur->val == 0); true<-0->null should also be deleted
         if(cur->left && cur->right == NULL && pruneit(cur->left) && cur->val == 0)
         {
             return 1;
         }
 
-        if(cur->left == NULL && cur->right == NULL && cur->val == 1)
-        {
-            return 0;
-        }
 
         bool left_check = pruneit(cur->left);
         bool right_check = pruneit(cur->right);
