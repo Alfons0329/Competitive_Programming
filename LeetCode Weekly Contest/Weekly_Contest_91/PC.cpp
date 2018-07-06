@@ -1,10 +1,10 @@
 class Solution
 {
 public:
-    struct
+    struct col_data
     {
         int col_0, col_1;
-    }col_data; //store the data of 1, 0 of each column
+    }; //store the data of 1, 0 of each column
     int matrixScore(vector<vector<int>>& arr)
     {
         int flag_1 = 0, flag_2 = 0, cnt_0 = 0, cnt_1 = 0;
@@ -74,5 +74,20 @@ public:
                 }
             }
         }
+        return binary_sum(arr);
+    }
+    int binary_sum(vector<vector<int>>& arr)
+    {
+        unsigned int sum = 0;
+        for(int i = 0; i < arr.size(); i++)
+        {
+            string str_bin("");
+            for(int j = 0; j < arr[i].size(); j++)
+            {
+                str_bin += arr[i][j] + '0';
+            }
+            sum += (unsigned int) stoi(str_bin, nullptr, 2);
+        }
+        return sum;
     }
 };
