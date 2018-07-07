@@ -1,6 +1,7 @@
 /*
 TLE in very large testcases(vector with length more than 30000), testcases 83/93
-the algorithm is implemented in the sliding-window linke alggorithm
+the algorithm is implemented in the sliding-window.
+need to optimize to O(N)
 */
 class Solutio
 {
