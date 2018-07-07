@@ -1,26 +1,41 @@
-/*
-for a fixed left, we want to find the smallest right such that arr[right + 1] - arr[left] >= target_val
-*/
-class Solution
-{
+class Solution {
 public:
-    int shortestSubarray(vector<int>& arr, int target_val)
-    {
-        if(arr.size() == 1)
+    int shortestSubarray(vector<int>& arr, int target) {
+        int prefix_sum[arr.size() + 1] = {0};
+
+        for(int i = 1; i <= arr.size(); i++)
         {
-            return 1;
+            prefix_sum[i] = prefix_sum[i - 1] + arr[i - 1];
         }
-        int prefix_sum[arr.size() + 1] = {0}, interval_sum = 0;  //interval_sum = arr[right + 1] - arr[left]
-        for(int i = 0; i < arr.size(); i++)
+
+        int ans = -1;
+
+        deque<int> window_left;
+
+        for(size_t end = 0; end <= arr.size(); end++)
         {
-            prefix_sum[i + 1] += prefix_sum[i] + arr[i];
+            while(!window_left.empty() && prefix_sum[end] - prefix_sum[window_left.back()] <= 0)
+            {
+                window_left.pop_back();
+            }
+            while(!window_left.empty() && prefix_sum[end] - prefix_sum[window_left.front()] >= target)
+            {
+                int beg = window_left.front();
+                window_left.pop_front();
+
+                if(ans == -1)
+                {
+                    ans = end - beg;
+                }
+                else
+                {
+                    ans = min(ans, (int)end - beg);
+                }
+            }
+            window_left.push_back(end);
         }
-        for(int i = 0; i < arr.size() + 1; i++)
-        {
-            printf("prefix to %d prefix_sum is %d\n", i, prefix_sum[i]);
-        }
-        int left = 0, right = 1;
-        for()
-        return 0;
+
+        return ans;
+
     }
 };
