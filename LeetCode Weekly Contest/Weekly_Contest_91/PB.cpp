@@ -47,6 +47,7 @@ public:
         {
             return;
         }
+
         for(set<int>::iterator it = visited.begin(); it != visited.end(); ++it)
         {
             if(*it == root->val)//the current-visiting node has been traversed before, so we just quit
@@ -55,6 +56,7 @@ public:
             }
         }
         visited.insert(root->val); //push the current visited node for dfs mark what node has been traversed to prevent duplicated traversing
+
         if(dist_K == 0) //dist_K reached
         {
             res.push_back(root->val);
