@@ -30,10 +30,6 @@ public:
     }
     bool is_prime(int num)
     {
-        if(num == 4)
-        {
-            return 0;
-        }
         for(int i = 2;i <= sqrt(num) ; i++)
         {
             if(num % i == 0)
@@ -45,28 +41,14 @@ public:
     }
     bool is_palindrome(int num)
     {
-        string str = to_string(num), l_str(""), r_str("");
-        int full_size = str.size() - 1, half_size = str.size() / 2;
-        if(str.size() % 2) //odd length
+
+        string str = to_string(num);
+        string rev = str;
+        if(num > 11 && str.size() % 2 == 0)
         {
-            for(int i = 0 ;i < half_size; i++)
-            {
-                l_str += str[i];
-                r_str += str[full_size - i];
-            }
+            return 0;
         }
-        else
-        {
-            for(int i = 0 ;i < half_size; i++)
-            {
-                l_str += str[i];
-                r_str += str[full_size - i];
-            }
-        }
-        if((l_str.size() == 1 && r_str.size() == 0) || (l_str.size() == 0 && r_str.size() == 1))
-        {
-            return 1;
-        }
-        return l_str == r_str;
+        reverse(rev.begin(), rev.end());
+        return str == rev;
     }
 };
