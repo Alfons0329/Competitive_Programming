@@ -22,10 +22,6 @@ public:
         dfs_information(root, 0);
         node_info_map[root].parent = root; //for the root itself without runtime error
         res = root; //initialize
-        for(map<TreeNode* , node_info>::iterator it = node_info_map.begin(); it != node_info_map.end(); it++)
-        {
-            printf("%d has the parent %d with its own depth %d \n", it->first->val, it->second.parent->val, it->second.depth);
-        }
         climbup_LCA(node_p, node_q);
         return res;
     }
@@ -51,7 +47,6 @@ public:
     //climb up to find the LCA, using depth comparison algorithm
     void climbup_LCA(TreeNode* node_p, TreeNode* node_q)
     {
-        printf("node_p %d node_q %d\n", node_p->val, node_q->val);
         if(node_info_map[node_p].parent == node_info_map[node_q].parent)
         {
             res = node_info_map[node_p].parent;
