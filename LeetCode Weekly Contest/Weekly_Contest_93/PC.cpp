@@ -1,37 +1,43 @@
 #define FORI(n) for(int i = 0; i < n; ++ i)
-
 class Solution
 {
 public:
     vector<int> advantageCount(vector<int>& va, vector<int>& vb)
     {
         vector<int> res;
-        vector<bool> used(va.size(), false);
+        sort(va.begin(), va.end());
         FORI(vb.size())
         {
-
-            vector<int>::iterator lb = lower_bound(va.begin(), va.end(), vb[i]);
-            printf("%d , %d\n",*lb ,vb[i]);
-            if(used[lb - va.begin()] == false)
+            int min_val = 1e9, min_pos = 0, find = 0;
+            for(int j = 0 ;j < va.size(); j++)
             {
-                res.push_back(va[lb - va.begin()]);
-                printf("has ub min_val %d\n", va[lb - va.begin()]);
-                used[lb - va.begin()] = true;
+                if(va[j] < min_val && va[j] > vb[i])
+                {
+                    min_pos = j;
+                    min_val = va[j];
+                    find = 1;
+                }
+            }
+            if(find)
+            {
+                // va[min_pos] = -1;, TLE since testcase 64
+                va.erase(va.begin() + min_pos); //AC
+                res.push_back(min_val);
             }
             else
             {
-                int min_val = 100000000, min_pos = 0;
-                for(int i = 0; i < va.size(); i++)
+                min_val = 1e9;
+                for(int j = 0 ;j < va.size(); j++)
                 {
-                    if(va[i] < min_val && used[i] == false) //just take the smallest to put
+                    if(va[j] < min_val && va[j] != -1)
                     {
-                        min_pos = i;
-                        min_val = va[i];
+                        min_pos = j;
+                        min_val = va[j];
                     }
                 }
-                used[min_pos] = true;
+                // va[min_pos] = -1;, TLE since testcase 64
+                va.erase(va.begin() + min_pos); //AC
                 res.push_back(min_val);
-                printf("no ub min_val %d\n", min_val);
             }
         }
         return res;
