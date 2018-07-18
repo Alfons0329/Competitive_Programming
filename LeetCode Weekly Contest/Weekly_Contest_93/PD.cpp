@@ -17,6 +17,7 @@ public:
         int closest_next_pos = 0, closest_next_dist = INT_MAX;
         while (1)
         {
+            printf("car_pos %d fuel_now %d \n",car_pos, cur_fuel);
             if(car_pos + cur_fuel >= target || car_pos >= target) //should have the highest priority
             {
                 printf("reach target!\n");
@@ -27,13 +28,12 @@ public:
             closest_next_dist = INT_MAX;
             for(int i = 0; i < stations.size(); i++)
             {
-                if(stations[i][0] - car_pos < closest_next_dist && stations[i][1] > 0 /*still useable*/)
+                if(abs(stations[i][0] - car_pos) < closest_next_dist && stations[i][1] > 0 /*still useable*/)
                 {
                     closest_next_dist = stations[i][0];
                     closest_next_pos = i;
                 }
             }
-            printf("car_pos %d fuel_now closest_next_pos is %d with dist %d\n",car_pos,  closest_next_pos, closest_next_dist);
 
             if(stations[closest_next_pos][0] - car_pos > cur_fuel || closest_next_dist == INT_MAX)//unracehable with current fuel
             {
@@ -45,7 +45,7 @@ public:
             for(int i = 0; i < stations.size(); i++) //find all reachable stations with max fuel to refill
             {
                 printf("i %d i0 %d i1 %d ok \n", i, stations[i][0], stations[i][1]);
-                if(stations[i][0] - car_pos >= 0 && cur_fuel >= stations[i][0] - car_pos/*reachable with current fuel*/&& stations[i][1] > max_refuel /*bigger fuel slot*/)
+                if(/*stations[i][0] - car_pos >= 0*/cur_fuel >= abs(stations[i][0] - car_pos)/*reachable with current fuel*/&& stations[i][1] > max_refuel /*bigger fuel slot*/)
                 {
                     max_refuel = stations[i][1];
                     stations_pos = i;
