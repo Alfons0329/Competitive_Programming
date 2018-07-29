@@ -5,8 +5,6 @@ public:
     int binaryGap(int num)
     {
         string binstr = to_binary(num);
-        cout << binstr <<endl;
-        vector<int> pos;
         int maxd = 0;
         for(int i = 0; i < binstr.size() - 1; i++)
         {
@@ -17,7 +15,6 @@ public:
                     if(binstr[j] == '1')
                     {
                         maxd = max(maxd, j - i);
-                        printf("csc i %d j %d\n", i, j);
                         i = j;
                         break;
                     }
