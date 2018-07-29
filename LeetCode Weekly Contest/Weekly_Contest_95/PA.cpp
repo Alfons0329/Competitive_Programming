@@ -19,12 +19,10 @@ public:
             head = head->next;
         }
         cnt /= 2;
-        printf("cnt is %d\n", cnt);
         while(cnt--)
         {
             h2 = h2->next;
         }
-        printf("h2 %d\n", h2->val);
         return h2;
     }
 
