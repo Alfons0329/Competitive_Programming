@@ -8,6 +8,6 @@ public:
         {
             num ^= piles[i];
         }
-        return num % 2 == 1;
+        return num & 1 == 1;
     }
 };
