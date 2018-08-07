@@ -23,7 +23,6 @@ public:
             return;
         }
         inorder(root->left);
-        printf("Traversed to %d\n", root->val);
         res.push_back(root->val);
         inorder(root->right);
     }
