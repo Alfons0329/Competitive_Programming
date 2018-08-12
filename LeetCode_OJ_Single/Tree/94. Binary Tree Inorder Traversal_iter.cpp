@@ -11,6 +11,7 @@ public:
             TreeNode* cur = root;
             while(stk.size() || cur != NULL)
             {
+                //equivalent to inorder(cur->left);
                 while(cur != NULL)
                 {
                     cur = cur->left;
@@ -20,9 +21,12 @@ public:
                     }
                     stk.push(cur);
                 }
+                //equivalent to res.push_back(cur->val);
                 cur = stk.top();
+                //reassign
                 stk.pop();
                 res.push_back(cur->val);
+                //equivalent to inorder(cur->right);
                 cur = cur->right;
                 if(cur != NULL)
                 {
