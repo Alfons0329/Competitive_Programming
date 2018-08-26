@@ -9,17 +9,11 @@ public:
 
         is_bipartie = true;
         dfs(1, 0, visited, dislikes);
-
-        for(int i = 1 ;i <= N ;i++)
-        {
-            // printf("vertex %d color %d \n", i, visited[i]);
-        }
         return is_bipartie;
     }
     void dfs(int cur_vertex,int cur_color, int* visited, vector<vector<int>>& dislikes)
     {
         visited[cur_vertex] = cur_color;
-        // printf("go %d \n", cur_vertex);
         for(int i = 0; i < dislikes.size(); i++)
         {
             if(dislikes[i][0] == cur_vertex) //check if unvisited and is the path of current vertex
@@ -28,7 +22,7 @@ public:
                 {
                     dfs(dislikes[i][1], cur_color == 1 ? 0 : 1 /*change the color for adjacent vertices*/, visited, dislikes);
                 }
-                else if(visited[dislikes[i][1]] == cur_color)
+                else if(visited[dislikes[i][1]] == cur_color) //visited, same color, not bipartie graph
                 {
                     is_bipartie = false;
                 }
