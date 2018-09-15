@@ -28,7 +28,6 @@ int main()
     int N, dl;
     cin>>N>>dl;
     bool impossible = false;
-
     int i;
     for (i = 0; i < N; i++){
         cin>>t[i];
