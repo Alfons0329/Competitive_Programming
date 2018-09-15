@@ -1,3 +1,4 @@
+/*
 #include <bits/stdc++.h>
 using namespace std;
 class Solution {
@@ -61,5 +62,13 @@ int main()
         tc.push_back(tmp);
     }
     cout<<"Ans is"<<sol.findLHS(tc)<<endl;
+    return 0;
+}
+*/
+int main()
+{
+
+    vector<int> tc;
+
     return 0;
 }

@@ -1,0 +1,28 @@
+leetcode OJ Weekly Contest 35 解題心得
+ProbA. 605. Can place flowers.
+基本上採用貪心解，將符合需求的0置換成1，並且注意邊界條件即可(12、17行)
+另外要特判當只有一個花圃的情形，若有種花則只能放0，若沒有種花則可以放0或是1。
+
+ProbB. Construct String from Binary Tree
+基本上由題目可以看出是要求preorder的排序再以括號區隔開，並且和原本的二元樹有
+一一對應的關係，利用遞迴的方式即可求解，但要注意在遍歷的時候如果遇到
+1.兩個孩子都是nullptr則應該停止，return ;
+2.另外如果左邊孩子null右邊非空則應該遞迴左右兩側
+3.但相較於2.而言如果只有左邊非空但是右邊是空的則應該單純走左邊即可因為題目的
+定義若較右側沒有即結束二元樹的定義。
+遞迴開始前加上左括號，遞迴完則加上右括號代表完畢。因此對於一個nullptr便會有()的產生
+
+ProbC. 609.Find Duplicate File in System
+比較像是OS的題目，基本上採用字串切割搭配hash內容把文件的內容做為hash key而文件的地址作為hash value
+hash在此因為不計較順序故採用unordered_map來優化，
+unordered_map<string ,vector<string>>fileMapping; 代表說key是string 而value 是vector<string>
+而這又剛好可以跟pair的觀念配對key作為first、而value作為second，因此用auto自動型別搭配iterator取用->
+即可取得數值
+
+--------------------字串切割方面-------------------
+檔名路徑如同 root/a 1.txt(abcd) 2.txt(efgh)
+因此首先採用量測到第一個空白的距離利用substr子字串filePath抓出，並把path設為真當作已經找過路徑
+接著再量測到左括號來取檔名fileName，奇怪的是不知為什麼第二個之後檔名切下後總是會多一個XD，因此只好特判一下第二個以後的檔名。
+再逐步量測到右括號來取得檔案內容fileContent，最後再用um將檔名與路徑映射過去(67行)。
+由於每一個文件路徑與檔案方式的寫法都一致，因此只需要同一種字串切割方法即可
+71行的ptr1=ptr2是指標逐步行走的方式，記得當初解題時把in[ptr2]寫成ptr2找了好久才發現ㄏㄏ
