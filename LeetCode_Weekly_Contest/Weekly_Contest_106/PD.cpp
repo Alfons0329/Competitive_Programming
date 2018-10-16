@@ -5,19 +5,18 @@ public:
         //check which node be removed will remove the most connection
         int n = initial.size(), m = graph.size();
         sort(initial.begin(), initial.end());
-        vector<int> color_cnt(n,0);
+        vector<int> color_cnt(m,0); //do not use n, otherwise runtime error will occurred such as [0,9] will out of the array bound with length 2
         
         //count how much nodes can be traversed from the starting point
         for(int i = 0; i < n; ++i)
         {
             int each_cnt = 0;
             vector<bool> traversed(m, false);
-            // printf("start from %d \n", initial[i]);
             DFS(graph, initial[i], traversed, each_cnt);
-            color_cnt[i] = each_cnt;
-            // printf("Node %d, reaches %d \n", initial[i], each_cnt);
+            color_cnt[initial[i]] = each_cnt;
         }
         int res = INT_MAX, max_color = 0;
+        
         for(int i = n - 1; i >= 0; --i)
         {
             if(color_cnt[initial[i]] >= max_color)
@@ -34,7 +33,6 @@ public:
         {
             return;
         }
-        // printf("traverse to %d \n", cur_node);
         traversed[cur_node] = true;
         each_cnt++;
         for(int i = 1; i < graph[cur_node].size(); ++i)
