@@ -15,7 +15,7 @@ public:
         TreeNode* parent;
         int depth;
     };
-    map<TreeNode* , node_info> node_info_map;
+    map<TreeNode*, node_info> node_info_map;
     TreeNode* res;
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* node_p, TreeNode* node_q)
     {
