@@ -17,7 +17,6 @@ string isValid(string s)
     map<int, int> freq_cnt; // order matters
     for(unordered_map<char, int>::iterator it = map_1.begin() ;it != map_1.end(); it++)
     {
-        // cout << it -> first << " , " << it -> second << endl;
         freq_cnt[it -> second]++;
     }
     if(freq_cnt.size() > 2)
@@ -38,7 +37,6 @@ string isValid(string s)
     int higher_freq_cnt = it2 -> second;
     
     int lower_freq = min(f1, f2), higher_freq = max(f1, f2);
-    printf("lfq %d, lfqcnt %d, hfq %d, hfqcnt %d\n", lower_freq, lower_freq_cnt, higher_freq, higher_freq_cnt); 
 
     if(lower_freq == 1 && lower_freq_cnt == 1)
     {
