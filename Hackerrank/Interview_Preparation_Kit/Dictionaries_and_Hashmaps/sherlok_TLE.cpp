@@ -27,6 +27,8 @@ bool check(string s1, string s2)
         return false;
     }
 
+    printf("Function map1 size %d\n", mp1.size());
+
     for(unordered_map<char, int>::iterator it = mp1.begin(); it != mp1.end(); it++)
     {
         if(mp2.count(it->first)) // if same alphabet, then the amount should be the same too.
@@ -62,10 +64,8 @@ int sherlockAndAnagrams(string s)
                 for(int k = j + 1; k + i - 1 < sz; k++)
                 {
                     s2 = s.substr(k, i);
-                    // cout << "check " << s1 << " , " << s2 <<endl;
                     if(check(s1, s2))
                     {
-                        // cout << " ANAGRAM! \n"; 
                         res++;
                     }
                 }

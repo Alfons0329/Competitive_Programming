@@ -36,7 +36,7 @@ int sherlockAndAnagrams(string s)
             }
         }
     }
-
+    printf("slen %llu, map size %d\n", s.length(), map_2.size());
     for(unordered_map<string, int>::iterator it = map_2.begin(); it != map_2.end(); it++)
     {
         res += it -> second * (it -> second  - 1) / 2;

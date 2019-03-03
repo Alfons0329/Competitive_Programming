@@ -4,17 +4,42 @@ using namespace std;
 
 vector<string> split_string(string);
 
-// Complete the minimumAbsoluteDifference function below.
-int minimumAbsoluteDifference(vector<int> arr) 
+// Complete the pairs function below.
+int pairs(int k, vector<int> arr) 
 {
-    int res = INT_MAX, n = arr.size();
-    sort(arr.begin(), arr.end()); // easily sort and check the diffrernce b/w 2 numbers (consecutive 2 i.e. a[i] and a[i + 1]), no need to brute force finding out all the possibilities
+    int res = 0, n = arr.size();
+    sort(arr.begin(), arr.end());
     for(int i = 0; i < n - 1; i++)
     {
-        res = min(res, abs(arr[i + 1] - arr[i]));
-        if(res == 0)
+        if(i == 0)
         {
-            return res;
+            for(int j = 1; j < n; j++)
+            {
+                if(abs(arr[j] - arr[i]) > k)
+                {
+                    break;
+                }
+                else if(abs(arr[j] - arr[i]) == k)
+                {
+                    res++;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            for(int j = i + 1; j < n; j++)
+            {
+                if(abs(arr[j] - arr[i]) > k)
+                {
+                    break;
+                }
+                else if(abs(arr[j] - arr[i]) == k)
+                {
+                    res++;
+                    break;
+                }
+            }
         }
     }
     return res;
@@ -24,9 +49,14 @@ int main()
 {
     ofstream fout(getenv("OUTPUT_PATH"));
 
-    int n;
-    cin >> n;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    string nk_temp;
+    getline(cin, nk_temp);
+
+    vector<string> nk = split_string(nk_temp);
+
+    int n = stoi(nk[0]);
+
+    int k = stoi(nk[1]);
 
     string arr_temp_temp;
     getline(cin, arr_temp_temp);
@@ -41,7 +71,7 @@ int main()
         arr[i] = arr_item;
     }
 
-    int result = minimumAbsoluteDifference(arr);
+    int result = pairs(k, arr);
 
     fout << result << "\n";
 
@@ -50,8 +80,7 @@ int main()
     return 0;
 }
 
-vector<string> split_string(string input_string) 
-{
+vector<string> split_string(string input_string) {
     string::iterator new_end = unique(input_string.begin(), input_string.end(), [] (const char &x, const char &y) {
         return x == y and x == ' ';
     });
