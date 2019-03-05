@@ -28,7 +28,7 @@ void dfs(vector<vector <int> > edges, vector<long> ids, int cur_id, int res, int
     
     // if the color of current node is what we want, update the result, but NO NEED TO RETURN 
     // since there will be other path not visited, go to the other path will be suitable.
-    if(cur_id == val)
+    if(ids[cur_id - 1] == val)
     {
         res = min(res, cur_len);
         printf("update res to %d\n", res);
@@ -51,16 +51,18 @@ void dfs(vector<vector <int> > edges, vector<long> ids, int cur_id, int res, int
 
     // after all the edges from this node has been traversed, mark this node as traversed
     edges[cur_id].clear();
+
 }
 
 int findShortest(int graph_nodes, vector<int> graph_from, vector<int> graph_to, vector<long> ids, int val) 
 {
-    // solve here
+    // init 
     int res = INT_MAX;
     int m = graph_from.size(); // edge size
     int n = ids.size(); // node size 
     vector<vector<int>> edges(n + 1, vector<int>()); // edge relations of node_1 -> node_2 -> node_3, n + 1 for padding one base
     unordered_map<int, int> color_cnt;
+
     for(int i = 0; i < m; i++)
     {
         printf("edge i %d\n", i);
@@ -97,8 +99,8 @@ int findShortest(int graph_nodes, vector<int> graph_from, vector<int> graph_to, 
         printf("only one such color\n");
         return -1;
     }
-
-    dfs(edges, ids, start_id, res, 0, val);
+    printf("start id %d with color %d\n", start_id, ids[start_id]);
+    // dfs(edges, ids, start_id, res, 0, val);
     printf("res %d \n", res);
     return res == INT_MAX ? -1 : res;
 }
