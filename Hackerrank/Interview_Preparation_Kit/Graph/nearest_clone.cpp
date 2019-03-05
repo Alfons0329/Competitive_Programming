@@ -16,28 +16,28 @@ vector<string> split_string(string);
  */
 
 
-void dfs(vector<vector <int> > edges, vector<long> ids, int cur_id, int res, int cur_len, int val)
+void dfs(vector<vector <int> > edges, vector<bool> visited, vector<long> ids, int cur_id, int& res, int cur_len, int val)
 {
-    // whole edges starting from this node has been traversed
-    printf("cur_id %d cur_color %ld cur_len %d\n", cur_id, ids[cur_id - 1], cur_len);
-    int n = edges[cur_id].size();
-    if(n == 0)
-    {
-        return;
-    }
-    
+    printf("cur_id %d cur_color %ld cur_len %d target %d\n", cur_id, ids[cur_id - 1], cur_len, val);
+    visited[cur_id] = true;// mark current node as traversed
+
     // if the color of current node is what we want, update the result, but NO NEED TO RETURN 
     // since there will be other path not visited, go to the other path will be suitable.
-    if(ids[cur_id - 1] == val)
+
+    int n = edges[cur_id].size();// how many mnodes are "being connected" by current node?
+    if(ids[cur_id - 1] == val && cur_len > 0)
     {
         res = min(res, cur_len);
         printf("update res to %d\n", res);
         cur_len = 0;
         // restart from current node
-        
+
         for(int i = 0; i < n; i++)
         {
-            dfs(edges, ids, edges[cur_id][i], res, cur_len, val);
+            if(!visited[edges[cur_id][i]]) // if untraversed
+            {
+                dfs(edges, visited, ids, edges[cur_id][i], res, cur_len + 1, val);
+            }
         }
     }
     else
@@ -45,13 +45,12 @@ void dfs(vector<vector <int> > edges, vector<long> ids, int cur_id, int res, int
         // keep searching
         for(int i = 0; i < n; i++)
         {
-            dfs(edges, ids, edges[cur_id][i], res, cur_len, val);
-        }
+            if(!visited[edges[cur_id][i]]) // if untraversed
+            {
+                dfs(edges, visited, ids, edges[cur_id][i], res, cur_len + 1, val);
+            }
+        }    
     }
-
-    // after all the edges from this node has been traversed, mark this node as traversed
-    edges[cur_id].clear();
-
 }
 
 int findShortest(int graph_nodes, vector<int> graph_from, vector<int> graph_to, vector<long> ids, int val) 
@@ -62,7 +61,9 @@ int findShortest(int graph_nodes, vector<int> graph_from, vector<int> graph_to, 
     int n = ids.size(); // node size 
     vector<vector<int>> edges(n + 1, vector<int>()); // edge relations of node_1 -> node_2 -> node_3, n + 1 for padding one base
     unordered_map<int, int> color_cnt;
+    vector<bool> visited(n + 1, false);
 
+    // make adjacent list
     for(int i = 0; i < m; i++)
     {
         printf("edge i %d\n", i);
@@ -99,9 +100,9 @@ int findShortest(int graph_nodes, vector<int> graph_from, vector<int> graph_to, 
         printf("only one such color\n");
         return -1;
     }
-    printf("start id %d with color %d\n", start_id, ids[start_id]);
-    // dfs(edges, ids, start_id, res, 0, val);
-    printf("res %d \n", res);
+    printf("start id %d with color %d\n", start_id, ids[start_id - 1]);
+    dfs(edges, visited, ids, start_id, res, 0, val);
+    printf("res %d \n", res == INT_MAX ? -1 : res);
     return res == INT_MAX ? -1 : res;
 }
 
@@ -152,8 +153,8 @@ int main()
 
 vector<string> split_string(string input_string) {
     string::iterator new_end = unique(input_string.begin(), input_string.end(), [] (const char &x, const char &y) {
-        return x == y and x == ' ';
-    });
+            return x == y and x == ' ';
+            });
 
     input_string.erase(new_end, input_string.end());
 
