@@ -16,10 +16,10 @@ vector<string> split_string(string);
  */
 
 
-void dfs(vector<vector <int> > edges,int cur_id, int res, int cur_len, int val)
+void dfs(vector<vector <int> > edges, vector<long> ids, int cur_id, int res, int cur_len, int val)
 {
     // whole edges starting from this node has been traversed
-    printf("cur_id %d cur_len %d\n", cur_id, cur_len);
+    printf("cur_id %d cur_color %ld cur_len %d\n", cur_id, ids[cur_id - 1], cur_len);
     int n = edges[cur_id].size();
     if(n == 0)
     {
@@ -37,7 +37,7 @@ void dfs(vector<vector <int> > edges,int cur_id, int res, int cur_len, int val)
         
         for(int i = 0; i < n; i++)
         {
-            dfs(edges, edges[cur_id][i], res, cur_len, val);
+            dfs(edges, ids, edges[cur_id][i], res, cur_len, val);
         }
     }
     else
@@ -45,7 +45,7 @@ void dfs(vector<vector <int> > edges,int cur_id, int res, int cur_len, int val)
         // keep searching
         for(int i = 0; i < n; i++)
         {
-            dfs(edges, edges[cur_id][i], res, cur_len, val);
+            dfs(edges, ids, edges[cur_id][i], res, cur_len, val);
         }
     }
 
@@ -84,10 +84,10 @@ int findShortest(int graph_nodes, vector<int> graph_from, vector<int> graph_to, 
     for(int i = 0 ; i < n; i++)
     {
         color_cnt[ids[i]]++;
+        printf("color %d has cnt %d\n", ids[i], color_cnt[ids[i]]);
         if(ids[i] == val)
         {
             start_id = i + 1;
-            break;
         }
     }
 
@@ -98,7 +98,7 @@ int findShortest(int graph_nodes, vector<int> graph_from, vector<int> graph_to, 
         return -1;
     }
 
-    dfs(edges, start_id, res, 0, val);
+    dfs(edges, ids, start_id, res, 0, val);
     printf("res %d \n", res);
     return res == INT_MAX ? -1 : res;
 }
