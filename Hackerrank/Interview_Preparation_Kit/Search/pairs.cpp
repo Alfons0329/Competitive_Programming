@@ -8,38 +8,17 @@ vector<string> split_string(string);
 int pairs(int k, vector<int> arr) 
 {
     int res = 0, n = arr.size();
-    sort(arr.begin(), arr.end());
-    for(int i = 0; i < n - 1; i++)
+    unordered_map<int, int> mymap;
+    for(int i = 0; i < n; i++)
     {
-        if(i == 0)
+        mymap[arr[i]]++;
+    }
+
+    for(int i = 0 ; i < n; i++)
+    {
+        if(mymap[arr[i] - k] == 1) // all the elements are unique, directly check if occurance exists 1
         {
-            for(int j = 1; j < n; j++)
-            {
-                if(abs(arr[j] - arr[i]) > k)
-                {
-                    break;
-                }
-                else if(abs(arr[j] - arr[i]) == k)
-                {
-                    res++;
-                    break;
-                }
-            }
-        }
-        else
-        {
-            for(int j = i + 1; j < n; j++)
-            {
-                if(abs(arr[j] - arr[i]) > k)
-                {
-                    break;
-                }
-                else if(abs(arr[j] - arr[i]) == k)
-                {
-                    res++;
-                    break;
-                }
-            }
+            res++;
         }
     }
     return res;
@@ -82,8 +61,8 @@ int main()
 
 vector<string> split_string(string input_string) {
     string::iterator new_end = unique(input_string.begin(), input_string.end(), [] (const char &x, const char &y) {
-        return x == y and x == ' ';
-    });
+            return x == y and x == ' ';
+            });
 
     input_string.erase(new_end, input_string.end());
 
