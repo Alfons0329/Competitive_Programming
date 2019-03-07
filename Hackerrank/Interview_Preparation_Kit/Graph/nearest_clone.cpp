@@ -18,7 +18,6 @@ vector<string> split_string(string);
 
 void dfs(vector<vector <int> > edges, vector<bool> visited, vector<long> ids, int cur_id, int& res, int cur_len, int val)
 {
-    // printf("cur_id %d cur_color %ld cur_len %d target %d\n", cur_id, ids[cur_id - 1], cur_len, val);
     visited[cur_id] = true;// mark current node as traversed
 
     // if the color of current node is what we want, update the result, but NO NEED TO RETURN 
@@ -28,7 +27,6 @@ void dfs(vector<vector <int> > edges, vector<bool> visited, vector<long> ids, in
     if(ids[cur_id - 1] == val && cur_len > 0)
     {
         res = min(res, cur_len);
-        // printf("update res to %d\n", res);
         cur_len = 0;
         // restart from current node
 
@@ -66,20 +64,8 @@ int findShortest(int graph_nodes, vector<int> graph_from, vector<int> graph_to, 
     // make adjacent list
     for(int i = 0; i < m; i++)
     {
-        // printf("edge i %d\n", i);
         edges[graph_from[i]].push_back(graph_to[i]); // make the edge relations
         edges[graph_to[i]].push_back(graph_from[i]); // make the edge relations
-    }
-
-    // unit test check whether the edge relationship is right
-    for(int i = 1; i < n + 1; i++)
-    {
-        // printf("%d connects to ", i);
-        for(int j = 0; j < edges[i].size(); j++)
-        {
-            // printf("%d ", edges[i][j]);
-        }
-        // printf("\n");
     }
 
     // find the starting node of that color
@@ -87,7 +73,6 @@ int findShortest(int graph_nodes, vector<int> graph_from, vector<int> graph_to, 
     for(int i = 0 ; i < n; i++)
     {
         color_cnt[ids[i]]++;
-        // printf("color %d has cnt %d\n", ids[i], color_cnt[ids[i]]);
         if(ids[i] == val)
         {
             start_id = i + 1;
@@ -97,10 +82,8 @@ int findShortest(int graph_nodes, vector<int> graph_from, vector<int> graph_to, 
     // starting dfs
     if(color_cnt[start_id] == 1 || start_id == -1) //only one for that color, return -1 directly or no such color
     {
-        // printf("only one such color\n");
         return -1;
     }
-    // printf("start id %d with color %d\n", start_id, ids[start_id - 1]);
     dfs(edges, visited, ids, start_id, res, 0, val);
     printf("res %d \n", res == INT_MAX ? -1 : res);
     return res == INT_MAX ? -1 : res;
