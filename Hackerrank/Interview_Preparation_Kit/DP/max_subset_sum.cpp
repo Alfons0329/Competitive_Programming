@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-
+#define MAX_N 100002
 using namespace std;
 
 vector<string> split_string(string);
@@ -7,16 +7,16 @@ vector<string> split_string(string);
 // Complete the maxSubsetSum function below.
 int maxSubsetSum(vector<int> arr) 
 {
-    int res, n = arr.size();
-    vector<int>dp(n + 2, 0); // for padding
+    int n = arr.size();
+    int dp[MAX_N] = { 0 } ;
     
     // starting from 0
     for(int i = 2; i < n + 2; i++)
     {
         dp[i] = max(dp[i - 2] + arr[i - 2 /*shift padding*/], dp[i - 1]);
     }
-
-    return dp.back();
+    printf("%d\n", dp[n + 1]);
+    return dp[n + 1];
 }
 
 int main()
