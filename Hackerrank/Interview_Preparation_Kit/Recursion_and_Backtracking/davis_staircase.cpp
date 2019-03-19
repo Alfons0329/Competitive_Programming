@@ -21,18 +21,11 @@ int stepPerms(int n)
         dp[3] = 4;
         return 4;
     }
-    else
+    else if(dp[n] != 0)
     {
-        if(dp[n - 1] != 0 && dp[n - 2] != 0 && dp[n - 3] != 0) // cached before
-        {
-            dp[n] = dp[n - 1] + dp [n - 2] + dp[n - 3];
-        }
-        else
-        {
-            dp[n] = stepPerms(n - 1) + stepPerms(n - 2) + stepPerms(n - 3);
-        }
+        return dp[n];
     }
-    printf("dp %d is %d\n", n, dp[n]);
+    dp[n] = stepPerms(n - 1) + stepPerms(n - 2) + stepPerms(n - 3);
     return dp[n];
 }
 
