@@ -1,0 +1,117 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+vector<string> split_string(string);
+
+// Complete the minimumSwaps function below.
+int dfs_circle(const vector<int>& arr_padded, int cur_pos, int arrow_cnt, int start_num, vector<bool>& visited)
+{
+    visited[cur_pos] = true;// mark current node as traversed
+    printf("DFS to %d\n", arr_padded[cur_pos]);
+    
+    cur_pos = arr_padded[cur_pos]; // move to the next one
+    if(visited[cur_pos] == false)
+    {
+        return dfs_circle(arr_padded, cur_pos, arrow_cnt + 1, start_num, visited); // keep dfs-ing
+    }
+    else if(arr_padded[cur_pos] == start_num)// the node ready to visit is the starting point, forms a cycle, dfs ends
+    {
+        return arrow_cnt; // just return the result
+    }
+
+}
+int minimumSwaps(vector<int> arr) 
+{
+    int n = arr.size(), res = 0;
+    vector<int> arr_padded(arr.begin(), arr.end());
+    arr_padded.insert(arr_padded.begin(), INT_MAX);
+
+    vector<bool> visited(n + 1, false);
+
+    for(int i = 1; i < n + 1;)
+    {
+        if(arr_padded[i] == i) // already in the right position, no need for dfs, to avoid stackoverflow
+        {
+            i++;
+            continue;
+        }
+        else
+        {
+            printf("Start DFS from %d\n", arr_padded[i]);
+            res += dfs_circle(arr_padded, i, 0, arr_padded[i], visited);
+            for(int j = 1; j < n + 1; j++)
+            {
+                if(visited[j] == false)
+                {
+                    i = j;
+                    break;
+                }
+            }
+
+        }
+    }
+    printf("final res %d\n", res);
+    return res;
+
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    int n;
+    cin >> n;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    string arr_temp_temp;
+    getline(cin, arr_temp_temp);
+
+    vector<string> arr_temp = split_string(arr_temp_temp);
+
+    vector<int> arr(n);
+
+    for (int i = 0; i < n; i++) {
+        int arr_item = stoi(arr_temp[i]);
+
+        arr[i] = arr_item;
+    }
+
+    int res = minimumSwaps(arr);
+
+    fout << res << "\n";
+
+    fout.close();
+
+    return 0;
+}
+
+vector<string> split_string(string input_string) {
+    string::iterator new_end = unique(input_string.begin(), input_string.end(), [] (const char &x, const char &y) {
+            return x == y and x == ' ';
+            });
+
+    input_string.erase(new_end, input_string.end());
+
+    while (input_string[input_string.length() - 1] == ' ') {
+        input_string.pop_back();
+    }
+
+    vector<string> splits;
+    char delimiter = ' ';
+
+    size_t i = 0;
+    size_t pos = input_string.find(delimiter);
+
+    while (pos != string::npos) {
+        splits.push_back(input_string.substr(i, pos - i));
+
+        i = pos + 1;
+        pos = input_string.find(delimiter, i);
+    }
+
+    splits.push_back(input_string.substr(i, min(pos, input_string.length()) - i + 1));
+
+    return splits;
+}
+
