@@ -8,17 +8,14 @@ vector<string> split_string(string);
 int dfs_circle(const vector<int>& arr_padded, int cur_pos, int arrow_cnt, int start_num, vector<bool>& visited)
 {
     visited[cur_pos] = true;// mark current node as traversed
-    printf("DFS to %d\n", arr_padded[cur_pos]);
+    // printf("DFS to %d\n", arr_padded[cur_pos]);
     
     cur_pos = arr_padded[cur_pos]; // move to the next one
     if(visited[cur_pos] == false)
     {
-        return dfs_circle(arr_padded, cur_pos, arrow_cnt + 1, start_num, visited); // keep dfs-ing
+        arrow_cnt = dfs_circle(arr_padded, cur_pos, arrow_cnt + 1, start_num, visited); // keep dfs-ing
     }
-    else if(arr_padded[cur_pos] == start_num)// the node ready to visit is the starting point, forms a cycle, dfs ends
-    {
-        return arrow_cnt; // just return the result
-    }
+    return arrow_cnt;
 
 }
 int minimumSwaps(vector<int> arr) 
@@ -28,7 +25,7 @@ int minimumSwaps(vector<int> arr)
     arr_padded.insert(arr_padded.begin(), INT_MAX);
 
     vector<bool> visited(n + 1, false);
-
+    bool finished_all = true;
     for(int i = 1; i < n + 1;)
     {
         if(arr_padded[i] == i) // already in the right position, no need for dfs, to avoid stackoverflow
@@ -38,17 +35,27 @@ int minimumSwaps(vector<int> arr)
         }
         else
         {
-            printf("Start DFS from %d\n", arr_padded[i]);
-            res += dfs_circle(arr_padded, i, 0, arr_padded[i], visited);
+            finished_all = true;
             for(int j = 1; j < n + 1; j++)
             {
                 if(visited[j] == false)
                 {
                     i = j;
+                    finished_all = false;
                     break;
                 }
             }
 
+            if(finished_all == false)
+            {
+
+                // printf("Start DFS from %d\n", arr_padded[i]);
+                res += dfs_circle(arr_padded, i, 0, arr_padded[i], visited);
+            }
+        }
+        if(finished_all)
+        {
+            break;
         }
     }
     printf("final res %d\n", res);
@@ -114,4 +121,5 @@ vector<string> split_string(string input_string) {
 
     return splits;
 }
+
 
