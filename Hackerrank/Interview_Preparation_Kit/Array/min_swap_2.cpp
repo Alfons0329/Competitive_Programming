@@ -8,7 +8,6 @@ vector<string> split_string(string);
 int dfs_circle(const vector<int>& arr_padded, int cur_pos, int arrow_cnt, int start_num, vector<bool>& visited)
 {
     visited[cur_pos] = true;// mark current node as traversed
-    // printf("DFS to %d\n", arr_padded[cur_pos]);
     
     cur_pos = arr_padded[cur_pos]; // move to the next one
     if(visited[cur_pos] == false)
@@ -35,7 +34,7 @@ int minimumSwaps(vector<int> arr)
         }
         else
         {
-            finished_all = true;
+            finished_all = true; // search for the untraversed node
             for(int j = 1; j < n + 1; j++)
             {
                 if(visited[j] == false)
@@ -46,14 +45,13 @@ int minimumSwaps(vector<int> arr)
                 }
             }
 
-            if(finished_all == false)
+            if(finished_all == false) // and traverse such node
             {
 
-                // printf("Start DFS from %d\n", arr_padded[i]);
                 res += dfs_circle(arr_padded, i, 0, arr_padded[i], visited);
             }
         }
-        if(finished_all)
+        if(finished_all) // break if all the nodes have been traversed
         {
             break;
         }
