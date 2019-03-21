@@ -100,6 +100,7 @@ char descend_tree(node* root, string decoded, const string& encoded, int& encode
     if(encoded[encoded_pos] == '0') // goes left
     {
         encoded_pos++;
+        
         return descend_tree(root -> left, decoded, encoded, encoded_pos);
     }
     else // goes right

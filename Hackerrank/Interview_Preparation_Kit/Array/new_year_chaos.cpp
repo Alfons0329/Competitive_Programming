@@ -14,43 +14,48 @@ void minimumBribes(vector<int> q)
         p.push_back(i + 1);
     }
 
-    for(int i = 1; i < n - 1; i++)
+    for(int i = 0; i < n ; i++)
     {
         if(p[i] != q[i]) // search the swap starting position
         {
-            for(int j = i + 1; j < n; j++)
+            if(i < n - 1)
             {
-                if(q[i] == p[j] && j - i <= 2)
+                for(int j = i + 1; j < n; j++)
                 {
-                    res += (j - i);
-                    swap(p[i], p[j]);
-                    //printfprintf("j %d pj %d i %d qi %d\n", j ,p[j], i ,q[i]);
-                    break;
-                }
-                else if(q[i] == p[j] && j - i > 2)
-                {
-                    too_chaotic = 1;
-                    //printfprintf("too chaotic j %d pj %d i %d qi %d\n", j ,p[j], i ,q[i]);
-                    break;
+                    if(q[j] == p[i] && j - i <= 2)
+                    {
+                        res += (j - i);
+                        //printfprintf("j %d pj %d i %d qi %d\n", j ,p[j], i ,q[i]);
+                        break;
+                    }
+                    else if(q[j] == p[i] && j - i > 2)
+                    {
+                        too_chaotic = 1;
+                        //printfprintf("too chaotic j %d pj %d i %d qi %d\n", j ,p[j], i ,q[i]);
+                        break;
+                    }
                 }
             }
             
-            for(int j = i - 1; j >= 0; j--)
+            if(i > 0)
             {
-                if(q[i] == p[j] && i - j <= 2)
+                for(int j = i - 1; j >= 0; j--)
                 {
-                    res += (i - j);
-                    swap(p[i], p[j]);
-                    //printfprintf("j %d pj %d i %d qi %d\n", j ,p[j], i ,q[i]);
-                    break;
+                   if(q[j] == p[i] && i - j <= 2)
+                   {
+                       res += (i - j);
+                       //printfprintf("j %d pj %d i %d qi %d\n", j ,p[j], i ,q[i]);
+                       break;
+                   }
+                   else if(q[j] == p[i] && i - j > 2)
+                   {
+                        too_chaotic = 1;
+                        //printfprintf("too chaotic j %d pj %d i %d qi %d\n", j ,p[j], i ,q[i]);
+                        break;
+                    }
                 }
-                else if(q[i] == p[j] && i - j > 2)
-                {
-                    too_chaotic = 1;
-                    //printfprintf("too chaotic j %d pj %d i %d qi %d\n", j ,p[j], i ,q[i]);
-                    break;
-                }
-            }
+            }    
+            
         }
         if(too_chaotic == 1)
         {
