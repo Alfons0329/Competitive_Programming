@@ -36,25 +36,8 @@ const ll P = 92540646808111039LL;
 const ll maxn = 1e5 + 10, MOD = 1e9 + 7;
 const int Move[4][2] = {-1,0,1,0,0,1,0,-1};
 const int Move_[8][2] = {-1,-1,-1,0,-1,1,0,-1,0,1,1,-1,1,0,1,1};
-
-inline int read()
-{
-    int x=0,f=1;char ch=getchar();
-    while(ch<'0'||ch>'9'){if(ch=='-')f=-1;ch=getchar();}
-    while(ch>='0'&&ch<='9'){x=x*10+ch-'0';ch=getchar();}
-    return x*f;
-
-}
-
-void init()
-{
-
-}
-void solve()
-{
-
-}
 const int MAX_N = 2e5;
+
 int main()
 {
     ios_base::sync_with_stdio(0);
@@ -66,14 +49,16 @@ int main()
     cin >> s1;
     cin >> s2;
 
-    unordered_map<char, stack<int>> m;
-    unordered_map<char, stack<int>> m2;
+    unordered_map<char, stack<int>> m; // map of alphabet position
     for(int i = 0; i < n; i++)
     {
-        m[s2[i]].push(i);
+        if(isalpha(s2[i]))
+        {
+            m[s2[i]].push(i);
+        }
     }
     
-    // use s2 to match s1
+    // match s1 s2 alphabet
     vector<pii> res;
     for(int i = 0; i < n; i++)
     {
@@ -84,81 +69,44 @@ int main()
 
                 int tmp = m[s1[i]].top();
                 res.pb(mp(i + 1, tmp + 1));
-                s2[tmp] = '!';
                 m[s1[i]].pop();
+                s1[i] = '!';
+                s2[tmp] = '!'; // use the position 
             }
-            else if(s2[i] == '?')
-            {
-                // printf("?? i + 1 %d s2i %c\n", i + 1, s2[i]);
-                res.pb(mp(i + 1, i + 1));
-                s2[i] = '!';
-            }
-            s1[i] = '!';
         }
     }
 
-    stack<int> remain;
+    // match ? in s1 with s2 alphabet
+    stack<int> remain; // s2 unused
     for(int i = 0; i < n; i++)
     {
-        if(s2[i] != '!')
+        if(isalpha(s2[i]))
         {
             // printf("push remain %d\n", i + 1);
             remain.push(i);
         }
     }
-
+    
     for(int i = 0; i < n; i++)
     {
         if(s1[i] == '?')
         {
             if(remain.size())
             {
-                // printf("remain i + 1 %d, remain.top %d\n", i, remain.top());
                 res.pb(mp(i + 1, remain.top() + 1));
                 s1[i] = '!';
+                s2[remain.top()] = '!';
                 remain.pop();
             }
         }
     }
 
-
-    // use s1 to match s2
+    // match ? in s2 with s1 alphabet
+    stack<int> remain2; // s1 unused
     for(int i = 0; i < n; i++)
     {
-        if(s1[i] != '!')
+        if(isalpha(s1[i]))
         {
-            m2[s1[i]].push(i);
-        }
-    }
-
-    for(int i = 0; i < n; i++)
-    {
-        if(s2[i] != '?')
-        {
-            if(m2[s2[i]].size())
-            {
-
-                int tmp = m2[s2[i]].top();
-                res.pb(mp(i + 1, tmp + 1));
-                s1[tmp] = '!';
-                m2[s2[i]].pop();
-            }
-            else if(s1[i] == '?')
-            {
-                // printf("?? i + 1 %d s2i %c\n", i + 1, s2[i]);
-                res.pb(mp(i + 1, i + 1));
-                s1[i] = '!';
-            }
-            s2[i] = '!';
-        }
-    }
-
-    stack<int> remain2;
-    for(int i = 0; i < n; i++)
-    {
-        if(s1[i] != '!')
-        {
-            // printf("push remain %d\n", i + 1);
             remain2.push(i);
         }
     }
@@ -169,13 +117,33 @@ int main()
         {
             if(remain2.size())
             {
-                // printf("remain i + 1 %d, remain.top %d\n", i, remain.top());
-                res.pb(mp(i + 1, remain2.top() + 1));
+                res.pb(mp(remain2.top() + 1, i + 1));
+                s1[remain2.top()] = '!';
+                s2[i] = '!';
                 remain2.pop();
             }
         }
     }
 
+    // match ? in s1 with s2 ?
+    vi v1, v2;
+    for(int i = 0; i < n; i++)
+    {
+        if(s1[i] == '?')
+        {
+            v1.pb(i);
+        }
+        if(s2[i] == '?')
+        {
+            v2.pb(i);
+        }
+    }
+
+    int small = min((int)v1.size(), (int)v2.size());
+    for(int i = 0; i < small; i++)
+    {
+        res.pb(mp(v1[i] + 1, v2[i] + 1));
+    }
 
     if(res.size())
     {
