@@ -25,6 +25,7 @@ void minimumBribes(vector<int> q)
                     if(q[j] == p[i] && j - i <= 2)
                     {
                         res += (j - i);
+                        swap(p[i], p[j]);
                         //printfprintf("j %d pj %d i %d qi %d\n", j ,p[j], i ,q[i]);
                         break;
                     }
@@ -44,6 +45,7 @@ void minimumBribes(vector<int> q)
                    if(q[j] == p[i] && i - j <= 2)
                    {
                        res += (i - j);
+                        swap(p[i], p[j]);
                        //printfprintf("j %d pj %d i %d qi %d\n", j ,p[j], i ,q[i]);
                        break;
                    }
