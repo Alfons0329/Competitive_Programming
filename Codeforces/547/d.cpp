@@ -54,13 +54,141 @@ void solve()
 {
 
 }
+const int MAX_N = 2e5;
 int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    vs v;
-    v.pb("apple");
-    cout << v[0];
+
+    int n;
+    cin >> n;
+    string s1, s2;
+    cin >> s1;
+    cin >> s2;
+
+    unordered_map<char, stack<int>> m;
+    unordered_map<char, stack<int>> m2;
+    for(int i = 0; i < n; i++)
+    {
+        m[s2[i]].push(i);
+    }
     
+    // use s2 to match s1
+    vector<pii> res;
+    for(int i = 0; i < n; i++)
+    {
+        if(s1[i] != '?')
+        {
+            if(m[s1[i]].size())
+            {
+
+                int tmp = m[s1[i]].top();
+                res.pb(mp(i + 1, tmp + 1));
+                s2[tmp] = '!';
+                m[s1[i]].pop();
+            }
+            else if(s2[i] == '?')
+            {
+                // printf("?? i + 1 %d s2i %c\n", i + 1, s2[i]);
+                res.pb(mp(i + 1, i + 1));
+                s2[i] = '!';
+            }
+            s1[i] = '!';
+        }
+    }
+
+    stack<int> remain;
+    for(int i = 0; i < n; i++)
+    {
+        if(s2[i] != '!')
+        {
+            // printf("push remain %d\n", i + 1);
+            remain.push(i);
+        }
+    }
+
+    for(int i = 0; i < n; i++)
+    {
+        if(s1[i] == '?')
+        {
+            if(remain.size())
+            {
+                // printf("remain i + 1 %d, remain.top %d\n", i, remain.top());
+                res.pb(mp(i + 1, remain.top() + 1));
+                s1[i] = '!';
+                remain.pop();
+            }
+        }
+    }
+
+
+    // use s1 to match s2
+    for(int i = 0; i < n; i++)
+    {
+        if(s1[i] != '!')
+        {
+            m2[s1[i]].push(i);
+        }
+    }
+
+    for(int i = 0; i < n; i++)
+    {
+        if(s2[i] != '?')
+        {
+            if(m2[s2[i]].size())
+            {
+
+                int tmp = m2[s2[i]].top();
+                res.pb(mp(i + 1, tmp + 1));
+                s1[tmp] = '!';
+                m2[s2[i]].pop();
+            }
+            else if(s1[i] == '?')
+            {
+                // printf("?? i + 1 %d s2i %c\n", i + 1, s2[i]);
+                res.pb(mp(i + 1, i + 1));
+                s1[i] = '!';
+            }
+            s2[i] = '!';
+        }
+    }
+
+    stack<int> remain2;
+    for(int i = 0; i < n; i++)
+    {
+        if(s1[i] != '!')
+        {
+            // printf("push remain %d\n", i + 1);
+            remain2.push(i);
+        }
+    }
+
+    for(int i = 0; i < n; i++)
+    {
+        if(s2[i] == '?')
+        {
+            if(remain2.size())
+            {
+                // printf("remain i + 1 %d, remain.top %d\n", i, remain.top());
+                res.pb(mp(i + 1, remain2.top() + 1));
+                remain2.pop();
+            }
+        }
+    }
+
+
+    if(res.size())
+    {
+        n = res.size();
+        cout << n << '\n';
+        for(int i = 0; i < n; i++)
+        {
+            cout << res[i].first << ' ' << res[i].second << '\n';
+        }
+    }
+    else
+    {
+        cout << 0 << '\n';
+    }
     return 0;
 }
