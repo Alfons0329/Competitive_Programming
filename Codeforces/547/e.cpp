@@ -37,30 +37,42 @@ const ll maxn = 1e5 + 10, MOD = 1e9 + 7;
 const int Move[4][2] = {-1,0,1,0,0,1,0,-1};
 const int Move_[8][2] = {-1,-1,-1,0,-1,1,0,-1,0,1,1,-1,1,0,1,1};
 
-inline int read()
-{
-    int x=0,f=1;char ch=getchar();
-    while(ch<'0'||ch>'9'){if(ch=='-')f=-1;ch=getchar();}
-    while(ch>='0'&&ch<='9'){x=x*10+ch-'0';ch=getchar();}
-    return x*f;
-
-}
-
-void init()
-{
-
-}
-void solve()
-{
-
-}
 int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    vs v;
-    v.pb("apple");
-    cout << v[0];
+    ll H, n, tmp, delta = 0, r_time = 0;
+    cin >> H >> n;
+    r_time = n;
+    vll v;
+    while(n--)
+    {
+        cin >> tmp;
+        delta += tmp;
+        v.pb(tmp);
+    }
     
+    if(delta >= (ll)0)
+    {
+        cout << -1 << '\n';
+        return 0;
+    }
+    ll cnt = 0, sz = v.size();
+    cnt += H / abs(delta);
+    cnt--;
+    H += cnt* delta;
+    cnt *= r_time;
+    // cout << cnt << ' ' << H << ' ' << delta << endl;
+    while(H)
+    {
+        if(H <= 0)
+        {
+            break;
+        }
+        H += v[(cnt++) % sz];
+    }
+
+    cout << cnt << '\n';
+
     return 0;
 }
