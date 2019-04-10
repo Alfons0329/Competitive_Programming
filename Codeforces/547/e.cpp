@@ -59,17 +59,20 @@ int main()
     }
     ll cnt = 0, sz = v.size();
     cnt += H / abs(delta);
-    cnt--;
     H += cnt* delta;
     cnt *= r_time;
-    // cout << cnt << ' ' << H << ' ' << delta << endl;
-    while(H)
+    cout << cnt << ' ' << H << ' ' << " revert " << endl;
+    while(H < 0)
     {
-        if(H <= 0)
+        H -= v[(cnt - 1) % sz];
+        cout << cnt << ' ' << H << endl;
+        if(H >= 0)
         {
+            cout << H << " more zero break \n";
+            cnt++;
             break;
         }
-        H += v[(cnt++) % sz];
+        cnt--;
     }
 
     cout << cnt << '\n';
