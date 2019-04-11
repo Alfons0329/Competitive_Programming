@@ -42,16 +42,16 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    ll H, n, tmp, delta = 0, r_time = 0, most = INF_LL, most_idx = 0;
+    ll H, n, tmp, delta = 0, most = INF_LL, most_idx = 0;
     cin >> H >> n;
-    r_time = n;
 
     vll v;
+    int flg = 0;
     for(int i = 0; i < n; i++)
     {
         cin >> tmp;
         delta += tmp;
-        if(delta < most)
+        if(delta < most) 
         {
             most = delta;
             most_idx = i;
@@ -59,49 +59,36 @@ int main()
         v.pb(tmp);
     }
 
-    ll cnt = 0, sz = v.size();
-    // last round up to
+    ll cnt = 0, res = 0, sz = v.size();
 
-    H += most;
-    if(H > 0 && delta >= 0) // most not work
+    if(H + most > 0 && delta >= 0)
     {
         cout << -1 << '\n';
         return 0;
     }
 
-    //cout << "most " << most << '\n';
-    if(delta != 0)
+    if(H + most > 0) // finish in this round
     {
-        cnt += H / abs(delta);
-        //cout << "cnt += to " << cnt << '\n';
-        H -= cnt * delta;
-        cnt *= r_time;
-        //cout << "cnt *= to " << cnt << '\n';
-        cnt += most_idx;
-        //cout << "cnt += most_idx to " << cnt << '\n';
-    }
-    else
-    {
-        H -= most;
-        cnt = most_idx;
+        cnt = (H - abs(most)) / abs(delta); // which is the final round
+        H -= abs(delta) * cnt; // remaining HP
     }
 
-    // revert
-    if(H < abs(delta) && H > 0)
+    // printf("Outside H %lld cnt %lld delta %lld\n", H, cnt, delta);
+    if(H == 0)
     {
-        cnt += r_time;
-        H += delta;
+        cout << cnt * n << '\n';
     }
-    while(H)
+
+    for(int i = 0; ; i++) //iterate through the final round
     {
-        if(H - v[(cnt) % r_time] > 0)
+        if(H + v[i % n] <= 0)
         {
+            cout << cnt * n + i + 1 << '\n';
             break;
         }
-        H -= v[(cnt) % r_time]; 
-        cnt--;
-        //cout << "H " << H << " cnt " << cnt << '\n';
+        H += v[i % n];
+        // printf("H %lld i %d\n", H, i);
     }
-    cout << cnt + 1 << '\n';
+
     return 0;
 }
