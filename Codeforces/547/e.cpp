@@ -9,7 +9,7 @@ using namespace std;
 #define se second
 #define MEM(a,b) memset((a),(b),sizeof(a))
 #define mod(x) ((x)%MOD)
-#define wz cout<<"-----"<<endl;
+#define wz //cout<<"-----"<<endl;
 #define pb push_back
 #define mp make_pair
 
@@ -41,41 +41,67 @@ int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    ll H, n, tmp, delta = 0, r_time = 0;
+
+    ll H, n, tmp, delta = 0, r_time = 0, most = INF_LL, most_idx = 0;
     cin >> H >> n;
     r_time = n;
+
     vll v;
-    while(n--)
+    for(int i = 0; i < n; i++)
     {
         cin >> tmp;
         delta += tmp;
+        if(delta < most)
+        {
+            most = delta;
+            most_idx = i;
+        }
         v.pb(tmp);
     }
-    
-    if(delta >= (ll)0)
+
+    ll cnt = 0, sz = v.size();
+    // last round up to
+
+    H += most;
+    if(H > 0 && delta >= 0) // most not work
     {
         cout << -1 << '\n';
         return 0;
     }
-    ll cnt = 0, sz = v.size();
-    cnt += H / abs(delta);
-    H += cnt* delta;
-    cnt *= r_time;
-    cout << cnt << ' ' << H << ' ' << " revert " << endl;
-    while(H < 0)
+
+    //cout << "most " << most << '\n';
+    if(delta != 0)
     {
-        H -= v[(cnt - 1) % sz];
-        cout << cnt << ' ' << H << endl;
-        if(H >= 0)
-        {
-            cout << H << " more zero break \n";
-            cnt++;
-            break;
-        }
-        cnt--;
+        cnt += H / abs(delta);
+        //cout << "cnt += to " << cnt << '\n';
+        H -= cnt * delta;
+        cnt *= r_time;
+        //cout << "cnt *= to " << cnt << '\n';
+        cnt += most_idx;
+        //cout << "cnt += most_idx to " << cnt << '\n';
+    }
+    else
+    {
+        H -= most;
+        cnt = most_idx;
     }
 
-    cout << cnt << '\n';
-
+    // revert
+    if(H < abs(delta) && H > 0)
+    {
+        cnt += r_time;
+        H += delta;
+    }
+    while(H)
+    {
+        if(H - v[(cnt) % r_time] > 0)
+        {
+            break;
+        }
+        H -= v[(cnt) % r_time]; 
+        cnt--;
+        //cout << "H " << H << " cnt " << cnt << '\n';
+    }
+    cout << cnt + 1 << '\n';
     return 0;
 }
