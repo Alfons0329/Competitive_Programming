@@ -37,6 +37,10 @@ const ll maxn = 1e5 + 10, MOD = 1e9 + 7;
 const int Move[4][2] = {-1,0,1,0,0,1,0,-1};
 const int Move_[8][2] = {-1,-1,-1,0,-1,1,0,-1,0,1,1,-1,1,0,1,1};
 
+bool cmp(pii p1, pii p2)
+{
+    return p1.second - p1.first < p2.second - p2.first; 
+}
 int main()
 {
     ios_base::sync_with_stdio(0);
@@ -67,6 +71,8 @@ int main()
     map<int, vector<pii>>::iterator it = m.begin();
     for(; it != m.end(); it++)
     {
+        // printf("%d has kinds %d\n", it -> first, it -> second.size());
+        sort(it -> second.begin(), it -> second.end(), cmp);
         if(it -> second.size() > res.size())
         {
             // check overlapping
@@ -94,6 +100,12 @@ int main()
                 }
             }
 
+            // printf("it -> first %d has result %lu \n", it -> first, tmp_res.size());
+            /*for(auto i : tmp_res)
+            {
+                cout << i.first + 1 << ' ' << i.second + 1 << ' ';
+            }
+            cout << endl;*/
             if(tmp_res.size() > res.size())
             {
                 res = tmp_res;
