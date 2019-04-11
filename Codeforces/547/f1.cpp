@@ -71,7 +71,6 @@ int main()
     map<int, vector<pii>>::iterator it = m.begin();
     for(; it != m.end(); it++)
     {
-        // printf("%d has kinds %d\n", it -> first, it -> second.size());
         sort(it -> second.begin(), it -> second.end(), cmp);
         if(it -> second.size() > res.size())
         {
@@ -100,12 +99,6 @@ int main()
                 }
             }
 
-            // printf("it -> first %d has result %lu \n", it -> first, tmp_res.size());
-            /*for(auto i : tmp_res)
-            {
-                cout << i.first + 1 << ' ' << i.second + 1 << ' ';
-            }
-            cout << endl;*/
             if(tmp_res.size() > res.size())
             {
                 res = tmp_res;
