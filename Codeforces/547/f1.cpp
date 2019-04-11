@@ -67,12 +67,12 @@ int main()
     map<int, vector<pii>>::iterator it = m.begin();
     for(; it != m.end(); it++)
     {
-        cout << it -> first << " has kind " << it ->second.size() << " res.size " << res.size() << '\n';
         if(it -> second.size() > res.size())
         {
             // check overlapping
             vector<bool>check(n, 0);
             vector<pii>tmp_res;
+
             for(int i = 0; i < it -> second.size(); i++)
             {
                 int flg = 1;
@@ -94,7 +94,6 @@ int main()
                 }
             }
 
-            printf("%d gets %d results \n", it ->first, tmp_res.size());
             if(tmp_res.size() > res.size())
             {
                 res = tmp_res;
