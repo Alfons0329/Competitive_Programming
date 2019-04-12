@@ -39,7 +39,7 @@ const int Move_[8][2] = {-1,-1,-1,0,-1,1,0,-1,0,1,1,-1,1,0,1,1};
 
 bool cmp(pii p1, pii p2)
 {
-    return p1.second - p1.first < p2.second - p2.first; 
+    return p1.second < p2.second ; 
 }
 int main()
 {
@@ -77,25 +77,14 @@ int main()
             // check overlapping
             vector<bool>check(n, 0);
             vector<pii>tmp_res;
-
-            for(int i = 0; i < it -> second.size(); i++)
+            int i = 0; // select the 1st activity
+            tmp_res.pb(mp(it -> second[i].first, it -> second[i].second));
+            for(int j = 1; j < it -> second.size(); j++)
             {
-                int flg = 1;
-                for(int j = it -> second[i].first; j <= it -> second[i].second; j++)
+                if(it -> second[j].first > it -> second[i].second) // start > end of last, OK
                 {
-                    if(check[j] == 1)
-                    {
-                        flg = 0;
-                        break;
-                    }
-                }
-                if(flg)
-                {
-                    for(int j = it -> second[i].first; j <= it -> second[i].second; j++) // legal result, take position 
-                    {
-                        check[j] = 1;
-                    }
-                    tmp_res.pb(mp(it -> second[i].first, it -> second[i].second));
+                    tmp_res.pb(mp(it -> second[j].first, it -> second[j].second));
+                    i = j;
                 }
             }
 
