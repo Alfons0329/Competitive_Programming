@@ -41,6 +41,7 @@ int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
+
     int n, b, a, tmp, a_max;
     cin >> n >> b >> a;
     a_max = a;
@@ -54,6 +55,7 @@ int main()
     
     n = s.size();
     int res = 0;
+    
     for(int i = 0; i < n; i++) // use accumulator as much as possible since it can charge
     {
         if(a == 0 && b == 0) // nothing can be used
@@ -65,44 +67,32 @@ int main()
             if(a > 0)
             {
                 a--;
-                //printf("0Sun use a now %d\n", a);
             }
             else if(b > 0) // if no accumulate, decrease battery
             {
                 b--;
-                //printf("0Sun use b now %d\n", b);
             }
         }
         else if(s[i] == 1) // sunlight, use battery to let accumulator charge
         {
-            if(a > 0)
+            if(a >= 0)
             {
-                if(a == a_max) // cannot charge anymore, use it
+                if(a == a_max) // cannot charge anymore, use it directly
                 {
                     a--;
-                    //printf("1Sun use full a now %d\n", a);
                 }
-                else if(b > 0) // charge and use b if accumulator has not been fully charged
+                else if(b > 0) // charge and use b if accumulator has not been fully charged with total amount of power has not been changed
                 {   
                     b--;
                     a++;
-                    //printf("1Sun use b now %d charge a now %d\n", b, a);
                 }
-                else
+                else // just use a if there is no b to use
                 {
                     a--;
-                    //printf("1Sun use a now %d\n", a);
                 }
-            }
-            else if(b > 0) // if no more a just use b
-            {
-                b--;
-                a++;
-                //printf("1Sun no a use b now %d\n", b);
             }
         }
         res++;
-        //printf("res now %d \n", res);
     }
     
     cout << res;
