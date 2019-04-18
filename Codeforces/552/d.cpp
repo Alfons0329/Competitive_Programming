@@ -60,37 +60,51 @@ int main()
         {
             break;
         }
-        else if(s[i] == 0) // no sunlight, use what's more
+        else if(s[i] == 0) // no sunlight, use accumulator first since it can charge after 
         {
             if(a > 0)
             {
                 a--;
-                printf("0Sun use a now %d\n", a);
+                //printf("0Sun use a now %d\n", a);
             }
             else if(b > 0) // if no accumulate, decrease battery
             {
                 b--;
-                printf("0Sun use b now %d\n", b);
+                //printf("0Sun use b now %d\n", b);
             }
         }
         else if(s[i] == 1) // sunlight, use battery to let accumulator charge
         {
-            if(b > 0)
+            if(a > 0)
+            {
+                if(a == a_max) // cannot charge anymore, use it
+                {
+                    a--;
+                    //printf("1Sun use full a now %d\n", a);
+                }
+                else if(b > 0) // charge and use b if accumulator has not been fully charged
+                {   
+                    b--;
+                    a++;
+                    //printf("1Sun use b now %d charge a now %d\n", b, a);
+                }
+                else
+                {
+                    a--;
+                    //printf("1Sun use a now %d\n", a);
+                }
+            }
+            else if(b > 0) // if no more a just use b
             {
                 b--;
-                a = (a + 1) % a_max;
-                printf("1Sun use b now %d\n", b);
+                a++;
+                //printf("1Sun no a use b now %d\n", b);
             }
-            else if(a > 0)
-            {
-                a--;
-                printf("1Sun use a now %d\n", a);
-            }
-
         }
         res++;
+        //printf("res now %d \n", res);
     }
     
-    cout << "res:  " << res;
+    cout << res;
     return 0;
 }
