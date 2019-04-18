@@ -41,33 +41,56 @@ int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    int n, b, a, tmp;
+    int n, b, a, tmp, a_max;
     cin >> n >> b >> a;
+    a_max = a;
     vi s;
 
     while(n--)
     {
+        cin >> tmp;
         s.pb(tmp);
     }
     
     n = s.size();
     int res = 0;
-    for(int i = 0; i < n; i++)
+    for(int i = 0; i < n; i++) // use accumulator as much as possible since it can charge
     {
         if(a == 0 && b == 0) // nothing can be used
         {
+            break;
+        }
+        else if(s[i] == 0) // no sunlight, use what's more
+        {
+            if(a > 0)
+            {
+                a--;
+                printf("0Sun use a now %d\n", a);
+            }
+            else if(b > 0) // if no accumulate, decrease battery
+            {
+                b--;
+                printf("0Sun use b now %d\n", b);
+            }
+        }
+        else if(s[i] == 1) // sunlight, use battery to let accumulator charge
+        {
+            if(b > 0)
+            {
+                b--;
+                a = (a + 1) % a_max;
+                printf("1Sun use b now %d\n", b);
+            }
+            else if(a > 0)
+            {
+                a--;
+                printf("1Sun use a now %d\n", a);
+            }
 
         }
-        else if(s[i] == 0) // no sunlight
-        {
-
-        }
-        else // sunlight
-        {
-            
-        }
+        res++;
     }
     
-    cout << res;
+    cout << "res:  " << res;
     return 0;
 }
