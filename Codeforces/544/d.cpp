@@ -41,46 +41,20 @@ int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    int n, m;
-    cin >> n >> m;
+    int n, tmp;
+    vi v1, v2;
+    cin >> n;
+    for(int i = 0; i < n; i++)
+    {
+        cin >> tmp;
+        v1.pb(tmp);
+    }
     
-    if(m % n != 0)
+    for(int i = 0; i < n; i++)
     {
-        cout << "-1" << '\n';
-        return 0;
-    }
-    else if(m == n)
-    {
-        cout << "0" << '\n';
-        return 0;
-    }
-    m /= n;
-    int cnt = 0;
-    while(m % 2 == 0)
-    {
-        if(m % 2 == 0)
-        {
-            m /= 2;
-            cnt++;
-        }
+        cin >> tmp;
+        v2.pb(tmp);
     }
 
-    while(m % 3 == 0)
-    {
-        if(m % 3 == 0)
-        {
-            m /= 3;
-            cnt++;
-        }
-    }
-    
-    if(m != 1)
-    {
-        cout << "-1" << '\n';
-    }
-    else
-    {
-        cout << cnt << "\n";
-    }
     return 0;
 }

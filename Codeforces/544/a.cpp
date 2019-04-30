@@ -41,46 +41,28 @@ int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    int n, m;
-    cin >> n >> m;
-    
-    if(m % n != 0)
-    {
-        cout << "-1" << '\n';
-        return 0;
-    }
-    else if(m == n)
-    {
-        cout << "0" << '\n';
-        return 0;
-    }
-    m /= n;
-    int cnt = 0;
-    while(m % 2 == 0)
-    {
-        if(m % 2 == 0)
-        {
-            m /= 2;
-            cnt++;
-        }
-    }
+    int h1, h2, m1, m2;
+    scanf("%d:%d", &h1, &m1);
+    scanf("%d:%d", &h2, &m2);
 
-    while(m % 3 == 0)
-    {
-        if(m % 3 == 0)
-        {
-            m /= 3;
-            cnt++;
-        }
-    }
+    int t1 = h1 * 60 + m1;
+    int t2 = h2 * 60 + m2;
+    int t3 = (t1 + t2) / 2;
     
-    if(m != 1)
+    int r1 = t3 / 60;
+    int r2 = t3 % 60;
+    
+    string s1, s2;
+    if(r1 < 10)
     {
-        cout << "-1" << '\n';
+        s1 = "0";
     }
-    else
+    if(r2 < 10)
     {
-        cout << cnt << "\n";
+        s2 = "0";
     }
+    s1 += to_string(r1);
+    s2 += to_string(r2);
+    cout << s1 << ':' << s2;
     return 0;
 }

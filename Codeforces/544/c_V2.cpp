@@ -14,21 +14,21 @@ using namespace std;
 #define mp make_pair
 
 #define vs vector<string> 
-#define vi vector<int> 
+#define vi vector<ull> 
 #define vll vector<ll> 
 #define vull vector<ull>
 
-#define pii pair<int,int>
+#define pii pair<ull,ull>
 
-#define msi map<string, int>
-#define mci map<char, int>
-#define mii map<int, int>
+#define msi map<string, ull>
+#define mci map<char, ull>
+#define mii map<ull, ull>
 
-#define usi unordered_map<string, int>
-#define uci unordered_map<char, int>
-#define uii unordered_map<int, int>
+#define usi unordered_map<string, ull>
+#define uci unordered_map<char, ull>
+#define uii unordered_map<ull, ull>
 
-const int INF_INT = 2147483647;
+const ull INF_ull = 2147483647;
 const ll INF_LL = 9223372036854775807LL;
 const ull INF_ULL = 18446744073709551615Ull;
 const ll P = 92540646808111039LL;
@@ -41,46 +41,30 @@ int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    int n, m;
-    cin >> n >> m;
     
-    if(m % n != 0)
+    int n, tmp, res = 0;
+    vi v;
+    cin >> n;
+    while(n--)
     {
-        cout << "-1" << '\n';
-        return 0;
+        cin >> tmp;
+        v.pb(tmp);
     }
-    else if(m == n)
+    n = v.size();
+    
+    sort(v.begin(), v.end());
+    for(int i = 0; i < n; i++)
     {
-        cout << "0" << '\n';
-        return 0;
-    }
-    m /= n;
-    int cnt = 0;
-    while(m % 2 == 0)
-    {
-        if(m % 2 == 0)
+        auto it = upper_bound(v.begin() + i, v.end(), v[i] + 5);
+        if(it != v.end())
         {
-            m /= 2;
-            cnt++;
+            res = max(res, (int)(it - v.begin() - i));
+        }
+        else
+        {
+            res = max(res, n - i);
         }
     }
-
-    while(m % 3 == 0)
-    {
-        if(m % 3 == 0)
-        {
-            m /= 3;
-            cnt++;
-        }
-    }
-    
-    if(m != 1)
-    {
-        cout << "-1" << '\n';
-    }
-    else
-    {
-        cout << cnt << "\n";
-    }
+    cout << res;
     return 0;
 }

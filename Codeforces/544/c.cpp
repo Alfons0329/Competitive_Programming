@@ -14,21 +14,21 @@ using namespace std;
 #define mp make_pair
 
 #define vs vector<string> 
-#define vi vector<int> 
+#define vi vector<ull> 
 #define vll vector<ll> 
 #define vull vector<ull>
 
-#define pii pair<int,int>
+#define pii pair<ull,ull>
 
-#define msi map<string, int>
-#define mci map<char, int>
-#define mii map<int, int>
+#define msi map<string, ull>
+#define mci map<char, ull>
+#define mii map<ull, ull>
 
-#define usi unordered_map<string, int>
-#define uci unordered_map<char, int>
-#define uii unordered_map<int, int>
+#define usi unordered_map<string, ull>
+#define uci unordered_map<char, ull>
+#define uii unordered_map<ull, ull>
 
-const int INF_INT = 2147483647;
+const ull INF_ull = 2147483647;
 const ll INF_LL = 9223372036854775807LL;
 const ull INF_ULL = 18446744073709551615Ull;
 const ll P = 92540646808111039LL;
@@ -41,6 +41,25 @@ int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
+
+    int n, tmp, res = 0;
+    vi v;
+    cin >> n;
+    while(n--)
+    {
+        cin >> tmp;
+        v.pb(tmp);
+    }
+    n = v.size();
+
+    sort(v.begin(), v.end());
+    for(int i = 0; i < n; i++)
+    {
+        auto it = upper_bound(v.begin() + i, v.end(), v[i] + 5);
+        res = max(res, (int(it - v.begin() - i)));
+        // printf("i %d itval %d dist %d\n", i, *it, int(it - v.begin() - i));
+
+    }
+    cout << res;
     return 0;
 }
