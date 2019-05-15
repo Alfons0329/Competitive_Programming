@@ -36,6 +36,7 @@ const ll P = 92540646808111039LL;
 const ll maxn = 1e5 + 10, MOD = 1e9 + 7;
 const int Move[4][2] = {-1,0,1,0,0,1,0,-1};
 const int Move_[8][2] = {-1,-1,-1,0,-1,1,0,-1,0,1,1,-1,1,0,1,1};
+
 ll div_cnt(ll n)
 {
     ll res = 0;
@@ -55,6 +56,7 @@ ll div_cnt(ll n)
     }
     return res;
 }
+
 int main()
 {
     ios_base::sync_with_stdio(0);
@@ -75,7 +77,6 @@ int main()
         
         int flg = 1;
         ll res = v[0] * v.back();
-        //printf("n %d n / 2 %d\n", n, n / 2);
         for(int i = 1; i <= n / 2; i++)
         {
             ll mul;
@@ -88,7 +89,6 @@ int main()
                 mul = v[i] * v[v.size() - i - 1];
             }
             
-            //printf("mul %lld res %llu \n", mul, res);
             if(mul != res)
             {
                 cout << -1 << '\n';
