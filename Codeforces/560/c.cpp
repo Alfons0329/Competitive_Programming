@@ -56,7 +56,6 @@ int main()
         {
             res += s[i];
         }
-        // cout << " res " << res << " si "  << s[i] << '\n';
     }
 
     if(res.size() % 2 == 1)

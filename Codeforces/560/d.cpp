@@ -36,11 +36,78 @@ const ll P = 92540646808111039LL;
 const ll maxn = 1e5 + 10, MOD = 1e9 + 7;
 const int Move[4][2] = {-1,0,1,0,0,1,0,-1};
 const int Move_[8][2] = {-1,-1,-1,0,-1,1,0,-1,0,1,1,-1,1,0,1,1};
-
+ll div_cnt(ll n)
+{
+    ll res = 0;
+    for(int i = 1; i <= sqrt(n); i++)
+    {
+        if(n % i == 0)
+        {
+            if(n / i == i)
+            {
+                ++res;
+            }
+            else
+            {
+                res += 2;
+            }
+        }
+    }
+    return res;
+}
 int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
+
+    int T, n, tmp;
+    cin >> T;
+    while(T--)
+    {
+        cin >> n;
+        vll v;
+        for(int i = 0; i < n; i++)
+        {
+            cin >> tmp;
+            v.pb(tmp);
+        }
+        sort(v.begin(), v.end());
+        
+        int flg = 1;
+        ll res = v[0] * v.back();
+        //printf("n %d n / 2 %d\n", n, n / 2);
+        for(int i = 1; i <= n / 2; i++)
+        {
+            ll mul;
+            if(n % 2 == 1 && i == n / 2)
+            {
+                mul = v[n / 2] * v[n / 2];
+            }
+            else
+            {
+                mul = v[i] * v[v.size() - i - 1];
+            }
+            
+            //printf("mul %lld res %llu \n", mul, res);
+            if(mul != res)
+            {
+                cout << -1 << '\n';
+                flg = 0;
+                break;
+            }
+        }
+        if(flg)
+        {
+            if(div_cnt(res) != n + 2)
+            {
+                cout << -1 << '\n';
+            }
+            else
+            {
+                cout << res << '\n';
+            }
+        }
+    }
     
     return 0;
 }
