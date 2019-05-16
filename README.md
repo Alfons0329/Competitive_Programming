@@ -1,2 +1,3 @@
 # Programming_Competition
-Including PTC ITSA (Monthly), codeforces some sorts of onling judge, and codebook
+* My programming practice for problem-solving based website like Codeforces, Hackerrank and LeetCode
+* Slowly ongoing of my own codebook for practice
