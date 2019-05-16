@@ -57,7 +57,6 @@ int main()
     {
         auto it = upper_bound(v.begin() + i, v.end(), v[i] + 5);
         res = max(res, (int(it - v.begin() - i)));
-        // printf("i %d itval %d dist %d\n", i, *it, int(it - v.begin() - i));
 
     }
     cout << res;
