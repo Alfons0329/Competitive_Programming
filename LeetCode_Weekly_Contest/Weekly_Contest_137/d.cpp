@@ -6,7 +6,6 @@ class Solution {
             if(n == 1)
             {
                 return stones[0];
-
             }
 
             bool dp[105][30005] = {0}; // combination of sum (col) up to certain stones(row)
@@ -17,7 +16,6 @@ class Solution {
                 if(i < n)
                 {
                     sum += stones[i];
-
                 }
 
             }
@@ -29,16 +27,12 @@ class Solution {
                     if(j < stones[i - 1])
                     {
                         dp[i][j] = dp[i - 1][j];
-
                     }
                     else
                     {
                         dp[i][j] = dp[i - 1][j] || dp[i - 1][j - stones[i - 1]];
-
                     }
-
                 }
-
             }
 
 
@@ -47,10 +41,10 @@ class Solution {
                 if(2 * j - sum >= 0 && dp[n][j])
                 {
                     res = min(res, 2 * j - sum);
-
                 }
 
             }
+
             return res;
 
         }
