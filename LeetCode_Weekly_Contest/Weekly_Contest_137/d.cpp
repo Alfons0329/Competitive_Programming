@@ -17,7 +17,6 @@ class Solution {
                 {
                     sum += stones[i];
                 }
-
             }
 
             for(int i = 1; i <= n; i++) // all combination for problem input
@@ -42,7 +41,6 @@ class Solution {
                 {
                     res = min(res, 2 * j - sum);
                 }
-
             }
 
             return res;
