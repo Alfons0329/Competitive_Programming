@@ -12,6 +12,7 @@ class Solution {
             }
             return true;
         }
+
         vector<int> prevPermOpt1(vector<int>& A) 
         {
             if(check(A))

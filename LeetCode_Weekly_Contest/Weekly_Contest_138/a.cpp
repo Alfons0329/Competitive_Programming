@@ -4,7 +4,6 @@ class Solution
         static bool cmp(int a, int b)
         {
             return a <= b;
-
         }
         int heightChecker(vector<int>& heights) 
         {
@@ -17,13 +16,8 @@ class Solution
                 if(heights[i] != h2[i])
                 {
                     res++;
-
                 }
-
             }
             return res;
-
-
         }
-
 };
