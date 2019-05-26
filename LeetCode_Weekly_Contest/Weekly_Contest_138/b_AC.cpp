@@ -23,7 +23,7 @@ public:
         {
             l_sum = prefix_sum[i - 1];
             x_sum = x_sum + c[i + x - 1] - c[i - 1];
-            r_sum = prefix_sum[n] - prefix_sum[i + x - 1];
+            r_sum = prefix_sum[n + 1] - prefix_sum[i + x - 1];
             
             res = max(res, l_sum + x_sum + r_sum);
         }
