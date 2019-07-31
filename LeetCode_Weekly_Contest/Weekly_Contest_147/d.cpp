@@ -10,18 +10,18 @@ class Solution
             // printf("L >= n, return 0 \n");
             return 0; 
         }
-        else if(dp[l][M] > 0) // return the cached answer
+        else if(dp[l][M] > 0) // return the cached answer if already computerd before
         {
             // printf("cached: %d\n", dp[l][M]);
             return dp[l][M];
         }
-        else
+        else // update the max possibilities for Alex, starting from l and take at most 2M\
+             // then maximize all the possibilities when compete with Lee
         {
             for(int i = 1; i <= 2 * M && l + i <= n; i++)
-            // update the max possibilities for Alex, starting from l and take at most 2M, then maximize all the possibilities when compete with Lee
             {
                 // printf("%d, %d call %d, %d \n", l, M,  i + l, max(M, i));
-                dp[l][M] = max(dp[l][M], suffix_sum[l] - dfs(suffix_sum, dp, i + l, max(M, i), n)); // what Alex can take the most equals to the max (suffix_sum from end to current l(start) minus all the posibilities that Lee can do) 
+                dp[l][M] = max(dp[l][M], suffix_sum[l] - dfs(suffix_sum, dp, i + l, max(M, i), n)); // what Alex can take equals to the (suffix_sum from end to current l(start) minus all the posibilities that Lee can do starting from index i + l(since Alex has taken i stones)) 
             }
             return dp[l][M];
         }
