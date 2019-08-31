@@ -46,35 +46,47 @@ int main()
     while(T--)
     {
         cin >> n >> m;
-        ull res = 0;
-        unordered_map<ull, ull> stat;
-        vull v;
-        int bs = m % 10, idx = 1;
-        while(stat[bs * idx % 10] == 0)
+
+        // corner case
+        if(n == m) 
         {
-            stat[bs * idx % 10]++;
-            v.pb(m * idx);
-            idx++;
+            cout << m % 10 << '\n';
         }
-        
-        ull cycle = m * (idx - 1);
-        auto it = stat.begin();
-        if(it -> first == 0)
+        else if(n < m)
         {
-            it++;
+            cout << 0 << '\n';
         }
-        idx = 0;
-        while(it != stat.end())
+        else
         {
-            float todo = (float)(n - v[idx]), cyc = (float)cycle;
-            ull cnt = ceil(todo / cyc);
-            res += v[idx] % 10 * cnt; 
-            // printf("vidx %d todo %f cyc %f cnt %d", v[idx], todo, cyc, cnt);
-            // printf("cycle %lld itf %d idx %d res %d \n", cycle, it -> first, idx, res);
-            it++;
-            idx++;
+            // normal
+            unordered_map<ull, ull> stat;
+            vull v;
+            ull res = 0, bs = m % 10, idx = 1;
+            while(stat[bs * idx % 10] == 0 && m * idx <= n)
+            {
+                stat[bs * idx % 10]++;
+                v.pb(m * idx);
+                idx++;
+            }
+
+            ull cycle = m * (idx - 1);
+            auto it = stat.begin();
+            if(it -> first == 0)
+            {
+                it++;
+            }
+            idx = 0;
+            ull sz = v.size();
+            while(it != stat.end() && idx < sz)
+            {
+                long double todo = n - v[idx], cyc = cycle; // use long double for store unsigned ll
+                ull cnt = (n - v[idx]) % cycle == 0 ? (n - v[idx]) / cycle + 1 : ceil(todo / cyc);
+                res += v[idx] % 10 * cnt; 
+                it++;
+                idx++;
+            }
+            cout << res << '\n';
         }
-        cout << res << '\n';
     }
     return 0;
 }
