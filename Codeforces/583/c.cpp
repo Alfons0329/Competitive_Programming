@@ -47,7 +47,7 @@ int main()
     {
         cin >> n >> m;
         ull res = 0;
-        map<ull, ull> stat;
+        unordered_map<ull, ull> stat;
         vull v;
         int bs = m % 10, idx = 1;
         while(stat[bs * idx % 10] == 0)
@@ -66,12 +66,13 @@ int main()
         idx = 0;
         while(it != stat.end())
         {
-            float todo = (float)(n - v[idx++]), cyc = (float)cycle;
+            float todo = (float)(n - v[idx]), cyc = (float)cycle;
             ull cnt = ceil(todo / cyc);
-            res += it -> first * cnt; 
-            printf("vidx %d todo %f cyc %f cnt %d", v[idx - 1], todo, cyc, cnt);
-            printf("cycle %lld itf %d idx %d res %d \n", cycle, it -> first, idx, res);
+            res += v[idx] % 10 * cnt; 
+            // printf("vidx %d todo %f cyc %f cnt %d", v[idx], todo, cyc, cnt);
+            // printf("cycle %lld itf %d idx %d res %d \n", cycle, it -> first, idx, res);
             it++;
+            idx++;
         }
         cout << res << '\n';
     }
