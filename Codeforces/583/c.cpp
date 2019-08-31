@@ -47,23 +47,32 @@ int main()
     {
         cin >> n >> m;
         ull res = 0;
-        map<ull, int> stat;
+        map<ull, ull> stat;
+        vull v;
         int bs = m % 10, idx = 1;
         while(stat[bs * idx % 10] == 0)
         {
             stat[bs * idx % 10]++;
+            v.pb(m * idx);
             idx++;
         }
-
-        idx *= m;
+        
+        ull cycle = m * (idx - 1);
         auto it = stat.begin();
-        while(it != stat.end())
+        if(it -> first == 0)
         {
-            res += it -> first * (n / idx); 
-            printf("itf %d idx %d res %d \n", it -> first, idx, res);
             it++;
         }
-        
+        idx = 0;
+        while(it != stat.end())
+        {
+            float todo = (float)(n - v[idx++]), cyc = (float)cycle;
+            ull cnt = ceil(todo / cyc);
+            res += it -> first * cnt; 
+            printf("vidx %d todo %f cyc %f cnt %d", v[idx - 1], todo, cyc, cnt);
+            printf("cycle %lld itf %d idx %d res %d \n", cycle, it -> first, idx, res);
+            it++;
+        }
         cout << res << '\n';
     }
     return 0;
