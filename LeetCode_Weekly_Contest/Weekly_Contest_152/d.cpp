@@ -24,14 +24,20 @@ public:
         {
             sz = w[i].size();
             bit = 0;
+            
+            set<char> char_cnt;
             for(int j = 0; j < sz; j++)
             {
                 bit |= (1 << w[i][j] - 'a');
+                char_cnt.insert(w[i][j]);
             }
-            wb.push_back(bit);
+            if(char_cnt.size() <= 7)
+            {
+                wb.push_back(bit);
+            }
         }
         
-        
+        n = wb.size();
         for(int i = 0; i < m; i++)
         {
             int cnt = 0;
