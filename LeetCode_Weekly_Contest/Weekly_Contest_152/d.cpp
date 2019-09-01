@@ -6,8 +6,8 @@ public:
         vector<int> res;
         int n = w.size(), m = p.size();
         int bit = 0, sz = 0;
-        vector<bitset<26>> pb;
-        vector<bitset<26>> wb;
+        vector<int> pb;
+        vector<int> wb;
         
         for(int i = 0; i < m; i++)
         {
@@ -17,8 +17,7 @@ public:
             {
                 bit |= (1 << p[i][j] - 'a');
             }
-            bitset<26> tmp(bit);
-            pb.push_back(tmp);
+            pb.push_back(bit);
         }
         
         for(int i = 0; i < n; i++)
@@ -29,8 +28,7 @@ public:
             {
                 bit |= (1 << w[i][j] - 'a');
             }
-            bitset<26> tmp(bit);
-            wb.push_back(tmp);
+            wb.push_back(bit);
         }
         
         
@@ -39,22 +37,9 @@ public:
             int cnt = 0;
             for(int j = 0; j < n; j++)
             {
-                int flg1 = 1, flg2 = 0, idx = 0;
-                while(idx < 26)
-                {
-                    if(pb[i][idx] < wb[j][idx])
-                    {
-                        flg1 = 0;
-                        break;
-                    }
-                    idx++;
-                }
-
-                if(wb[j][p[i][0] - 'a'])
-                {
-                    flg2 = 1;
-                }
-                if(flg1 && flg2)
+                int fir = p[i][0] - 'a';
+                
+                if(((wb[j] >> fir) & 1) &&(wb[j] & pb[i]) == wb[j])
                 {
                     cnt++;
                 }
