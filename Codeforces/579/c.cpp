@@ -41,6 +41,66 @@ int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
+    int n;
+    cin >> n;
+    vull v(n);
+    ull small = INF_ULL;
+
+    for(int i = 0; i < n; i++)
+    {
+        cin >> v[i];
+        small = min(small, v[i]);
+    }
+
+
+    int res = 0, has_common = 0;
+
+    for(int i = 1; i < n; i++)
+    {
+        if(v[i] % small != 0 && v[i] != small)
+        {
+            v[i] = -1; 
+        }
+        else if(v[i] != small)
+        {
+            has_common = 1;
+        }
+    }
+
+    // deal with the smallest element
+    vull v_small;
+    for(int i = 1; i <= small; i++)
+    {
+        if(small % i == 0)
+        {
+            res++;
+            v_small.pb(i);
+        }
+    }
+
+    for(int i = 0; i < n; i++)
+    {
+        if(v[i] < 0)
+        {
+            int chk = v[i], small_sz = v_small.size(), cnt = 0;
+            for(int j = 0; j < small_sz; j++)
+            {
+                if(chk % v_small[j] == 0)
+                {
+                    cnt++;
+                }
+            }
+            res = min(res, cnt);
+        }
+    }
+
+    if(has_common)
+    {
+        cout << res;
+    }
+    else
+    {
+        cout << 1;
+    }
     return 0;
 }

@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
+
 using namespace std;
+
 #define ll long long
 #define ull unsigned long long
 #define PI acos(-1.0)
@@ -16,6 +18,7 @@ using namespace std;
 #define vll vector<ll> 
 #define vull vector<ull>
 #define pii pair<int,int>
+
 #define msi map<string, int>
 #define mci map<char, int>
 #define mii map<int, int>
@@ -23,6 +26,7 @@ using namespace std;
 #define uci unordered_map<char, int>
 #define uii unordered_map<int, int>
 const int INF_INT = 2147483647;
+
 const ll INF_LL = 9223372036854775807LL;
 const ull INF_ULL = 18446744073709551615Ull;
 const ll P = 92540646808111039LL;
@@ -50,7 +54,6 @@ int main()
         sort(v.begin(), v.end());
         for(int i = 0; i < sz; i += 2)
         {
-            // printf("vi %d v + 1 %d \n", v[i], v[i + 1]);
             if(v[i] != v[i + 1])
             {
                 ok = 0;

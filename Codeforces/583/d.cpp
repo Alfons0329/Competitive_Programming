@@ -36,22 +36,30 @@ const ll P = 92540646808111039LL;
 const ll maxn = 1e5 + 10, MOD = 1e9 + 7;
 const int Move[4][2] = {-1,0,1,0,0,1,0,-1};
 const int Move_[8][2] = {-1,-1,-1,0,-1,1,0,-1,0,1,1,-1,1,0,1,1};
-bool cmp(vector<int> v1, vector<int> v2)
-{
-    return v1[0] < v2[0];
-}
 int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    int n, k;
+    int n, k, ok = 0;
     cin >> n >> k;
-    vector<vector<int> > v(n, vector<int>(0));
-    vector<int> pos_record;
+    vector<int> input(n);
     for(int i = 0; i < n; i++)
     {
-        int tmp;
-        cin >> tmp;
+        cin >> input[i];
+    }
+    vector<vector<int> > v(n, vector<int>(0));
+    vector<int> pos_record;
+    vector<int> freq(2e5 + 5, 0);
+
+    sort(input.begin(), input.end());
+    for(int i = 0; i < n; i++)
+    {
+        int tmp = input[i];
+        freq[tmp]++;
+        if(freq[tmp] == k)
+        {
+            ok = 1;
+        }
         v[i].pb(tmp);
         while(tmp)
         {
@@ -61,27 +69,41 @@ int main()
         pos_record.pb(v[i].size() - 1);
     }
 
-    int tmp_res = 0, res = INF_INT, zero_cnt = 0;
-
-    while(zero_cnt < n)
+    int tmp_res = 0, res = INF_INT;
+    if(ok)
     {
-        int cnt = 0;
-        tmp_res = 0;
-        for(int i = 0; i < n; i++)
-        {
-            cnt++;
-            if(cnt != k)
-            {
-                tmp_res += pos_record[i];
-            }
-            pos_record[i] -= 1;
-            if(pos_record[i] == 0)
-            {
-                zero_cnt++;
-            }
-        }
-        res = min(res, tmp_res);
+        cout << 0;
     }
-    cout << res;
+    else
+    {
+        while(1)
+        {
+            tmp_res = 0;
+            for(int i = 0; i < n; i++)
+            {
+                // accumulate the freq of same number, and add the 'step'
+                cout << v[i][0] << ',' << pos_record[i] << ',' << v[i][pos_record[i]] << ',' \
+                    << freq[v[i][pos_record[i]]] << ' ';
+                tmp_res += (pos_record[i] == 0) ? 0 : pos_record[i];
+                freq[v[i][pos_record[i]]] = (pos_record[i] == 0) ? freq[v[i][pos_record[i]]] : freq[v[i][pos_record[i]]] + 1;  
+                pos_record[i] = (pos_record[i] == 0) ? 0 \
+                                : pos_record[i] - 1;
+                cout << "tmp_res "<< tmp_res << '|';
+            }
+
+            if(tmp_res == 0)
+            {
+                break;
+            }
+            else
+            {
+                res = min(res, tmp_res);
+            }
+
+            cout << " cleared tmp_res "<< tmp_res << '|' << endl;
+        }
+        cout << res;
+    }
+
     return 0;
 }
