@@ -88,6 +88,7 @@ int main()
                 freq[v[i][pos_record[i]]] = (pos_record[i] == 0) ? freq[v[i][pos_record[i]]] : freq[v[i][pos_record[i]]] + 1;  
                 pos_record[i] = (pos_record[i] == 0) ? 0 \
                                 : pos_record[i] - 1;
+
                 cout << "tmp_res "<< tmp_res << '|';
             }
 
