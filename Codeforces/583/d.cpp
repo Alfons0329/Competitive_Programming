@@ -36,14 +36,52 @@ const ll P = 92540646808111039LL;
 const ll maxn = 1e5 + 10, MOD = 1e9 + 7;
 const int Move[4][2] = {-1,0,1,0,0,1,0,-1};
 const int Move_[8][2] = {-1,-1,-1,0,-1,1,0,-1,0,1,1,-1,1,0,1,1};
-
+bool cmp(vector<int> v1, vector<int> v2)
+{
+    return v1[0] < v2[0];
+}
 int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     int n, k;
     cin >> n >> k;
+    vector<vector<int> > v(n, vector<int>(0));
+    vector<int> pos_record;
+    for(int i = 0; i < n; i++)
+    {
+        int tmp;
+        cin >> tmp;
+        v[i].pb(tmp);
+        while(tmp)
+        {
+            v[i].pb(tmp / 2);
+            tmp /= 2;
+        }
+        pos_record.pb(v[i].size() - 1);
+    }
 
-    
+    int tmp_res = 0, res = INF_INT, zero_cnt = 0;
+
+    while(zero_cnt < n)
+    {
+        int cnt = 0;
+        tmp_res = 0;
+        for(int i = 0; i < n; i++)
+        {
+            cnt++;
+            if(cnt != k)
+            {
+                tmp_res += pos_record[i];
+            }
+            pos_record[i] -= 1;
+            if(pos_record[i] == 0)
+            {
+                zero_cnt++;
+            }
+        }
+        res = min(res, tmp_res);
+    }
+    cout << res;
     return 0;
 }
