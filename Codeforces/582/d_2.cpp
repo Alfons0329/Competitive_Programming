@@ -61,11 +61,9 @@ int main()
         {
             freq[todo]++;
             cost[todo] += power;
-            // printf("%d, f %d, cost %d \n", todo, freq[todo], cost[todo]);
             if(freq[todo] == k)
             {
                 res = min(res, cost[todo]);
-                // printf("update cost as %d \n", res);
             }
             todo >>= 1;
             power += 1;
