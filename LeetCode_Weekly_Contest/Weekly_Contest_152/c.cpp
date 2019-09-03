@@ -17,6 +17,7 @@ public:
         {
             int l = q[i][0], r = q[i][1], k = q[i][2];
             int more_odd = 0;
+
             // check palindrome odd # alphabets
             for(int j = 0; j < 26; j++)
             {
