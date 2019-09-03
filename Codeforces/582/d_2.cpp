@@ -74,8 +74,7 @@ int main()
         for(int i = 0; i <= 2e5; i++) // brute force calculating the required step for each element
         {
             int base = i;
-            int cnt = 0;
-            tmp_res = 0;
+            tmp_res = 0, ok = 0;
             if(base <= v.back())
             {
                 for(int j = 0; j < n; j++)
@@ -83,23 +82,24 @@ int main()
                     if(base == 0)
                     {
                         tmp_res += log2(v[j]) + 1;
-                        cnt++;
                         // cout << "vj " << v[j] << "  base  " << base << "  tmp_res " << tmp_res << endl;
+                        freq[0]++;
                     }
                     else if(base < v[j] && v[j] >= base * 2)
                     {
                         tmp_res += log2(v[j] / base);
-                        cnt++;
                         // cout << "VVj " << v[j] << "  base  " << base << "  tmp_res " << tmp_res << endl;
+                        freq[base]++;
                     }
 
-                    if(cnt + freq[base] == k)
+                    if(freq[base] == k)
                     {
+                        ok = 1;
                         break;
                     }
                 }
 
-                if(tmp_res)
+                if(ok)
                 {
                     res = min(tmp_res, res);
                 }
