@@ -43,70 +43,35 @@ int main()
 
     int n, k, ok = 0;
     cin >> n >> k;
-    vi input(n);
-    for(int i = 0; i < n; i++)
-    {
-        cin >> input[i];
-    }
-
-    // rearrange IO
     vi v(n);
-    mii freq;
-    sort(input.begin(), input.end());
+
     for(int i = 0; i < n; i++)
     {
-        int tmp = input[i];
-        freq[tmp]++;
-        if(freq[tmp] == k)
-        {
-            ok = 1;
-        }
-        v[i] = tmp;
+        cin >> v[i];
     }
-
-    int tmp_res = 0, res = INF_INT;
-    if(ok)
+    sort(v.begin(), v.end());
+    
+    int res = INT_MAX;
+    map<int, int> freq; // map to count number -> occurances (freq)
+    map<int, int> cost; // mao to count number -> cost (strp of /2)
+    for(int i = 0; i < n; i++)
     {
-        cout << 0;
-    }
-    else
-    {
-        for(int i = 0; i <= 2e5; i++) // brute force calculating the required step for each element
+        int todo = v[i], power = 0;
+        while(todo)
         {
-            int base = i;
-            tmp_res = 0, ok = 0;
-            if(base <= v.back())
+            freq[todo]++;
+            cost[todo] += power;
+            // printf("%d, f %d, cost %d \n", todo, freq[todo], cost[todo]);
+            if(freq[todo] == k)
             {
-                for(int j = 0; j < n; j++)
-                {
-                    if(base == 0)
-                    {
-                        tmp_res += log2(v[j]) + 1;
-                        // cout << "vj " << v[j] << "  base  " << base << "  tmp_res " << tmp_res << endl;
-                        freq[0]++;
-                    }
-                    else if(base < v[j] && v[j] >= base * 2)
-                    {
-                        tmp_res += log2(v[j] / base);
-                        // cout << "VVj " << v[j] << "  base  " << base << "  tmp_res " << tmp_res << endl;
-                        freq[base]++;
-                    }
-
-                    if(freq[base] == k)
-                    {
-                        ok = 1;
-                        break;
-                    }
-                }
-
-                if(ok)
-                {
-                    res = min(tmp_res, res);
-                }
+                res = min(res, cost[todo]);
+                // printf("update cost as %d \n", res);
             }
+            todo >>= 1;
+            power += 1;
         }
-        cout << res;
     }
 
+    cout << res;
     return 0;
 }
