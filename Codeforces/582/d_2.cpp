@@ -50,9 +50,9 @@ int main()
     }
 
     // rearrange IO
-    sort(input.begin(), input.end());
-    vector<vector<int> > v(n, vector<int>(0));
+    vi v(n);
     mii freq;
+    sort(input.begin(), input.end());
     for(int i = 0; i < n; i++)
     {
         int tmp = input[i];
@@ -61,13 +61,7 @@ int main()
         {
             ok = 1;
         }
-        v[i].pb(tmp);
-        while(tmp)
-        {
-            v[i].pb(tmp / 2);
-            tmp /= 2;
-            freq[tmp]++;
-        }
+        v[i] = tmp;
     }
 
     int tmp_res = 0, res = INF_INT;
@@ -77,31 +71,39 @@ int main()
     }
     else
     {
-        auto it = freq.begin();
-        while(it != freq.end()) 
+        for(int i = 0; i <= 2e5; i++) // brute force calculating the required step for each element
         {
+            int base = i;
             int cnt = 0;
             tmp_res = 0;
-            if(it -> second >= k) // if such number accumulated up to k
+            if(base <= v.back())
             {
-                // brute force searching for all the possible numbers and calculate thestep
-                for(int i = 0; i < n; i++)
+                for(int j = 0; j < n; j++)
                 {
-                    // accumulate the freq of same number, and add the 'step'
-                    auto search = find(v[i].begin(), v[i].end(), it -> first);
-                    if(search != v[i].end())
+                    if(base == 0)
                     {
-                        tmp_res += search - v[i].begin();
+                        tmp_res += log2(v[j]) + 1;
                         cnt++;
+                        // cout << "vj " << v[j] << "  base  " << base << "  tmp_res " << tmp_res << endl;
                     }
-                    if(cnt == k)
+                    else if(base < v[j] && v[j] >= base * 2)
+                    {
+                        tmp_res += log2(v[j] / base);
+                        cnt++;
+                        // cout << "VVj " << v[j] << "  base  " << base << "  tmp_res " << tmp_res << endl;
+                    }
+
+                    if(cnt + freq[base] == k)
                     {
                         break;
                     }
                 }
-                res = min(res, tmp_res);
+
+                if(tmp_res)
+                {
+                    res = min(tmp_res, res);
+                }
             }
-            it++;
         }
         cout << res;
     }
