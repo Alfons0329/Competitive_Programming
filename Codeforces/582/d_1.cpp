@@ -40,17 +40,19 @@ int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
+
     int n, k, ok = 0;
     cin >> n >> k;
-    vector<int> input(n);
+    vi input(n);
     for(int i = 0; i < n; i++)
     {
         cin >> input[i];
     }
     vector<vector<int> > v(n, vector<int>(0));
-    vector<int> pos_record;
-    vector<int> freq(2e5 + 5, 0);
+    vi pos_record;
+    mii freq;
 
+    // rearrange IO
     sort(input.begin(), input.end());
     for(int i = 0; i < n; i++)
     {
@@ -65,8 +67,8 @@ int main()
         {
             v[i].pb(tmp / 2);
             tmp /= 2;
+            freq[tmp]++;
         }
-        pos_record.pb(v[i].size() - 1);
     }
 
     int tmp_res = 0, res = INF_INT;
@@ -76,32 +78,31 @@ int main()
     }
     else
     {
-        while(1)
+        auto it = freq.begin();
+        while(it != freq.end()) 
         {
             tmp_res = 0;
-            for(int i = 0; i < n; i++)
+            int cnt = 0;
+            if(it -> second >= k) // if such number accumulated up to k
             {
-                // accumulate the freq of same number, and add the 'step'
-                cout << v[i][0] << ',' << pos_record[i] << ',' << v[i][pos_record[i]] << ',' \
-                    << freq[v[i][pos_record[i]]] << ' ';
-                tmp_res += (pos_record[i] == 0) ? 0 : pos_record[i];
-                freq[v[i][pos_record[i]]] = (pos_record[i] == 0) ? freq[v[i][pos_record[i]]] : freq[v[i][pos_record[i]]] + 1;  
-                pos_record[i] = (pos_record[i] == 0) ? 0 \
-                                : pos_record[i] - 1;
-
-                cout << "tmp_res "<< tmp_res << '|';
-            }
-
-            if(tmp_res == 0)
-            {
-                break;
-            }
-            else
-            {
+                // brute force searching for all the possible numbers and calculate thestep
+                for(int i = 0; i < n; i++)
+                {
+                    // accumulate the freq of same number, and add the 'step'
+                    auto search = find(v[i].begin(), v[i].end(), it -> first);
+                    if(search != v[i].end())
+                    {
+                        tmp_res += search - v[i].begin();
+                        cnt++;
+                    }
+                    if(cnt == k)
+                    {
+                        break;
+                    }
+                }
                 res = min(res, tmp_res);
             }
-
-            cout << " cleared tmp_res "<< tmp_res << '|' << endl;
+            it++;
         }
         cout << res;
     }
