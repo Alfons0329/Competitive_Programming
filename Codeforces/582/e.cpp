@@ -48,36 +48,54 @@ int main()
     cin >> s >> t;
 
     int cnt = 0;
-    vector<char> v(n * 3);
-    for(int i = 1; i <= n * 3; i++)
+    vector<char> v(n);
+    for(int i = 0; i < 3; i++)
     {
-        v[i - 1] = cnt + 'a';
-        if(i % n == 0)
-        {
-            cnt++;
-        }
+        v[i] = i + 'a';
     }
 
+    
+    // check 1, check the substring does not exist
+    vector<string> qualified_cycle;
+    string qualified_string;
+    do
+    {
+        qualified_string = "";
+        for(auto x : v)
+        {
+            qualified_string += x;
+        }
+
+        if(qualified_string.find(s) == string::npos \
+                && qualified_string.find(t) == string :: npos)
+        {
+            for(int i = 0; i < 3; i++)
+            {
+                qualified_cycle.pb(qualified_string);
+            }
+            break;
+        }
+    }while(next_permutation(v.begin(), v.end()));
+    
+    // check 2, check the overall substring does not exist
     string res;
     int ok = 0;
-    do 
+    do
     {
         res = "";
-
-        for(auto x : v)
+        for(auto x : qualified_cycle)
         {
             res += x;
         }
 
-        auto found1 = res.find(s);
-        auto found2 = res.find(t);
-
-        if(found1 == string::npos && found2 == string::npos)
+        if(res.find(s) == string::npos \
+                && res.find(t) == string :: npos)
         {
             ok = 1;
             break;
         }
-    }while(next_permutation(v.begin(), v.end()));
+    }while(next_permutation(qualified_cycle.begin(), qualified_cycle.end()));
+    cout << "qs " << qualified_string << " res " << res << endl;
 
     if(ok)
     {
