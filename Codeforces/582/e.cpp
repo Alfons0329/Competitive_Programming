@@ -75,7 +75,7 @@ int main()
         if(qualified_string.find(s) == string::npos \
                 && qualified_string.find(t) == string :: npos)
         {
-            for(int i = 0; i < n; i++)
+            for(int i = 0; i < 3; i++)
             {
                 qualified_cycle.pb(qualified_string);
             }
@@ -91,14 +91,14 @@ int main()
                     res += x;
                 }
 
-                if(res.size() == n * 3 && res.find(s) == string::npos \
+                if(res.size() == 9 && res.find(s) == string::npos \
                         && res.find(t) == string :: npos)
                 {
                     ok2 = 1;
                     break;
                 }
             }while(next_permutation(qualified_cycle.begin(), qualified_cycle.end()));
-            // cout << "qs " << qualified_string << " res " << res << endl;
+            cout << "qs " << qualified_string << " res " << res << endl;
         }
 
         if(ok1 && ok2) // 2 situation satisfied
@@ -110,6 +110,11 @@ int main()
     // check 2, check the overall substring does not exist
     if(ok1 && ok2)
     {
+        res.clear();
+        for(int i = 0; i < n; i++)
+        {
+            res += qualified_cycle[0];
+        }
         cout << "YES\n" << res;
     }
     else if(ok1 && !ok2)
