@@ -48,19 +48,25 @@ int main()
     cin >> s >> t;
 
     int cnt = 0;
-    vector<char> v(n);
+    vector<char> v(3);
     for(int i = 0; i < 3; i++)
     {
         v[i] = i + 'a';
     }
 
-    
+
     // check 1, check the substring does not exist
     vector<string> qualified_cycle;
-    string qualified_string;
+    string qualified_string = "";
+    string res = "";
+    int ok1 = 0, ok2 = 0;
+
     do
     {
-        qualified_string = "";
+        res.clear();
+        qualified_string.clear();
+
+        qualified_cycle.clear();
         for(auto x : v)
         {
             qualified_string += x;
@@ -69,41 +75,56 @@ int main()
         if(qualified_string.find(s) == string::npos \
                 && qualified_string.find(t) == string :: npos)
         {
-            for(int i = 0; i < 3; i++)
+            for(int i = 0; i < n; i++)
             {
                 qualified_cycle.pb(qualified_string);
             }
+            ok1 = 1;
+        }
+
+        if(ok1 == 1)
+        {
+            do
+            {
+                for(auto x : qualified_cycle)
+                {
+                    res += x;
+                }
+
+                if(res.size() == n * 3 && res.find(s) == string::npos \
+                        && res.find(t) == string :: npos)
+                {
+                    ok2 = 1;
+                    break;
+                }
+            }while(next_permutation(qualified_cycle.begin(), qualified_cycle.end()));
+            // cout << "qs " << qualified_string << " res " << res << endl;
+        }
+
+        if(ok1 && ok2) // 2 situation satisfied
+        {
             break;
         }
     }while(next_permutation(v.begin(), v.end()));
-    
+
     // check 2, check the overall substring does not exist
-    string res;
-    int ok = 0;
-    do
-    {
-        res = "";
-        for(auto x : qualified_cycle)
-        {
-            res += x;
-        }
-
-        if(res.find(s) == string::npos \
-                && res.find(t) == string :: npos)
-        {
-            ok = 1;
-            break;
-        }
-    }while(next_permutation(qualified_cycle.begin(), qualified_cycle.end()));
-    cout << "qs " << qualified_string << " res " << res << endl;
-
-    if(ok)
+    if(ok1 && ok2)
     {
         cout << "YES\n" << res;
     }
-    else
+    else if(ok1 && !ok2)
     {
-        cout << "NO"; 
+        res.clear();
+        for(int i = 0, j = 0; i < 3 * n; i++)
+        {
+            res += qualified_string[j];
+            if((i + 1) % n == 0)
+            {
+                j++;
+            }
+        }
+        cout << "YES\n" << res;
     }
+
     return 0;
 }
