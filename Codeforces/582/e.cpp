@@ -54,8 +54,6 @@ int main()
         v[i] = i + 'a';
     }
 
-
-    // check 1, check the substring does not exist
     vector<string> qualified_cycle;
     string qualified_string = "";
     string res = "";
@@ -65,8 +63,8 @@ int main()
     {
         res.clear();
         qualified_string.clear();
-
         qualified_cycle.clear();
+
         for(auto x : v)
         {
             qualified_string += x;
@@ -75,7 +73,7 @@ int main()
         if(qualified_string.find(s) == string::npos \
                 && qualified_string.find(t) == string :: npos)
         {
-            for(int i = 0; i < 3; i++)
+            for(int i = 0; i < 2; i++)
             {
                 qualified_cycle.pb(qualified_string);
             }
@@ -91,14 +89,32 @@ int main()
                     res += x;
                 }
 
-                if(res.size() == 9 && res.find(s) == string::npos \
-                        && res.find(t) == string :: npos)
+                if(res.size() == 6 && res.find(s) == string::npos \
+                        && res.find(t) == string :: npos) // cycle with abcabc
                 {
                     ok2 = 1;
                     break;
                 }
+                else // cycle with aabbcc
+                {
+                    res.clear();
+                    for(int i = 0, j = 0; i < 6; i++)
+                    {
+                        res += qualified_string[j];
+                        if((i + 1) % 2 == 0)
+                        {
+                            j++;
+                        }
+                    }
+
+                    if(res.size() == 6 && res.find(s) == string::npos \
+                            && res.find(t) == string :: npos) 
+                    {
+                        ok2 = 2;
+                        break;
+                    }
+                }
             }while(next_permutation(qualified_cycle.begin(), qualified_cycle.end()));
-            cout << "qs " << qualified_string << " res " << res << endl;
         }
 
         if(ok1 && ok2) // 2 situation satisfied
@@ -107,8 +123,7 @@ int main()
         }
     }while(next_permutation(v.begin(), v.end()));
 
-    // check 2, check the overall substring does not exist
-    if(ok1 && ok2)
+    if(ok1 && ok2 == 1) // abcabc type
     {
         res.clear();
         for(int i = 0; i < n; i++)
@@ -117,7 +132,7 @@ int main()
         }
         cout << "YES\n" << res;
     }
-    else if(ok1 && !ok2)
+    else if(ok1 && ok2 == 2) // aabbcc type
     {
         res.clear();
         for(int i = 0, j = 0; i < 3 * n; i++)
