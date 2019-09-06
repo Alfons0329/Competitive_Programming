@@ -54,10 +54,20 @@ int union_find(int id) // find the group for id belongs to
     return id_group[id];
 }
 
-void merge(int u, int v, int& tmp_res)
+void merge(int u, int v, ll& tmp_res)
 {
+    ll u_g = union_find(u);
+    ll v_g = union_find(v);
 
+    tmp_res -= comb(con_nodes[u_g]); // merge group of u and decrease its count, C(u, 2)
+    tmp_res -= comb(con_nodes[v_g]); // merge group of v and decrease its count, C(v, 2)
+
+
+    con_nodes[u_g] += con_nodes[v_g]; // doing merge
+    tmp_res += comb(con_nodes[u_g]); // add back of C(u + v, 2)
+    id_group[v_g] = id_group[u_g];
 }
+
 int main()
 {
     ios_base::sync_with_stdio(0);
@@ -74,7 +84,7 @@ int main()
     con_nodes = vector<int>(n, 1); // init connected nodes with 1 for self
     id_group = vector<int>(n, 0);
     iota(id_group.begin(), id_group.end(), 0); // id -> self group
-    vector<pair<int, pii> > e; // (weight, (u, v) edge)
+    vector<pair<int, pii> > e(n); // (weight, (u, v) edge)
     for(int i = 0; i < n - 1; i++)
     {
         cin >> e[i].second.first >> e[i].second.second >> e[i].first;
@@ -94,12 +104,16 @@ int main()
     
     for(int i = 0, id = 0; i < m; i++) // going through all the queries
     {
-        while(id < n && e[id].first <= q[idx].first) // suitable query
+        ll tmp_res = 0;
+        while(id < n && e[id].first <= q[i].first) // suitable query
         {
-            int u = e[id].first;
-            int v = e[id].second;
+            int u = e[id].second.first;
+            int v = e[id].second.second;
 
+            merge(u, v, tmp_res);
+            id++;
         }
+        res[id] = tmp_res;
     }
 
     for(auto x : q)
