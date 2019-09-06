@@ -65,7 +65,7 @@ void merge(int u, int v, ll& tmp_res)
     con_nodes[u] += con_nodes[v]; // doing merge
     tmp_res -= (uu + vv);
     tmp_res += comb(con_nodes[u]); // add back of C(u + v, 2)
-    printf("Merge u %d v %d uu %lld vv %lld tmp_res %lld\n", u, v, uu, vv, tmp_res);
+    printf("Merge u %d v %d uu %lld vv %lld tmp_res %lld\n\n", u, v, uu, vv, tmp_res);
     id_group[v] = id_group[u];
 }
 
@@ -115,13 +115,13 @@ int main()
             merge(u, v, tmp_res);
             eid++;
         }
-        printf("query %d tmp_res %lld ", i, tmp_res);
+        printf("query %d tmp_res %lld \n---------\n", q[i].second, tmp_res);
         res[q[i].second] = tmp_res;
     }
 
-    for(auto x : q)
+    for(auto x : res)
     {
-        cout << res[x.second] << ' ';
+        cout << x << ' ';
     }
     return 0;
 }
