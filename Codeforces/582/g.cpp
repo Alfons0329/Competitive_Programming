@@ -42,7 +42,7 @@ vector<int> id_group; // node -> id
 
 ll comb(int n)
 {
-    return n * 1LL * (n - 1) / 2;
+    return n * 1LL * (n - 1) / 2LL;
 }
 
 int union_find(int id) // find the group for id belongs to
@@ -56,16 +56,17 @@ int union_find(int id) // find the group for id belongs to
 
 void merge(int u, int v, ll& tmp_res)
 {
-    ll u_g = union_find(u);
-    ll v_g = union_find(v);
+    u = union_find(u);
+    v = union_find(v);
 
-    tmp_res -= comb(con_nodes[u_g]); // merge group of u and decrease its count, C(u, 2)
-    tmp_res -= comb(con_nodes[v_g]); // merge group of v and decrease its count, C(v, 2)
+    ll uu = comb(con_nodes[u]); // merge group of u and decrease its count, C(u, 2)
+    ll vv = comb(con_nodes[v]); // merge group of v and decrease its count, C(v, 2)
 
-
-    con_nodes[u_g] += con_nodes[v_g]; // doing merge
-    tmp_res += comb(con_nodes[u_g]); // add back of C(u + v, 2)
-    id_group[v_g] = id_group[u_g];
+    con_nodes[u] += con_nodes[v]; // doing merge
+    tmp_res -= (uu + vv);
+    tmp_res += comb(con_nodes[u]); // add back of C(u + v, 2)
+    printf("Merge u %d v %d uu %lld vv %lld tmp_res %lld\n", u, v, uu, vv, tmp_res);
+    id_group[v] = id_group[u];
 }
 
 int main()
@@ -102,18 +103,20 @@ int main()
 
     // solve
     
-    for(int i = 0, id = 0; i < m; i++) // going through all the queries
+    ll tmp_res = 0;
+    for(int i = 0, eid = 0; i < m; i++) // going through all the queries
     {
-        ll tmp_res = 0;
-        while(id < n && e[id].first <= q[i].first) // suitable query
+        while(eid < n - 1 && e[eid].first <= q[i].first) // suitable query
         {
-            int u = e[id].second.first;
-            int v = e[id].second.second;
+            int u = e[eid].second.first;
+            int v = e[eid].second.second;
 
+            printf("id %d u %d v %d tmp_res %lld qif %d \n", eid, u, v, tmp_res, q[i].first);
             merge(u, v, tmp_res);
-            id++;
+            eid++;
         }
-        res[id] = tmp_res;
+        printf("query %d tmp_res %lld ", i, tmp_res);
+        res[q[i].second] = tmp_res;
     }
 
     for(auto x : q)
