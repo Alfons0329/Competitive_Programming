@@ -37,14 +37,27 @@ const ll maxn = 1e5 + 10, MOD = 1e9 + 7;
 const int Move[4][2] = {-1,0,1,0,0,1,0,-1};
 const int Move_[8][2] = {-1,-1,-1,0,-1,1,0,-1,0,1,1,-1,1,0,1,1};
 
-vector<pair<int, pii> > e; // (weight, (u, v) edge)
-ll tmp_res;
+vector<int> con_nodes; // nodes for connected gtoup
+vector<int> id_group; // node -> id
 
 ll comb(int n)
 {
     return n * 1LL * (n - 1) / 2;
 }
 
+int union_find(int id) // find the group for id belongs to
+{
+    while(id != id_group[id])
+    {
+       id = id_group[id]; 
+    }
+    return id_group[id];
+}
+
+void merge(int u, int v, int& tmp_res)
+{
+
+}
 int main()
 {
     ios_base::sync_with_stdio(0);
@@ -57,10 +70,15 @@ int main()
     vector<pii> q(m); // store queries
     vector<ll> res(m);
 
+    // init
+    con_nodes = vector<int>(n, 1); // init connected nodes with 1 for self
+    id_group = vector<int>(n, 0);
+    iota(id_group.begin(), id_group.end(), 0); // id -> self group
+    vector<pair<int, pii> > e; // (weight, (u, v) edge)
     for(int i = 0; i < n - 1; i++)
     {
         cin >> e[i].second.first >> e[i].second.second >> e[i].first;
-        e[i].second.first--;
+        e[i].second.first--; // 0-base
         e[i].second.second--;
     }
 
@@ -73,6 +91,20 @@ int main()
     sort(q.begin(), q.end()); // sort queries based on weight
 
     // solve
+    
+    for(int i = 0, id = 0; i < m; i++) // going through all the queries
+    {
+        while(id < n && e[id].first <= q[idx].first) // suitable query
+        {
+            int u = e[id].first;
+            int v = e[id].second;
 
+        }
+    }
+
+    for(auto x : q)
+    {
+        cout << res[x.second] << ' ';
+    }
     return 0;
 }
