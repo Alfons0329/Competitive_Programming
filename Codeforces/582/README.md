@@ -335,15 +335,15 @@ int main()
 ```
 ## [E - Two Small Strings ](https://codeforces.com/contest/1213/problem/E)
 ### Sorry for the quite ugly code.
-* Proof that there will definitely be answer --> [here](https://codeforces.com/blog/entry/69464?#comment-539816), we can think the use of abc as the strongly connected graph initially and gradually remove the edges as the limitation from problem
-* Thought: Use constructive algorithm with brute force.
-    * Step 1. qualified_string as the string that satisfies limitation from problem, ex: `ab cb -> bca` brute force to find it $(3! = 6)$ possible (ok1)
-    * Step 2. if we passed pretest in Step 1, concatenate candidate string 2 times to check the cycle version ex: ` bca -> bcabca` to see if matches the limitation from problem. (ok2), it is $(2! = 3)$ possible
-    * Step 3. if both were satisfied, ex: `bcabca`, then  we print out the answer with the specified repeating times
+* Proof that there will definitely be an answer (Or say proof of correctness) --> [here](https://codeforces.com/blog/entry/69464?#comment-539816), we can think the use of a,b,c as the **strongly connected graph** initially and gradually remove the edges from the limitation of problem.
+* Thought: Use **constructive algorithm with brute force**.
+    * Step 1. `qualified_string` as the string that satisfies limitation from problem, ex: `ab cb -> bca` brute force to find it $(3! = 6)$ possible (ok1)
+    * Step 2. If we passed the pretest in Step 1, concatenate candidate string **2 times** to check the cycle version. </br> ex: ` bca -> bcabca` to see if matches the limitation from problem. (ok2), it is $(2! = 3)$ possible
+    * Step 3. If both were satisfied, ex: `bcabca`, then  we print out the answer with the required repeating times.
     * Step 4. Otherwise, if only step 1 can be matched but not for 2, then this means pattern will be like `bbbbccccaaaa` ex: `ac ab -> bca -> bcabca still faied but bbbbccccaaaa succeeded` 
 * Analysis:
-    * Time complexity: O(N)
-    * Space complexity: O(N)
+    * Time complexity: $O(N)$
+    * Space complexity: $O(N)$
 * Code:
 ```cpp
 int main()
@@ -367,7 +367,7 @@ int main()
     string qualified_string = "";
     string res = "";
     int ok1 = 0, ok2 = 0;
-    do
+    do // Step 1.
     {
         res.clear();
         qualified_string.clear();
@@ -390,7 +390,7 @@ int main()
 
         if(ok1 == 1)
         {
-            do
+            do // Step 2.
             {
                 for(auto x : qualified_cycle)
                 {
@@ -431,7 +431,7 @@ int main()
         }
     }while(next_permutation(v.begin(), v.end()));
 
-    if(ok1 && ok2 == 1) // abcabc type
+    if(ok1 && ok2 == 1) // abcabc type, Step 3.
     {
         res.clear();
         for(int i = 0; i < n; i++)
@@ -440,7 +440,7 @@ int main()
         }
         cout << "YES\n" << res;
     }
-    else if(ok1 && ok2 == 2) // aabbcc type
+    else if(ok1 && ok2 == 2) // aabbcc type, Step 4.
     {
         res.clear();
         for(int i = 0, j = 0; i < 3 * n; i++)
