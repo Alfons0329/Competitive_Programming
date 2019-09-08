@@ -52,8 +52,8 @@ int main()
     sort(v.begin(), v.end());
     
     int res = INT_MAX;
-    map<int, int> freq; // map to count number -> occurances (freq)
-    map<int, int> cost; // mao to count number -> cost (strp of /2)
+    mii freq; // map to count number -> occurances (freq)
+    mii cost; // mao to count number -> cost (strp of /2)
     for(int i = 0; i < n; i++)
     {
         int todo = v[i], power = 0;
