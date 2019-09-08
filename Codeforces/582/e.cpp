@@ -54,11 +54,10 @@ int main()
         v[i] = i + 'a';
     }
 
-    vector<string> qualified_cycle;
+    vs qualified_cycle;
     string qualified_string = "";
     string res = "";
     int ok1 = 0, ok2 = 0;
-
     do
     {
         res.clear();
