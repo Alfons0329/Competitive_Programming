@@ -37,22 +37,21 @@ const ll maxn = 1e5 + 10, MOD = 1e9 + 7;
 const int Move[4][2] = {-1,0,1,0,0,1,0,-1};
 const int Move_[8][2] = {-1,-1,-1,0,-1,1,0,-1,0,1,1,-1,1,0,1,1};
 
-vector<int> con_nodes; // nodes for connected gtoup
-vector<int> id_group; // node -> id
+vi con_nodes; // nodes for connected gtoup
+vi id_group; // node -> id
 
 ll comb(int n)
 {
     return n * 1LL * (n - 1) / 2LL;
 }
 
-int union_find(int id) // find the group for id belongs to
+int union_find(int id) 
 {
     int original_id = id;
     while(id != id_group[id])
     {
         id = id_group[id_group[id]]; 
     }
-    // return id_group[id] = union_find(id_group[id])
     return id_group[original_id] = id; // path compression
 }
 
@@ -67,7 +66,6 @@ void merge(int u, int v, ll& tmp_res)
     con_nodes[u] += con_nodes[v]; // doing merge
     tmp_res -= (uu + vv);
     tmp_res += comb(con_nodes[u]); // add back of C(u + v, 2)
-    //printf("Merge u %d v %d uu %lld vv %lld tmp_res %lld\n\n", u, v, uu, vv, tmp_res);
     id_group[v] = id_group[u];
 }
 
@@ -80,8 +78,8 @@ int main()
     int n, m;
     cin >> n >> m;
 
-    vector<pii> q(m); // store queries
-    vector<ll> res(m);
+    vector<pii> q(m); 
+    vll res(m);
 
     // init
     con_nodes = vector<int>(n, 1); // init connected nodes with 1 for self
@@ -104,7 +102,6 @@ int main()
     sort(q.begin(), q.end()); // sort queries based on weight
 
     // solve
-    
     ll tmp_res = 0;
     for(int i = 0, eid = 0; i < m; i++) // going through all the queries
     {
@@ -114,11 +111,9 @@ int main()
             int v = e[eid].second.second;
             int w = e[eid].first;
 
-            //printf("id %d u %d v %d tmp_res %lld qif %d w %d\n", eid, u, v, tmp_res, q[i].first, w);
             merge(u, v, tmp_res);
             eid++;
         }
-        //printf("query %d tmp_res %lld \n---------\n", q[i].second, tmp_res);
         res[q[i].second] = tmp_res;
     }
 
