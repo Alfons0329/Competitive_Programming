@@ -22,6 +22,7 @@ void LCS(int* xarr, int* yarr, int* carr) //find the length
         carr[i] = LCS_string[i];
     }
 }
+
 void getLCS(int* xarr, int* yarr, int* carr ,vector<vector <int> >dplist,string& LCS_string)
 {
     unsigned int xlen=xarr[0],ylen=yarr[0];
