@@ -23,7 +23,7 @@ node* insert(vector<int> input, node* root)
     {
         int new_val = input[i];
         node* cur = root;
-        node* prev = root;
+        node* prev = nullptr;
         while(cur)
         {
             prev = cur;
@@ -35,7 +35,11 @@ node* insert(vector<int> input, node* root)
             {
                 cur = cur -> right;
             }
-            cout << "prev: " << (char) prev -> val << "cur: " << (char) cur -> val << '\n';
+
+            if(cur && prev)
+            {
+                // cout << "prev: " << (char) prev -> val << "cur: " << (char) cur -> val << '\n';
+            }
         }
 
         if(new_val < prev -> val)
@@ -63,11 +67,12 @@ int del()
 
 void specified_traverse(string s, node* root)
 {
+    node* original = root;
     for(auto x : s)
     {
         if(root == nullptr) // SIGSEGV prevention
         {
-            break;
+            root = original;
         }
         if(x == 'L')
         {
@@ -79,7 +84,7 @@ void specified_traverse(string s, node* root)
         }
         else if(x == 'D')
         {
-            cout << root -> val << ", ";
+            cout << (char)root -> val;
         }
     }
 }
@@ -90,18 +95,16 @@ int main()
     vector<int> input;
     int tmp;
     cout << "Input to build BST, EOF for done " << '\n';
-    
-    while(cin >> tmp)
-    {
-        input.push_back(tmp);
-    }
-
-    node* root = new node;
-    root -> val = input[0];
-    root -> left = root -> right = nullptr;
-    root = insert(input, root);
 
     string s;
+    cin >> s;
+    for(auto x : s)
+    {
+        input.push_back(x);
+    }
+
+    node* root = new_node(input[0]);
+    root = insert(input, root);
     cout << "CTF " << endl;
     cin >> s;
     specified_traverse(s, root);
