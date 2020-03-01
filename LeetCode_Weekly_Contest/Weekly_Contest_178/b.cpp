@@ -1,26 +1,6 @@
 class Solution
 {
 public:
-    struct data
-    {
-        char a;
-        int sum;
-        vector<int> rk;
-    };
-    static bool cmp(data &d1, data &d2)
-    {
-        sort(d1.rk.begin(), d1.rk.end());
-        sort(d2.rk.begin(), d2.rk.end());
-        int n = d1.rk.size();
-        for (int i = 0; i < n; i++)
-        {
-            if (d1.rk[i] != d2.rk[i])
-            {
-                return d1.rk[i] < d2.rk[i];
-            }
-        }
-        return 0;
-    }
     string rankTeams(vector<string> &vs)
     {
         int n = vs.size();
@@ -30,39 +10,56 @@ public:
             return vs[0];
         }
 
-        int minchar = 0xff;
-        vector<data> vd(26);
-        vector<data> vd_clean;
-        for (char x : vs[0])
+        // vii is the original data, and vii_clean is cleaned (i.e. remove all unused alphabets)
+        vector<vector<int>> vii(26, vector<int>(m + 1, 0));
+        vector<vector<int>> vii_clean;
+        int alph = 0;
+        for (auto s : vs[0])
         {
-            minchar = min(minchar, (int)x);
+            vii[s - 'A'][0] = s;
         }
-        for (int i = 0; i < n; i++)
+        for (auto s : vs)
         {
-            for (int j = 0; j < m; j++)
+            int sz = s.size();
+            for (int i = 0; i < sz; i++)
             {
-                vd[vs[i][j] - minchar].a = vs[i][j];
-                vd[vs[i][j] - minchar].sum += (j + 1);
-                vd[vs[i][j] - minchar].rk.push_back(j + 1);
-            }
-        }
-        for (auto x : vd)
-        {
-            if (x.rk.size())
-            {
-                vd_clean.push_back(x);
+                vii[s[i] - 'A'][i + 1]++;
             }
         }
 
-        sort(vd_clean.begin(), vd_clean.end(), cmp);
-        string res("");
-        for (auto x : vd_clean)
+        // make 0 away, clean
+        for (auto vi : vii)
         {
-            if (x.a)
+            if (vi[0])
             {
-                res += x.a;
+                vii_clean.push_back(vi);
             }
         }
+
+        // custom sort
+        sort(vii_clean.begin(), vii_clean.end(), [](auto &a, auto &b) {
+            int m = a.size();
+            for (int i = 1; i < m; i++)
+            {
+                if (a[i] > b[i])
+                {
+                    return true;
+                }
+                else if (a[i] < b[i])
+                {
+                    return false;
+                }
+            }
+            return a[0] < b[0]; // all tie, rank by ID
+        });
+
+        // concatenate the result
+        string res("");
+        for (auto vi : vii_clean)
+        {
+            res += (char)vi[0];
+        }
+
         return res;
     }
 };
