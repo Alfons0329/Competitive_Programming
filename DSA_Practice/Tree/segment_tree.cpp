@@ -40,11 +40,12 @@ int update(int p, int v, int n){
 }
 
 int dbg_check(int n){
+    cout << "segment tree: ";
     for(int i = 0; i < 2 * n; i++){
-        if(i & (i - 1) == 0){
-            printf("\n");
+        if((i & (i - 1)) == 0){
+            cout << '\n';
         }
-        printf("%d ", segment_tree[i]);
+        cout << segment_tree[i] << ' ';
     }
 }
 
@@ -56,10 +57,13 @@ int main(){
     int n;
     cin >> n;
 
+    cout << "array of size " << n << '\n';
     int* arr = new int(n);
     for(int i = 0; i < n; i++){
         cin >> arr[i];
     }
+    cout << "build tree " << '\n';
+    build(arr, n);
 
     while(1){
         int choice;
@@ -69,6 +73,7 @@ int main(){
         }
 
         int p, v;
+        cout << "update at p, v \n";
         if(choice == 1){
             cin >> p >> v;
             update(p, v, n);
