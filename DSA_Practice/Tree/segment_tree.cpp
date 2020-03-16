@@ -8,6 +8,7 @@ int segment_tree[2 * MAX_N];
 // input arguments
 // arr: array for range sum query
 // n: range sum query array size
+// printf is used for debugging
 int build(int* arr, int n){
 
     // build the leaf nodes
@@ -16,8 +17,10 @@ int build(int* arr, int n){
     }
 
     // update the corresponding parents
-    for(int i = n - 1; i >= 0; i--){
+    for(int i = n - 1; i > 0; i--){
         segment_tree[i] = segment_tree[i << 1] + segment_tree[(i << 1) | 1];
+        printf("%d, child %d + %d, ", i, i << 1, (i << 1) | 1);
+        printf("%d = %d + %d \n", segment_tree[i], segment_tree[i << 1], segment_tree[(i << 1) | 1]);
     }
 }
 
@@ -26,33 +29,52 @@ int build(int* arr, int n){
 // p: position [0, n) to update
 // v: new_value
 // n: original array size
-
-
+// printf is used for debugging
 int update(int p, int v, int n){
     segment_tree[n + p] = v;
     p += n;
-    p >>= 2;
+    p >>= 1;
 
-    // update its path
-    for(; p >= 1; p >>= 1){
+    // update its path like heapify
+    for(; p > 0; p >>= 1){
         segment_tree[p] = segment_tree[p << 1] + segment_tree[(p << 1) | 1];
+        printf("%d = %d + %d \n", segment_tree[p], segment_tree[p << 1], segment_tree[(p << 1) + 1]);
     }
+}
+
+// query segment tree in interval [start, end)
+// input arguments
+// start: interval start
+// end:
+int query(int start, int end, int n){
+    int res = 0, l = start, r = end;
+    l += n;
+    r += n;
+    for(; l < r ; l >>= 1, r >>= 1){
+        if(l & 1){
+            res += segment_tree[l++];
+        }
+        if(r & 1){
+            res += segment_tree[--r];
+        }
+    }
+    return res;
 }
 
 int dbg_check(int n){
     cout << "segment tree: ";
-    for(int i = 0; i < 2 * n; i++){
+    for(int i = 1; i < 2 * n; i++){
         if((i & (i - 1)) == 0){
             cout << '\n';
         }
         cout << segment_tree[i] << ' ';
     }
+    cout << '\n';
 }
 
 // main driver function
 int main(){
-    cin.tie(0);
-    ios_base::sync_with_stdio(0);
+    memset(segment_tree, 0, sizeof(segment_tree));
 
     int n;
     cin >> n;
@@ -62,23 +84,23 @@ int main(){
     for(int i = 0; i < n; i++){
         cin >> arr[i];
     }
-    cout << "build tree " << '\n';
+
     build(arr, n);
+    cout << "build tree done" << '\n';
+    dbg_check(n);
 
     while(1){
-        int choice;
-        cin >> choice;
-        if(!choice){
-            break;
-        }
-
+        cout << "update at p, v: ";
         int p, v;
-        cout << "update at p, v \n";
-        if(choice == 1){
-            cin >> p >> v;
-            update(p, v, n);
-            dbg_check(n);
-        }
+        cin >> p >> v;
+        update(p, v, n);
+        cout << "update tree done" << '\n';
+        dbg_check(n);
+
+        int start, end;
+        cin >> start >> end;
+        cout << "range sum query in [start, end)";
+        cout << query(start, end, n) << '\n';
     }
 
     delete(arr);
