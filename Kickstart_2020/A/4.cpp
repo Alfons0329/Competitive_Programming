@@ -1,124 +1,83 @@
 #include <bits/stdc++.h>
+const int MAX_N = 2e6 + 5;
+const char aa = 'A';
+
 using namespace std;
 
-#define ll long long
-#define ull unsigned long long
-#define PI acos(-1.0)
-#define eps 1e-12
-#define fi first
-#define se second
-#define MEM(a,b) memset((a),(b),sizeof(a))
-#define mod(x) ((x)%MOD)
-#define wz // // cout<<"-----"<<endl;
-#define pb push_back
-#define mp make_pair
+string s;
+int T, n, k, kase;
+int tot, res;
+int trie[MAX_N][26];
+int cnt[MAX_N], len[MAX_N];
 
-#define vs vector<string> 
-#define vi vector<int> 
-#define vll vector<ll> 
-#define vull vector<ull>
-
-#define pii pair<int,int>
-
-#define msi map<string, int>
-#define mci map<char, int>
-#define mii map<int, int>
-
-#define usi unordered_map<string, int>
-#define uci unordered_map<char, int>
-#define uii unordered_map<int, int>
-
-const int INF_INT = 2147483647;
-const ll INF_LL = 9223372036854775807LL;
-const ull INF_ULL = 18446744073709551615Ull;
-const ll P = 92540646808111039LL;
-
-const ll maxn = 1e5 + 10, MOD = 1e9 + 7;
-const int Move[4][2] = {-1,0,1,0,0,1,0,-1};
-const int Move_[8][2] = {-1,-1,-1,0,-1,1,0,-1,0,1,1,-1,1,0,1,1};
-
-const int ALPHA_SIZE = 26;
-const char a = 'A';
-
-struct node{
-    node* child[ALPHA_SIZE];
-    bool end;
-};
-
-node* create_node(){
-    node* new_node = new node;
-    new_node -> end = false;
-    for(int i = 0; i < ALPHA_SIZE; i++){
-        new_node -> child[i] = NULL;
-    }
-    return new_node;
-}
-
-void insert(node* root, string& s){
-    for(char x : s){
-        if(!root -> child[x - a]){
-            root -> child[x - a] = create_node();
-        }
-        root = root -> child[x - a];
-    }
-    root -> end = true;
-}
-
-int search(node* root, const string& s, const string& pfx){
-    int res = 0;
-    int n = min(s.size(), pfx.size());
+void insert(){
+    int n = s.size(), root = 0;
+    cout << "insert " << s << '\n';
     for(int i = 0; i < n; i++){
-        if(!root -> child[s[i] - a] || s[i] != pfx[i]){
-            return res;
+        // not exist, insert it
+        if(!trie[root][s[i] - aa]){
+            trie[root][s[i] - aa] = ++tot;
         }
-        res++;
-        root = root -> child[s[i] - a];
+        // descend trie
+        root = trie[root][s[i] - aa];
+        cnt[root]++;
+        len[root] = i + 1;
     }
-    return res;
-}
 
-int group(vector<string>& g){
-    node* root = create_node();
-    string head = g[0]; 
-    int n = g.size(), res = INT_MAX;
-    insert(root, head);
-    for(int i = 1; i < n; i++){
-        res = min(res, search(root, head, g[i]));
+
+    for(int i = 0; i < 12; i++){
+        for(int j = 0; j < 26; j++){
+            cout << trie[i][j] << ' ';
+        }
+        cout << '\n';
     }
-    return res;
+
+    for(int i = 0; i < 12; i++){
+        cout << cnt[i] << ' ';
+    }
+    cout << '\n';
+    for(int i = 0; i < 12; i++){
+        cout << len[i] << ' ';
+    }
+    cout << '\n';
+
 }
 
-int dp[100005][26];
-void dfs(int u = 0, int idx = 0){
-   for(int v = 0; v < 26; v++){
-       if(dp[u][v]){
-           dfs(dp[u][v], idx + 1);
-
-       }
-   } 
-}
-
-int solve(){
-    int n, k;
-    string s;
-    cin >> n >> k;
-    while(n--){
-        cin >> s;
-        for(char c : s){
-            
+int dfs(int u, int sum){
+    printf("u %d sum %d \n", u, sum);
+    for(int i = 0; i < 26; i++){
+        if(trie[u][i]){
+            sum += dfs(trie[u][i], 0);
+            trie[u][i] = 0;
         }
     }
-    cout << "Case #" << cnt++ << ": " << res << '\n';
+
+    int tmp = (cnt[u] - sum) / k;
+    if(tmp){
+        printf("tmp %d cntu %d sum %d res %d \n",tmp , cnt[u], sum, res);
+        res += tmp * len[u];
+        sum += tmp * k;
+    }
+
+    cnt[u] = 0;
+    len[u] = 0;
     return res;
 }
 
 int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
+    // ios_base::sync_with_stdio(0);
+    // cin.tie(0);
 
-    int T, n, k, cnt = 1;
     cin >> T;
     while(T--){
+        cin >> n >> k;
+        tot = 0;
+        res = 0;
+        for(int i = 0; i < n; i++){
+            cin >> s;
+            insert();
+        }
+        cout << "Case #" << ++kase << ": " << dfs(0, 0) << endl;
     }
     return 0;
 }

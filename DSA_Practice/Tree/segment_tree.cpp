@@ -1,3 +1,4 @@
+// printf is used for debugging, use regex replace in vim to toggle and comment
 #include <bits/stdc++.h>
 #define MAX_N 100000
 using namespace std;
@@ -8,8 +9,7 @@ int segment_tree[2 * MAX_N];
 // input arguments
 // arr: array for range sum query
 // n: range sum query array size
-// printf is used for debugging
-int build(int* arr, int n){
+void build(int* arr, int n){
 
     // build the leaf nodes
     for(int i = 0; i < n; i++){
@@ -29,8 +29,7 @@ int build(int* arr, int n){
 // p: position [0, n) to update
 // v: new_value
 // n: original array size
-// printf is used for debugging
-int update(int p, int v, int n){
+void update(int p, int v, int n){
     segment_tree[n + p] = v;
     p += n;
     p >>= 1;
@@ -61,7 +60,7 @@ int query(int start, int end, int n){
     return res;
 }
 
-int dbg_check(int n){
+void dbg_check(int n){
     cout << "segment tree: ";
     for(int i = 1; i < 2 * n; i++){
         if((i & (i - 1)) == 0){
