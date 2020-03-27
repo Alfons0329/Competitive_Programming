@@ -1,46 +1,46 @@
 #include <bits/stdc++.h>
+const int maxn = 1e5 + 5;
+
 using namespace std;
 
-#define ll long long
-#define ull unsigned long long
-#define PI acos(-1.0)
-#define eps 1e-12
-#define fi first
-#define se second
-#define MEM(a,b) memset((a),(b),sizeof(a))
-#define mod(x) ((x)%MOD)
-#define wz cout<<"-----"<<endl;
-#define pb push_back
-#define mp make_pair
+int T, n, m, kase, res; 
+int a[maxn];
 
-#define vs vector<string> 
-#define vi vector<int> 
-#define vll vector<ll> 
-#define vull vector<ull>
+int solve(){
+    int res = INT_MIN;
+    priority_queue<int, vector<int>>pq;
+    for(int i = 0; i < n - 1; i++){
+        pq.push(a[i + 1] - a[i]);
+    }
 
-#define pii pair<int,int>
+    while(m--){
+        int mxm = pq.top();
+        if(mxm == 1){
+            break;
+        }
+        int p1 = mxm / 2, p2 = mxm - p1;
+        // printf("mxm %d p1 %d p2 %d \n", mxm, p1, p2);
+        pq.pop();
+        pq.push(p1);
+        pq.push(p2);
+    }
 
-#define msi map<string, int>
-#define mci map<char, int>
-#define mii map<int, int>
+    return pq.top();
+}
 
-#define usi unordered_map<string, int>
-#define uci unordered_map<char, int>
-#define uii unordered_map<int, int>
-
-const int INF_INT = 2147483647;
-const ll INF_LL = 9223372036854775807LL;
-const ull INF_ULL = 18446744073709551615Ull;
-const ll P = 92540646808111039LL;
-
-const ll maxn = 1e5 + 10, MOD = 1e9 + 7;
-const int Move[4][2] = {-1,0,1,0,0,1,0,-1};
-const int Move_[8][2] = {-1,-1,-1,0,-1,1,0,-1,0,1,1,-1,1,0,1,1};
-
-int main()
-{
+int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
+
+    cin >> T;
+    while(T--){
+        cin >> n >> m;
+        memset(a, 0 , sizeof(a));
+        for(int i = 0; i < n; i++){
+            cin >> a[i];
+        }
+        cout << "Case #" << ++kase << ": " << solve() << endl;
+    }
+
     return 0;
 }

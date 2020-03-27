@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-const int MAX_N = 2e6 + 5;
+const int maxn = 2e6 + 5;
 const char aa = 'A';
 
 using namespace std;
@@ -7,8 +7,8 @@ using namespace std;
 string s;
 int T, n, k, kase;
 int tot, res;
-int trie[MAX_N][26];
-int cnt[MAX_N], len[MAX_N];
+int trie[maxn][26];
+int cnt[maxn], len[maxn];
 
 void insert(){
     int n = s.size(), root = 0;
@@ -19,7 +19,6 @@ void insert(){
         }
         // descend trie
         root = trie[root][s[i] - aa];
-
         // calculate the matched occurrence
         cnt[root]++;
         // calculate the matched length
@@ -65,5 +64,6 @@ int main() {
         dfs(0, 0);
         cout << "Case #" << ++kase << ": " << res << endl;
     }
+
     return 0;
 }
