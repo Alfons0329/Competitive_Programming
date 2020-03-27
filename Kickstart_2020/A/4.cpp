@@ -12,7 +12,6 @@ int cnt[MAX_N], len[MAX_N];
 
 void insert(){
     int n = s.size(), root = 0;
-    cout << "insert " << s << '\n';
     for(int i = 0; i < n; i++){
         // not exist, insert it
         if(!trie[root][s[i] - aa]){
@@ -20,31 +19,15 @@ void insert(){
         }
         // descend trie
         root = trie[root][s[i] - aa];
+
+        // calculate the matched occurrence
         cnt[root]++;
+        // calculate the matched length
         len[root] = i + 1;
     }
-
-
-    for(int i = 0; i < 12; i++){
-        for(int j = 0; j < 26; j++){
-            cout << trie[i][j] << ' ';
-        }
-        cout << '\n';
-    }
-
-    for(int i = 0; i < 12; i++){
-        cout << cnt[i] << ' ';
-    }
-    cout << '\n';
-    for(int i = 0; i < 12; i++){
-        cout << len[i] << ' ';
-    }
-    cout << '\n';
-
 }
 
 int dfs(int u, int sum){
-    printf("u %d sum %d \n", u, sum);
     for(int i = 0; i < 26; i++){
         if(trie[u][i]){
             sum += dfs(trie[u][i], 0);
@@ -52,21 +35,23 @@ int dfs(int u, int sum){
         }
     }
 
+    // check how many group we can have a match
     int tmp = (cnt[u] - sum) / k;
     if(tmp){
-        printf("tmp %d cntu %d sum %d res %d \n",tmp , cnt[u], sum, res);
+        // matched prefix len for all member string in group at the same time
         res += tmp * len[u];
+        // at the same time, use such amount of inserted string
         sum += tmp * k;
     }
-
     cnt[u] = 0;
     len[u] = 0;
-    return res;
+
+    return sum;
 }
 
 int main() {
-    // ios_base::sync_with_stdio(0);
-    // cin.tie(0);
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
 
     cin >> T;
     while(T--){
@@ -77,7 +62,8 @@ int main() {
             cin >> s;
             insert();
         }
-        cout << "Case #" << ++kase << ": " << dfs(0, 0) << endl;
+        dfs(0, 0);
+        cout << "Case #" << ++kase << ": " << res << endl;
     }
     return 0;
 }
