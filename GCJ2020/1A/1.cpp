@@ -40,20 +40,16 @@ void solve(){
             sfx = p.second;
         }
         ps[i] = p;
-        // cout << "pfx " << pfx << " sfx " << sfx << '\n';
     }
 
     for(int i = 0; i < n; i++){
         // prefix mismatch
-        // cout << "maxpfx " << pfx << " max suffix " << sfx << " psif " << ps[i].first << " psis " << ps[i].second << '\n';
         if(ps[i].first.size() && pfx.substr(0, ps[i].first.size()) != ps[i].first){
-            // cout << "pfx mismatch " << pfx.substr(0, ps[i].first.size()) << " , " << ps[i].first << '\n';
             cout << "Case #" << I << ": *" << '\n';
             return;
         }
         // suffix mismatch
         if(ps[i].second.size() && sfx.substr(sfx.size() - ps[i].second.size(), ps[i].second.size()) != ps[i].second){
-            // cout << "sfx mismatch " << sfx.substr(sfx.size() - ps[i].second.size(), ps[i].second.size()) << " , " << ps[i].second << '\n';
             cout << "Case #" << I << ": *" << '\n';
             return;
         }
