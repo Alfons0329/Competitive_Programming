@@ -1,28 +1,34 @@
+// Time O(N), Space O(N)
 class Solution {
 public:
     int findMaxLength(vector<int>& nums) {
-        int l = 0, r = 0, n = nums.size();
-        if(!n){
-            return 0;
-        }
+        // [1,0,1,1,0,0] --> answer will be 6 
+        // <key = freq diff, value = position of first time such freq diff occurrs>
+        // freq is freq0 - freq1
+        // m[0] = 0  --> update result to res = max(res, 6 - 0) = 6
+        // m[-1] = 1 --> update tesult to res - max(res, 3 - 1) = 2
+        // m[-2] = 4
+        // m[]
+        // m[]
         
-        int cnt0 = 0, cnt1 = 0, d = 0;
-        int res = INT_MIN;
-        unordered_map<int, int> dm;
-        dm[0] = 0;
+        int n = nums.size();
+        int c1 = 0, c0 = 0; // c1 is the freq of 1, and c2 is the freq of 0
+        int res = 0;
+        unordered_map<int, int>u;
+        u[0] = 0; // m[0] = 0  
         
         for(int i = 1; i <= n; i++){
-            cnt0 += nums[i - 1] == 0;
-            cnt1 += nums[i - 1] == 1;
-            d = cnt0 - cnt1;
-            if(dm.count(d)){
-                res = max(res, i - dm[d]);
+            c1 += nums[i - 1] == 1;
+            c0 += nums[i - 1] == 0;
+            int d = c0 - c1;
+            if(u.count(d)){
+                res = max(res, i - u[d]);
             }
             else{
-                dm[d] = i;
+                u[d] = i;
             }
         }
         
-        return res == INT_MIN ? 0 : res;
+        return res;
     }
 };
