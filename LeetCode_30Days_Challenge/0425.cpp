@@ -10,3 +10,4 @@ public:
         return max_pos >= nums.size() - 1;
     }
 };
+
