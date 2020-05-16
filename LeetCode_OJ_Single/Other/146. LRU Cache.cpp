@@ -1,5 +1,9 @@
 class LRUCache {
 public:
+    int max_cap;
+    unordered_map<int, list<pair<int, int>>::iterator> m;
+    list<pair<int, int>> cache;
+
     LRUCache(int capacity) {
         max_cap = capacity;
     }
@@ -18,7 +22,6 @@ public:
     }
     
     void put(int key, int value) {
-        // printf("put key %d value %d \n", key, value);
         auto found = m.find(key);
         // update the existing element and move it to the front
         if(found != m.end()){
@@ -37,9 +40,4 @@ public:
             m[key] = cache.begin();
         }
     }
-    
-private:
-    int max_cap;
-    unordered_map<int, list<pair<int, int>>::iterator> m;
-    list<pair<int, int>> cache;
 };
