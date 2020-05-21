@@ -1,40 +1,25 @@
 class Solution
 {
 public:
-    vector<int> res;
-    vector<int> inorderTraversal(TreeNode* root)
+    vector<int> inorderTraversal(TreeNode *root)
     {
-        stack<TreeNode*> stk;
-        if(root)
+        stack<TreeNode *> stk;
+        vector<int> res;
+        TreeNode *cur = root;
+        while (cur || stk.size())
         {
-            stk.push(root);
-            TreeNode* cur = root;
-            while(stk.size() || cur != NULL)
+            while (cur)
             {
-                //equivalent to inorder(cur->left);
-                while(cur != NULL)
-                {
-                    cur = cur->left;
-                    if(cur == NULL)
-                    {
-                        break;
-                    }
-                    stk.push(cur);
-                }
-                //equivalent to res.push_back(cur->val);
-                cur = stk.top();
-                //reassign
-                stk.pop();
-                res.push_back(cur->val);
-                //equivalent to inorder(cur->right);
-                cur = cur->right;
-                if(cur != NULL)
-                {
-                    stk.push(cur);
-                }
+                stk.push(cur);
+                cur = cur->left;
             }
+            cur = stk.top();
+            stk.pop();
+            res.emplace_back(cur->val);
+
+            cur = cur->right;
         }
+
         return res;
     }
-
 };

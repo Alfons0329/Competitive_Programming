@@ -1,0 +1,6 @@
+1
+4 2
+RANK
+RANDOM
+AZX
+ERV
