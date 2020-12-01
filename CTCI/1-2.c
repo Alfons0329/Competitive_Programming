@@ -1,5 +1,5 @@
 /*
- * Implement an algorithm to determine if a string has all unique characters. What if you can not use additional data structures?
+ * Write code to reverse a C-Style String. (C-String means that “abcd” is represented as five characters, including the null character.)
  * */
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,9 +9,6 @@
 #define MAX_N 1000
 
 void reverse(char input[]){
-    /*
-     * Check for A-Z and a-z
-     * */
     int len = 0;
     while(input[len++]);
     for(int i = 0; i < len / 2; i++){
