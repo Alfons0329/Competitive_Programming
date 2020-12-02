@@ -1,5 +1,5 @@
 /*
- * Write a method to decide if two strings are anagrams or not.
+ * Write a method to replace all spaces in a string with ‘%20’. 
  * */
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,14 +10,13 @@
 #define MAX_N 1000
 
 /*
- * Count each alphabet (ASCII char), doing the statistics with alphabet_count[256], and iterate again, if alphabet_count[i] is greater then zero, then it means there exists at least one char has not been cancelled out, so non anagram.
+ * Remember to allocate 2 * len + 1 space for the string as + 1 more space for the null terminated character 
  */
 void replace(char* s){
     int len = strlen(s);
     printf("String length: %d\n", len);
-    getchar();
     
-    char* res = (char*) calloc(2 * len + 1, sizeof(char));// 1 more space for the null terminated character
+    char* res = (char*) calloc(2 * len + 1, sizeof(char)); // 1 more space for the null terminated character
     int j = 0;
 
     for(int i = 0; i < len; i++){

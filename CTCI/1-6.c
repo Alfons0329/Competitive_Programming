@@ -1,5 +1,5 @@
 /*
- * Write a method to decide if two strings are anagrams or not.
+ * Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes, write a method to rotate the image by 90 degrees. Can you do this in place?
  * */
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,43 +7,66 @@
 #include <stdbool.h>
 #include <assert.h>
 
-#define MAX_N 1000
+#define MAX_N 4
 
-/*
- * Count each alphabet (ASCII char), doing the statistics with alphabet_count[256], and iterate again, if alphabet_count[i] is greater then zero, then it means there exists at least one char has not been cancelled out, so non anagram.
- */
-void replace(char* s){
-    int len = strlen(s);
-    printf("String length: %d\n", len);
-    getchar();
-    
-    char* res = (char*) calloc(2 * len + 1, sizeof(char));// 1 more space for the null terminated character
-    int j = 0;
+void swap(int* a, int* b){
+    *a ^= *b;
+    *b ^= *a;
+    *a ^= *b;
+}
 
-    for(int i = 0; i < len; i++){
-        if(s[i] == ' '){
-            res[j] = '%';
-            res[j + 1] = '2';
-            res [j + 2] = '0';
-            j += 3;
-        }
-        else{
-            res[j] = s[i];
-            j++;
+void transpose(int m[][MAX_N]){
+    for(int i = 0; i < MAX_N; i++){
+        for(int j = i + 1; j < MAX_N; j++){
+            swap(&m[i][j], &m[j][i]);
         }
     }
-    res[j] = '\0'; // NULL string terminator
-    
-    printf("%s\n", res);
+}
+
+void flip(int m[][MAX_N]){
+    for(int i = 0; i < MAX_N / 2; i++){
+        for(int j = 0; j < MAX_N; j++){
+            swap(&m[MAX_N - i - 1][j], &m[i][j]);
+        }
+    }
 }
 
 int main(){
     while(1){
-        char s[MAX_N] = {0};
-        if(scanf("%[^\n]s", s) == EOF){
-            break;
+        int m[MAX_N][MAX_N] = {0};
+        int n;
+        printf("Rotate N times of 90 degree, input N: ");
+        scanf("%d", &n);
+        for(int i = 0; i < MAX_N; i++){
+            for(int j = 0; j < MAX_N; j++){
+                m[i][j] = i * MAX_N + j + 1;
+            }
         }
-        replace(s);
+
+        switch(n){
+            case 1:
+                transpose(m);
+                flip(m);
+                break;
+            case 2:
+                flip(m);
+                break;
+            case 3:
+                flip(m);
+                transpose(m);
+                break;
+            case 4:
+                break;
+            default:
+                return 0;
+        }
+
+        for(int i = 0; i < MAX_N; i++){
+            for(int j = 0; j < MAX_N; j++){
+                printf("%d ", m[i][j]);
+            }
+            printf("\n");
+        }
     }
     return 0;
 }
