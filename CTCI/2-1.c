@@ -10,7 +10,7 @@
 #include <math.h>
 
 #define MAX_N 1000
-#define MAX_CASE 4
+#define MAX_CASE 5
 
 typedef struct{
     int v;
@@ -42,7 +42,7 @@ void remove_1(node* head, int max_ele){
         }
     }
 
-    printf("After remove duplicated: \n");
+    printf("After remove duplicated with method 1: \n");
     cur = head;
     while(cur){
         printf("%d --> ", cur->v);
@@ -51,12 +51,44 @@ void remove_1(node* head, int max_ele){
     printf("\n\n");
 }
 
-void remove_2(){
+void remove_2(node* head){
+    node* cur = head;
+    node* prev = cur;
+    while(cur){
+        node* search = cur->next;
+        bool flg = 0;
+        while(search){
+            // Found duplicated node, delete it!
+            if(cur->v == search->v){
+                node* to_delete = search;
+                prev->next = search->next;
+                free(to_delete);
+                flg = 1;
+            }
+            search = search->next;
+        }
+        if(flg){
+            cur->next = search;
+        }
+        prev = cur;
+        cur = cur->next;
+    }
 
+
+    printf("After remove duplicated with method 2: \n");
+    cur = head;
+    while(cur){
+        printf("%d --> ", cur->v);
+        cur = cur->next;
+    }
+    printf("\n\n");
 }
 
 int main(){
     int t = 0;
+    int choice;
+    scanf("%d", &choice);
+
     while(t++ < MAX_CASE){
         int a[MAX_N] = {0};
         int n;
@@ -96,11 +128,11 @@ int main(){
         }
         printf("\n");
 
-        if(n % 2){
+        if(choice == 1){
             remove_1(head, max_ele);
         }
         else{
-
+            remove_2(head);
         }
     }
 
