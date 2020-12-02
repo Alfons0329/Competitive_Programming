@@ -9,19 +9,17 @@
 #define MAX_N 1000
 
 void reverse(char input[]){
-    int len = 0;
-    while(input[len++]);
+    int len = strlen(input);
     for(int i = 0; i < len / 2; i++){
         input[i] ^= input[len - i - 1];
         input[len - i - 1] ^= input[i];
         input[i] ^= input[len - i - 1];
     }
+
     char* ret = (char*)malloc(sizeof(char) * (len + 1));
     memcpy(ret, input, sizeof(char) * (len + 1));
-    for(int i = 0; i < len; i++){
-        printf("%c", ret[i]);
-    }
-    printf("\n");;
+    ret[len] = '\0';
+    printf("%s\n", ret);
     free(ret);
 }
 

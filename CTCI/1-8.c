@@ -57,5 +57,6 @@ int main(){
 
         is_rotate(s1, s2);
     }
+
     return 0;
 }

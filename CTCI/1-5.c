@@ -15,7 +15,7 @@
 void replace(char* s){
     int len = strlen(s);
     printf("String length: %d\n", len);
-    
+
     char* res = (char*) calloc(2 * len + 1, sizeof(char)); // 1 more space for the null terminated character
     int j = 0;
 
@@ -32,17 +32,16 @@ void replace(char* s){
         }
     }
     res[j] = '\0'; // NULL string terminator
-    
+
     printf("%s\n", res);
+    free(res);
 }
 
 int main(){
-    while(1){
-        char s[MAX_N] = {0};
-        if(scanf("%[^\n]s", s) == EOF){
-            break;
-        }
+    char s[MAX_N] = {0};
+    if(scanf("%[^\n]s", s) != EOF){
         replace(s);
     }
+
     return 0;
 }

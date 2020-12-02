@@ -13,10 +13,9 @@
  * Count each alphabet (ASCII char), doing the statistics with alphabet_count[256], and iterate again, if alphabet_count[i] is greater then zero, then it means there exists at least one char has not been cancelled out, so non anagram.
  */
 void check_anagram(char s1[], char* s2){
-    int m = 0;
-    int n = 0;
-    while(s1[m++]);
-    while(s2[n++]);
+    int m = strlen(s1);
+    int n = strlen(s2);
+    printf("m %d n %d \n", m, n);
     assert(m == n);
     
     int alphabet_count[256] = {0};
@@ -46,5 +45,6 @@ int main(){
         scanf("%s", s2);
         check_anagram(s1, s2);
     }
+
     return 0;
 }

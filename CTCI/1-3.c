@@ -13,8 +13,7 @@
  * O(N^2) to remove duplicate char with none extra space, simply not print the duplicate character will be fine
  */
 void remove_dup_1(char input[]){
-    int len = 0;
-    while(input[len++]);
+    int len = strlen(input);
     printf("Method 1 \n");
     for(int i = 0; i < len - 1; i++){
         for(int j = i + 1; j < len; j++){
@@ -26,6 +25,9 @@ void remove_dup_1(char input[]){
             printf("%c", input[i]);
         }
     }
+    if(input[len - 1]){
+        printf("%c", input[len - 1]);
+    }
     printf("\n");
 }
 
@@ -34,17 +36,16 @@ void remove_dup_1(char input[]){
  * O(N) to remove  duplicate char with O(256) extra space
  * */
 void remove_dup_2(char input[]){
-    bool hash[256] = {false}; // Total 256 ASCII characters
-    int len = 0;
-    while(input[len++]);
+    bool seen[256] = {false}; // Total 256 ASCII characters
+    int len = strlen(input);
     for(int i = 0; i < len; i++){
         // Found duplicate, close that character
-        if(hash[input[i]]){
+        if(seen[input[i]]){
             input[i] = 0;
         }
-        // Non duplicate, add to hash 
+        // Non duplicate, add to seen 
         else{
-            hash[input[i]] = true;
+            seen[input[i]] = true;
         }
     }
 
@@ -64,7 +65,7 @@ int main(){
         if(scanf("%s", input_1) == EOF){
             break;
         }
-        strncpy(input_2, input_1, sizeof(input_1));
+        strncpy(input_2, input_1, strlen(input_1));
         remove_dup_1(input_1);
         remove_dup_2(input_2);
     }
