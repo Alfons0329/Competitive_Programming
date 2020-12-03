@@ -33,7 +33,8 @@ void findNth_recursive(node* head, int nth_bk){
         return;
     }
 }
-
+/*
+ * 
 void findNth_recursive_wrong(node* head, int* nth_bk){
     if(head == NULL){
         return;
@@ -47,11 +48,24 @@ void findNth_recursive_wrong(node* head, int* nth_bk){
         return;
     }
 }
+ * */
 
 /*
  * Iterative method
  * */
-void findNth_iterative(node* head){
+void findNth_iterative(node* head, int nth_bk){
+    node* front = head;
+    node* back = head;
+
+    while(nth--){
+        front = front->next;
+    }
+
+    while(front){
+        front= front->next;
+        back = back->next;
+    }
+    printf("[ANS]: Iteratvie method: %dth from last is %d \n", nth_bk, back->v);
 }
 
 int main(){
@@ -68,11 +82,11 @@ int main(){
         }
 
         // Init LL
-        node* fir = (node*)malloc(sizeof(node));
+        node* head = (node*)malloc(sizeof(node));
         node* sec = NULL;
-        node* head = fir; 
-        fir->v = a[0];
-        fir->next = NULL;
+        node* fir = head; 
+        head->v = a[0];
+        head->next = NULL;
 
         for(int i = 1; i < n; i++){
             sec = (node*)malloc(sizeof(node));
@@ -102,7 +116,7 @@ int main(){
         findNth_recursive(fir, nth_bk);
         fir = head;
         nth = nth_bk;
-        findNth_recursive_wrong(fir, &nth_bk);
+        findNth_iterative(fir, nth_bk);
     }
 
     return 0;
