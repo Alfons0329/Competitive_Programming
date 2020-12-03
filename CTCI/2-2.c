@@ -1,5 +1,5 @@
 /*
- * Write code to remove duplicates from an unsorted linked list. FOLLOW UP How would you solve this problem if a temporary buffer is not allowed? 
+ * Implement an algorithm to find the nth to last element of a singly linked list. 
  * */
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,22 +33,6 @@ void findNth_recursive(node* head, int nth_bk){
         return;
     }
 }
-/*
- * 
-void findNth_recursive_wrong(node* head, int* nth_bk){
-    if(head == NULL){
-        return;
-    }
-
-    findNth_recursive_wrong(head->next, nth_bk);
-    *nth_bk = *nth_bk - 1;
-    printf("Wrong Return from %d n is now %d \n", head->v, *nth_bk);
-    if(*nth_bk == 0){
-        printf("[ANS]: Wrong recursive method: %dth from last is %d \n", nth, head->v);
-        return;
-    }
-}
- * */
 
 /*
  * Iterative method
