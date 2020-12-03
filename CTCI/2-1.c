@@ -12,7 +12,7 @@
 #define MAX_N 1000
 #define MAX_CASE 5
 
-typedef struct{
+typedef struct node{
     int v;
     struct node* next;
 } node;
@@ -51,26 +51,31 @@ void remove_1(node* head, int max_ele){
     printf("\n\n");
 }
 
+/*
+ * O(N^2) time to remove but only require O(1) space since we use two-pointer method, that a node named search is used for finding the duplicate node, prev anc cur keeps the order for deletion.
+ * */
 void remove_2(node* head){
     node* cur = head;
-    node* prev = cur;
+    node* p;
+    node* q;
     while(cur){
-        node* search = cur->next;
-        bool flg = 0;
-        while(search){
+        p = cur;
+        q = cur->next;
+        int v_del = cur->v;
+        while(q){
             // Found duplicated node, delete it!
-            if(cur->v == search->v){
-                node* to_delete = search;
-                prev->next = search->next;
+            if(q->v == v_del){
+                node* to_delete = q;
+                p->next = q->next;
+                q = q->next;
                 free(to_delete);
-                flg = 1;
             }
-            search = search->next;
+            // Non duplicate one, connect p->next to node q to maintain the LL connectivity
+            else{
+                p = q;
+                q = q->next;
+            }
         }
-        if(flg){
-            cur->next = search;
-        }
-        prev = cur;
         cur = cur->next;
     }
 
