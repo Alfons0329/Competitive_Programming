@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -xe
 p=$1
 
 if [ -e $p.c ]
@@ -7,9 +7,9 @@ then
     gcc -std=c99 $p.c && ./a.out < $p\_in.txt
     if [ -e $p\_in.txt ]
     then
-        g++ -std=c99 $p.c && ./a.out < $p\_in.txt
+        gcc -std=c99 $p.c && ./a.out < $p\_in.txt
     else
-        g++ -std=c99 $p.c && ./a.out
+        gcc -std=c99 $p.c && ./a.out
     fi
 
 elif [ -e $p.cpp ]
