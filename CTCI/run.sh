@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xe
+set -e
 p=$1
 
 if [ -e $p.c ]
