@@ -4,7 +4,6 @@ p=$1
 
 if [ -e $p.c ]
 then
-    gcc -std=c99 $p.c && ./a.out < $p\_in.txt
     if [ -e $p\_in.txt ]
     then
         gcc -std=c99 $p.c && ./a.out < $p\_in.txt

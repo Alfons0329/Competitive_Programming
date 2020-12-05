@@ -31,7 +31,7 @@ int main(){
     uniform_int_distribution<> distrib(INT_MIN, INT_MAX);
     while(1){
         int h = hamming_distance(gen(), gen());
-        cout << "Hamming distance " << h << endl;
+        cout << "Hamming distance: " << h << endl;
         getchar();
     }
     return 0;
