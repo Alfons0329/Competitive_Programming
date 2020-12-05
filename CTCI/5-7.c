@@ -9,7 +9,8 @@
 #include <time.h>
 #include <string.h>
 
-#define MAX_N 20
+#define MAX_N 1000
+#define TEST_CASES 1000
 
 int fetch(int a[], int i, int x){
     // Fetch the xth bit of a[i]
@@ -21,10 +22,8 @@ int find_missing(int a[], int n){
     memset(seen, false, sizeof(bool) * n);
     for(int i = 0; i < n - 1; i++){
         int num = 0;
-        int base = 1;
         for(int j = 0; j < 32; j++){
-            num |= (base & (a, i, j));
-            base <<= 1;
+            num |= fetch(a, i, j) << j;
         }
         seen[num] = true;
     }
@@ -38,9 +37,10 @@ int find_missing(int a[], int n){
 }
 
 int main(){
-    while(1){
-        srand(time(NULL));
-        int missing = rand() % MAX_N + 1;
+    int t = 0;
+    srand(time(NULL));
+    while(t++ < TEST_CASES){
+        int missing = rand() % MAX_N;
         int* a = (int*) malloc(sizeof(int) * MAX_N);
         for(int i = 0; i < MAX_N; i++){
             a[i] = i;
@@ -58,17 +58,14 @@ int main(){
         memcpy(a_missing, a, sizeof(int) * (idx_missing));
         memcpy(&a_missing[idx_missing], &a[idx_missing + 1], sizeof(int) * (MAX_N - idx_missing - 1));
 
-        printf("After remove: %d\n", missing);
-        /*
-         * 
-        for(int i = 0; i < MAX_N - 1; i++){
-            printf("%d, ", a_missing[i]);
+        int ret = find_missing(a_missing, MAX_N);
+        if(ret != missing){
+            fprintf(stderr, "Testcase %d\tfailed!, remove %d != find missing %d \n", t, missing, ret);
+            return EXIT_FAILURE;
         }
-        printf("\n");
-         * */
-
-        printf("Missing number: %d", find_missing(a_missing, MAX_N));
-        getchar();
+        else{
+            fprintf(stdout, "Testcase %d\tpassed!, remove %d == find missing %d \n", t, missing, ret);
+        }
     }
     return 0;
 }
