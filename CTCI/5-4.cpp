@@ -3,11 +3,12 @@
  * */
 #include <bits/stdc++.h>
 
+using namespace std;
+
+
 bool check_pow_2(unsigned long num){
     return (num & (num - 1)) == 0;
 }
-
-using namespace std;
 
 int main(){
     for(unsigned long i = 0; i < 1ULL << 31; i += 2){
