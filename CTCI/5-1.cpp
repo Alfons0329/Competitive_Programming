@@ -11,9 +11,13 @@ int main(){
         cin >> i >> j;
         int tmp = (1 << i) - 1;
         tmp &= N;
-        int res = ((N >> (j + 1)) << (j + 1)) | M << i | tmp;
-        bitset<32> b(res);
-        cout << "Result: "<< b << '\n';
+        int res1 = ((N >> (j + 1)) << (j + 1)) | M << i | tmp;
+        // int res2 = (N & 1 << (j + 1)) | M << i | tmp; this is absolutely wrong since the bits higher than j will be set to zero due to & 1 << (j + 1)
+        bitset<32> b1(res1);
+        bitset<32> b2(res2);
+        cout << "Result1: "<< b1 << '\n';
+        // cout << "Result1: "<< b2 << '\n';
+        // assert(res1 == res2);
     }
     return 0;
 }
