@@ -79,10 +79,10 @@ node* delete_node_iterative(node* head, int v_del, int cnt_node){
     return cnt_delete == cnt_node ? NULL : new_head;
 }
 
-void delete_whole_LL(node* head){
+node* delete_whole_LL(node* head){
     if(head == NULL){
         fprintf(stderr, "%s", "delete_whole_, but LL is already empty! \n");
-        return;
+        return NULL;
     }
     node* cur = head;
     node* to_delete = NULL;
@@ -93,8 +93,8 @@ void delete_whole_LL(node* head){
         cur = cur->next;
         free(to_delete);
     }
-    head = NULL;
     printf("[LOG]: Finished delete all LL nodes\n");
+    return NULL;
 }
 
 
@@ -138,7 +138,7 @@ int main(){
         cur = head;
         printf("After delete %d\n", v_del);
         print_LL(cur);
-        delete_whole_LL(head);
+        head = delete_whole_LL(head);
         cur = head;
         print_LL(cur);
 
