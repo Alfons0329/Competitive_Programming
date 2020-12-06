@@ -18,7 +18,7 @@ typedef struct node{
 } node;
 
 void print_LL(node* head){
-    printf("[ANS]:\tLL: ");
+    printf("[ANS]: LL: ");
     node* cur = head;
     while(cur){
         printf("%d --> ", cur->v);
@@ -36,12 +36,10 @@ void delete_node_iterative(node* head, int v_del){
     node* to_delete = NULL;
 
     // If head holds the value to be deleted
-    if(head->v = v_del){
-        printf("[LOG]:\tTo delete value is %d\n", v_del);
+    if(head->v == v_del){
         to_delete = head;
         head = head->next;
         free(to_delete);
-        return;
     }
 
     cur = prev = head;
@@ -58,7 +56,7 @@ void delete_node_iterative(node* head, int v_del){
             to_delete = cur;
             prev->next = cur->next;
             cur = cur->next;
-            printf("[LOG]:\tFinished delete single node: %d \n",to_delete->v);
+            printf("[LOG]: Finished delete single node: %d \n",to_delete->v);
             free(to_delete);
         }
         else{
@@ -70,18 +68,15 @@ void delete_node_iterative(node* head, int v_del){
 
 void delete_whole_LL(node* head){
     node* cur = head;
-    node* prev = head;
     node* to_delete = NULL;
 
-    printf("[LOG]:\tStart to delete all LL nodes\n");
+    printf("[LOG]: Start to delete all LL nodes\n");
     while(cur){
         to_delete = cur;
-        prev->next = cur->next;
-        prev = cur;
         cur = cur->next;
         free(to_delete);
     }
-    printf("[LOG]:\tFinished delete all LL nodes\n");
+    printf("[LOG]: Finished delete all LL nodes\n");
 }
 
 int main(){
@@ -115,14 +110,23 @@ int main(){
 
         int v_del;
         cur = head;
+        printf("Original ");
         print_LL(cur);
+
         scanf("%d", &v_del);
-        printf("1Head become %d \n", head == NULL ? NULL : head->v);
+        cur = head;
         delete_node_iterative(head, v_del);
-        printf("2Head become %d \n", head == NULL ? NULL : head->v);
-        print_LL(head);
-        // delete_whole_LL(head);
-        print_LL(head);
+        cur = head;
+        printf("After delete %d", v_del);
+        print_LL(cur);
+
+        /*
+         * 
+        cur = head;
+        delete_whole_LL(cur);
+        cur = head;
+        print_LL(cur);
+         * */
     }
     return 0;
 } 
