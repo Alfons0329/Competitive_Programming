@@ -81,7 +81,7 @@ node* delete_node_iterative(node* head, int v_del, int cnt_node){
 
 void delete_whole_LL(node* head){
     if(head == NULL){
-        fprintf(stderr, "%s", "LL is empty! \n");
+        fprintf(stderr, "%s", "delete_whole_, but LL is already empty! \n");
         return;
     }
     node* cur = head;
