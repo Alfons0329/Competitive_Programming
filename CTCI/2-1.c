@@ -59,6 +59,7 @@ void remove_2(node* head){
     node* p;
     node* q;
     while(cur){
+        // p, q are pointers used for searching and delete
         p = cur;
         q = cur->next;
         int v_del = cur->v;
@@ -105,31 +106,31 @@ int main(){
         }
 
         // Init LL
-        node* fir = (node*)malloc(sizeof(node));
-        node* sec = NULL;
-        node* head = fir; 
-        fir->v = a[0];
-        fir->next = NULL;
+        node* prev = (node*)malloc(sizeof(node));
+        node* cur = NULL;
+        node* head = prev; 
+        prev->v = a[0];
+        prev->next = NULL;
 
         for(int i = 1; i < n; i++){
-            sec = (node*)malloc(sizeof(node));
-            sec->v = a[i];
-            sec->next = NULL;
-            fir->next = sec;
-            fir = sec;
-            sec = sec->next;
+            cur = (node*)malloc(sizeof(node));
+            cur->v = a[i];
+            cur->next = NULL;
+            prev->next = cur;
+            prev = cur;
+            cur = cur->next;
         }
 
         // Traverse and check
         int max_ele = INT_MIN;
-        fir = head;
+        prev = head;
         printf("\nOriginal LL:\n");
-        while(fir){
-            printf("%d --> ", fir->v);
-            if(fir->v > max_ele){
-                max_ele = fir->v;
+        while(prev){
+            printf("%d --> ", prev->v);
+            if(prev->v > max_ele){
+                max_ele = prev->v;
             }
-            fir = fir->next;
+            prev = prev->next;
         }
         printf("\n");
 
