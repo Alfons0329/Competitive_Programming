@@ -13,25 +13,21 @@ typedef struct node{
     struct node* next;
 } node;
 
-void check_cycle(node* target_node){
-
-}
-
 node* init(int a[]){
     // Init LL
     node* head = (node*)malloc(sizeof(node));
-    node* sec = NULL;
-    node* fir = head; 
+    node* cur = NULL;
+    node* prev = head; 
     head->v = a[0];
     head->next = NULL;
 
     for(int i = 1; i < MAX_N; i++){
-        sec = (node*)malloc(sizeof(node));
-        sec->v = a[i];
-        sec->next = NULL;
-        fir->next = sec;
-        fir = sec;
-        sec = sec->next;
+        cur = (node*)malloc(sizeof(node));
+        cur->v = a[i];
+        cur->next = NULL;
+        prev->next = cur;
+        prev = cur;
+        cur = cur->next;
     }
 
     return head;
@@ -65,7 +61,7 @@ void make_cycle(node* head){
 
 /*
  * Store each visited node into the unordered_map, and if visit, set the visit bool value to true.
- *  The cycle start node will be the situation that vis[cur] = true, since it is the first node to visit in the cycle
+ *  The cycle start node will be the situation that vis[cur] = true, since it is the prevst node to visit in the cycle
  * */
 void detect_cycle_hash(node* head){
     unordered_map<node*, bool> vis;

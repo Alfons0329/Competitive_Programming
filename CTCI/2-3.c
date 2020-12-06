@@ -35,7 +35,7 @@ void del(node* target_node){
     if(target_node->next){
         node* to_delete = target_node->next;
         target_node->v = target_node->next->v;
-        // Skip the to_delete node (skip the second 4 mentioned above)
+        // Skip the to_delete node (skip the curond 4 mentioned above)
         target_node->next = target_node->next->next;
         free(to_delete);
     }
@@ -60,18 +60,18 @@ int main(){
 
         // Init LL
         node* head = (node*)malloc(sizeof(node));
-        node* sec = NULL;
-        node* fir = head; 
+        node* cur = NULL;
+        node* prev = head; 
         head->v = a[0];
         head->next = NULL;
 
         for(int i = 1; i < n; i++){
-            sec = (node*)malloc(sizeof(node));
-            sec->v = a[i];
-            sec->next = NULL;
-            fir->next = sec;
-            fir = sec;
-            sec = sec->next;
+            cur = (node*)malloc(sizeof(node));
+            cur->v = a[i];
+            cur->next = NULL;
+            prev->next = cur;
+            prev = cur;
+            cur = cur->next;
         }
 
         // Traverse and find out the target to delete
@@ -79,14 +79,14 @@ int main(){
         int target_val;
         scanf("%d", &target_val);
 
-        fir = head;
+        prev = head;
         printf("\nOriginal LL:\n");
-        while(fir){
-            printf("%d --> ", fir->v);
-            if(fir->v == target_val){
-                target_node = fir;
+        while(prev){
+            printf("%d --> ", prev->v);
+            if(prev->v == target_val){
+                target_node = prev;
             }
-            fir = fir->next;
+            prev = prev->next;
         }
 
         // Doing deletion
@@ -94,13 +94,13 @@ int main(){
 
         // Check again
         printf("\nAfter delete %d, LL:\n", target_val);
-        fir = head;
-        while(fir){
-            printf("%d --> ", fir->v);
-            if(fir->v == target_val){
-                target_node = fir;
+        prev = head;
+        while(prev){
+            printf("%d --> ", prev->v);
+            if(prev->v == target_val){
+                target_node = prev;
             }
-            fir = fir->next;
+            prev = prev->next;
         }
         printf("\n\n");
     }

@@ -18,6 +18,10 @@ typedef struct node{
 } node;
 
 void print_LL(node* head){
+    if(head == NULL){
+        fprintf(stderr, "%s", "LL is empty! \n");
+        return;
+    }
     printf("[ANS]: LL: ");
     node* cur = head;
     while(cur){
@@ -27,22 +31,28 @@ void print_LL(node* head){
     printf("\n");
 }
 
-void delete_node_iterative(node* head, int v_del){
+node* delete_node_iterative(node* head, int v_del, int cnt_node){
     if(head == NULL){
         fprintf(stderr, "%s", "LL is empty! \n");
+        return NULL;
     }
     node* cur = head;
     node* prev = head;
+    node* new_head = head;
     node* to_delete = NULL;
+    int cnt_delete = 0;
 
     // If head holds the value to be deleted
     if(head->v == v_del){
         to_delete = head;
+        // Move head to next
         head = head->next;
+        // printf("[LOG]: Finished delete single node HEAD: %d \n",to_delete->v);
         free(to_delete);
+        cnt_delete++;
     }
 
-    cur = prev = head;
+    new_head = cur = prev = head;
     /*
      * prev --> cur (to_delete) --> cur->next
      * prev -X> cur (to_delete) --> cur->next
@@ -56,17 +66,24 @@ void delete_node_iterative(node* head, int v_del){
             to_delete = cur;
             prev->next = cur->next;
             cur = cur->next;
-            printf("[LOG]: Finished delete single node: %d \n",to_delete->v);
+            // printf("[LOG]: Finished delete single node: %d \n",to_delete->v);
             free(to_delete);
+            cnt_delete++;
         }
         else{
             prev = cur;
             cur=cur->next;
         }
     }
+    
+    return cnt_delete == cnt_node ? NULL : new_head;
 }
 
 void delete_whole_LL(node* head){
+    if(head == NULL){
+        fprintf(stderr, "%s", "LL is empty! \n");
+        return;
+    }
     node* cur = head;
     node* to_delete = NULL;
 
@@ -76,8 +93,10 @@ void delete_whole_LL(node* head){
         cur = cur->next;
         free(to_delete);
     }
+    head = NULL;
     printf("[LOG]: Finished delete all LL nodes\n");
 }
+
 
 int main(){
     int t = 0;
@@ -110,23 +129,21 @@ int main(){
 
         int v_del;
         cur = head;
-        printf("Original ");
+        printf("Original\n");
         print_LL(cur);
 
         scanf("%d", &v_del);
         cur = head;
-        delete_node_iterative(head, v_del);
+        head = delete_node_iterative(head, v_del, n);
         cur = head;
-        printf("After delete %d", v_del);
+        printf("After delete %d\n", v_del);
+        print_LL(cur);
+        delete_whole_LL(head);
+        cur = head;
         print_LL(cur);
 
-        /*
-         * 
-        cur = head;
-        delete_whole_LL(cur);
-        cur = head;
-        print_LL(cur);
-         * */
+        printf("\n\n");
+
     }
     return 0;
 } 
