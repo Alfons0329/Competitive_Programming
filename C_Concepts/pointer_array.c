@@ -31,36 +31,33 @@ int main(){
  Array size in main 5 
  * */
     
-    char str[] = "HELLO WORLD";
+    char str[] = "ABCDEFG";
     for(int i = 0; i < strlen(str); i++){
-        printf("Start from: %c\n", *(str + i));
-        printf("[%s]\n", str + i);
-        print_str(str + i); // This has the same function as above line
-        print_str(&str[i]); // This has the same function as above, above line
+        char* ptr_ith = str;
+        ptr_ith += i;
+        printf("%c\n", *(str + i)); // This print char at str[i]
+        printf("%d\n", *ptr_ith); // This does the same as above
+        printf("%p\n", ptr_ith); // This print the address of str[i]
+
+        printf("[%s]\n", ptr_ith); // This print str[i:]
+        printf("[%s]\n", str + i); // This does the same as above
+        print_str(str + i); // This does the same function as 2 lines above
+        print_str(&str[i]); // This does the same function as 3 lines above
+        
     }
 /*
-Start from: H
-HELLO WORLD
-Start from: E
-ELLO WORLD
-Start from: L
-LLO WORLD
-Start from: L
-LO WORLD
-Start from: O
-O WORLD
-Start from:  
- WORLD
-Start from: W
-WORLD
-Start from: O
-ORLD
-Start from: R
-RLD
-Start from: L
-LD
-Start from: D
-D
+ * */
+
+    char name1[200] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    char name2[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    char name3[27] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    printf("Sizeof name1[200] is %ld with len %ld \n", sizeof(name1), strlen(name1));
+    printf("Sizeof name2[] is %ld with len %ld \n", sizeof(name2), strlen(name2));
+    printf("Sizeof name3[7] is %ld with len %ld \n", sizeof(name3), strlen(name3));
+/*
+ * Sizeof name1[200] is 200 with len 26
+ * Sizeof name2[] is 27 with len 26
+ * Sizeof name3[7] is 27 with len 26
  * */
 
     char* p1 = &str[2];
@@ -68,12 +65,12 @@ D
     printf("%d \n", p2 - p1);
     printf("%s \n", p1);
     printf("%c \n", *(p1));
-    printf("%s \n", *(p1));
+    // printf("%s \n", *(p1));
 /*
  * 4
- * LLO WORLD
- * LLO WORLD
- * <<<SegFault>>>
+ * CDEFG 
+ * C
+ * ASAN:DEADLYSIGNAL
  * */
     return 0;
 }

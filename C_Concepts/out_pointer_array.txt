@@ -1,0 +1,59 @@
+sizeof(arr) 20, sizeof(arr[0]) 4
+Array size in main 5 
+sizeof(arr) 8, sizeof(arr[0]) 4
+Array size in param_1 2 
+A
+65
+0x7fffce16d480
+[ABCDEFG]
+[ABCDEFG]
+print_str print[ABCDEFG]
+print_str print[ABCDEFG]
+B
+66
+0x7fffce16d481
+[BCDEFG]
+[BCDEFG]
+print_str print[BCDEFG]
+print_str print[BCDEFG]
+C
+67
+0x7fffce16d482
+[CDEFG]
+[CDEFG]
+print_str print[CDEFG]
+print_str print[CDEFG]
+D
+68
+0x7fffce16d483
+[DEFG]
+[DEFG]
+print_str print[DEFG]
+print_str print[DEFG]
+E
+69
+0x7fffce16d484
+[EFG]
+[EFG]
+print_str print[EFG]
+print_str print[EFG]
+F
+70
+0x7fffce16d485
+[FG]
+[FG]
+print_str print[FG]
+print_str print[FG]
+G
+71
+0x7fffce16d486
+[G]
+[G]
+print_str print[G]
+print_str print[G]
+Sizeof name1[200] is 200 with len 26 
+Sizeof name2[] is 27 with len 26 
+Sizeof name3[7] is 27 with len 26 
+4 
+CDEFG 
+C 
