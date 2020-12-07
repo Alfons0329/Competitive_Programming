@@ -14,6 +14,10 @@ void param_1(int arr[]){
  * */
 }
 
+void print_str(char* p_str){
+    printf("print_str print[%s]\n", p_str);
+}
+
 int main(){
     int arr[] = {1, 2, 3, 4, 5};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
@@ -30,7 +34,9 @@ int main(){
     char str[] = "HELLO WORLD";
     for(int i = 0; i < strlen(str); i++){
         printf("Start from: %c\n", *(str + i));
-        printf("%s\n", str + i);
+        printf("[%s]\n", str + i);
+        print_str(str + i); // This has the same function as above line
+        print_str(&str[i]); // This has the same function as above, above line
     }
 /*
 Start from: H
@@ -67,7 +73,7 @@ D
  * 4
  * LLO WORLD
  * LLO WORLD
- * SegFault
+ * <<<SegFault>>>
  * */
     return 0;
 }
