@@ -36,6 +36,7 @@ int main(){
         f_ptr_void[i]();
     }
     
+    // char *f_ptr_int[](int) = {f1_int, f2_int}; // Error, does not compile
     char (*f_ptr_int[])(int) = {f1_int, f2_int}; //
     size_t size_f_ptr_int = sizeof(f_ptr_int) / sizeof(f_ptr_int[0]);
     printf("sizeof(f_ptr_int):[%ld], sizeof(f_ptr_int[0]):[%ld]\n", sizeof(f_ptr_int), sizeof(f_ptr_int[0]));
