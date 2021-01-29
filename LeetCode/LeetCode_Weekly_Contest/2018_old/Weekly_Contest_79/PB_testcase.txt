@@ -1,0 +1,28 @@
+[1,null,0,0,1]
+[1,0,1,0,0,0,1]
+[1,1,0,1,1,0,1,0]
+[1,0,1,0,0,0,1]
+[1,1,0,1,1,0,1,0]
+[1,1,1,1,1,0,0,0,1,null,0,1,1,null,1,null,null,null,null,null,null,null,null,null,null,null,null]
+[0,1,0,0,1,1,1,null,0,1,0,1,1,1,null,1,1,1,0,0,1,null,0,0,0,1,1,0,1,0,0,0,1,1,0,1,0,0,0,0,1,1,1,null,1,1,null,null,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
+
+
+
+[0,1,0,0,1,1,1,null,0,1,0,1,1,1,null,1,1,1,0,0,1,null,0,0,0,1,1,null,1,null,null,null,1,1,null,1,null,null,null,null,1,1,1,null,1,1]
+[0,1,0,0,1,1,1,null,0,1,0,1,1,1,null,1,null,1,0,0,null,null,0,0,0,1,1,null,1,null,1,1,null,1,null,null,1,1,1,null,1,1]
+
+Traverse to 1
+Traverse to 1
+Traverse to 1
+Traverse to 0
+Case 2
+Case 4
+Traverse to 1
+Case 5
+Case 6
+Traverse to 0
+Traverse to 0
+Case 2
+Traverse to 1
+Case 5
+Case 6
